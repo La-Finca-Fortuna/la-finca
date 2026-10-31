@@ -1,19 +1,18 @@
 /* ==========================================================================
    LA FINCA — GASTRONOMÍA & HOSPEDAJE
-   Digital Menu, Boutique Lodging Gallery, Pick-Up Order & Quoter Engine
+   Collapsible Digital Menu, Real Lodging Gallery, Pick-Up Order & Quoter
    WhatsApp Oficial: (+506) 8585-7454
    ========================================================================== */
 
 const WHATSAPP_NUMBER = "50685857454";
-const EXCHANGE_RATE_CRC_USD = 515; // Reference conversion rate
+const EXCHANGE_RATE_CRC_USD = 515;
 
 /* --------------------------------------------------------------------------
    1. COMPLETE DIGITAL MENU DATASET (57 Authentic Items from La Finca)
    -------------------------------------------------------------------------- */
 const MENU_CATEGORIES = [
-  { id: "all", nameEs: "Todo el Menú", nameEn: "Full Menu" },
   { id: "platos-fuertes", nameEs: "Platos Fuertes", nameEn: "Main Dishes" },
-  { id: "comidas-rapidas", nameEs: "Comidas Rápidas", nameEn: "Casual & Fast Food" },
+  { id: "comidas-rapidas", nameEs: "Comidas Rápidas", nameEn: "Fast Food" },
   { id: "sopas", nameEs: "Sopas", nameEn: "Soups" },
   { id: "bebidas-frias", nameEs: "Bebidas Frías", nameEn: "Cold Beverages" },
   { id: "bebidas-calientes", nameEs: "Bebidas Calientes", nameEn: "Hot Beverages" }
@@ -30,8 +29,6 @@ const MENU_ITEMS = [
     descEn: "French fries and salad or fried yucca with banana ceviche.",
     price: 7500,
     badges: ["popular", "seafood"],
-    optionLabelEs: "Acompañamiento",
-    optionLabelEn: "Side selection",
     options: [
       "Papas fritas y ensalada",
       "Yuca frita y ceviche de banano"
@@ -82,8 +79,8 @@ const MENU_ITEMS = [
     category: "platos-fuertes",
     nameEs: "Camarones al Ajillo, Ensalada y Arroz",
     nameEn: "Garlic Shrimp, Salad & Rice",
-    descEs: "Camarones en salsa de ajo acompañados de arroz y ensalada fresca.",
-    descEn: "Shrimp in garlic sauce, rice and fresh salad.",
+    descEs: "Camarones en salsa de ajo acompañados de arroz y ensalada.",
+    descEn: "Shrimp in garlic sauce, rice and salad.",
     price: 4500,
     badges: ["popular", "seafood"]
   },
@@ -100,9 +97,9 @@ const MENU_ITEMS = [
   {
     id: "pf-gordon-blue",
     category: "platos-fuertes",
-    nameEs: "Cordon Bleu de Pollo",
+    nameEs: "Gordon Blue de Pollo",
     nameEn: "Chicken Cordon Bleu",
-    descEs: "En salsa blanca acompañado de puré de papa y vegetales.",
+    descEs: "En salsa blanca acompañado de puré y vegetales.",
     descEn: "Chicken Cordon Bleu in white sauce with mashed potatoes and vegetables.",
     price: 5000,
     badges: ["popular"]
@@ -142,8 +139,8 @@ const MENU_ITEMS = [
     category: "platos-fuertes",
     nameEs: "Camarones con Arroz",
     nameEn: "Special Shrimp with Rice",
-    descEs: "Porción especial de camarones con arroz, papas fritas y ensalada.",
-    descEn: "Special Shrimp with rice, French fries and salad.",
+    descEs: "Acompañado de papas fritas y ensalada.",
+    descEn: "Shrimp with rice, French fries and salad.",
     price: 6500,
     badges: ["seafood"]
   },
@@ -172,7 +169,7 @@ const MENU_ITEMS = [
     category: "platos-fuertes",
     nameEs: "Arroz con Pollo",
     nameEn: "Chicken Fried Rice",
-    descEs: "Acompañado de papas fritas y ensalada.",
+    descEs: "Con papas fritas y ensalada.",
     descEn: "Chicken Fried Rice with French fries and salad.",
     price: 4000,
     badges: ["popular"]
@@ -192,7 +189,7 @@ const MENU_ITEMS = [
     category: "platos-fuertes",
     nameEs: "Arroz con Carne en Salsa",
     nameEn: "Rice with Stewed Beef",
-    descEs: "Acompañado de ensalada verde de la casa.",
+    descEs: "Acompañado de ensalada verde.",
     descEn: "Rice with stewed beef and green house salad.",
     price: 3500,
     badges: []
@@ -200,14 +197,12 @@ const MENU_ITEMS = [
   {
     id: "pf-casados",
     category: "platos-fuertes",
-    nameEs: "Casado Tradicional",
-    nameEn: "Traditional Costa Rican Casado",
-    descEs: "Arroz, frijoles, guarniciones típicas y proteína a elección.",
+    nameEs: "Casados",
+    nameEn: "Traditional Casado",
+    descEs: "Pollo, Bistec, Carne en Salsa, Pescado o Chuleta.",
     descEn: "With Chicken, Skirt steak, Stewed beef, Fish or Pork Chop.",
     price: 4000,
     badges: ["popular"],
-    optionLabelEs: "Proteína del Casado",
-    optionLabelEn: "Protein choice",
     options: [
       "Pollo (Chicken)",
       "Bistec (Skirt Steak)",
@@ -219,10 +214,10 @@ const MENU_ITEMS = [
   {
     id: "pf-casado-vegetariano",
     category: "platos-fuertes",
-    nameEs: "Casado Vegetariano",
+    nameEs: "Casados Vegetarianos",
     nameEn: "Vegetarian Casado",
-    descEs: "Arroz, frijoles, vegetales salteados, plátano maduro y ensalada.",
-    descEn: "Rice, beans, sautéed vegetables, sweet plantain and salad.",
+    descEs: "Arroz, frijoles, vegetales, plátano maduro y ensalada.",
+    descEn: "Rice, beans, vegetables, sweet plantain and salad.",
     price: 4000,
     badges: ["veg"]
   },
@@ -233,8 +228,8 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Nachos Mixtos",
     nameEn: "Mixed Nachos",
-    descEs: "Nachos crujientes con combinación mixta de carnes, queso y aderezos.",
-    descEn: "Mixed Nachos with beef, chicken, cheese and toppings.",
+    descEs: "Nachos con combinación mixta de carnes, queso y aderezos.",
+    descEn: "Mixed Nachos.",
     price: 4500,
     badges: ["popular"]
   },
@@ -243,12 +238,10 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Nachos de Pollo o Carne",
     nameEn: "Chicken or Beef Nachos",
-    descEs: "Nachos preparados al momento con pollo o carne.",
+    descEs: "Nachos preparados con pollo o carne.",
     descEn: "Chicken or Beef Nachos.",
     price: 4000,
     badges: [],
-    optionLabelEs: "Proteína",
-    optionLabelEn: "Protein",
     options: ["Pollo (Chicken)", "Carne (Beef)"]
   },
   {
@@ -256,12 +249,10 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Papanachos de Pollo o Carne",
     nameEn: "Chicken or Beef Papanachos",
-    descEs: "Base de papas y nachos con queso fundido, aderezos y proteína.",
+    descEs: "Papas y nachos con queso, aderezos y proteína.",
     descEn: "Chicken or Beef Papanachos.",
     price: 5000,
     badges: ["popular"],
-    optionLabelEs: "Proteína",
-    optionLabelEn: "Protein",
     options: ["Pollo (Chicken)", "Carne (Beef)"]
   },
   {
@@ -269,7 +260,7 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Papanachos Mixtos",
     nameEn: "Mixed Papanachos",
-    descEs: "Papanachos especiales con combinación de pollo y carne.",
+    descEs: "Papanachos con combinación de pollo y carne.",
     descEn: "Mixed Papanachos.",
     price: 5500,
     badges: ["popular"]
@@ -278,8 +269,8 @@ const MENU_ITEMS = [
     id: "cr-ceviche-pescado",
     category: "comidas-rapidas",
     nameEs: "Ceviche de Pescado",
-    nameEn: "Fish Ceviche (Regular)",
-    descEs: "Ceviche fresco de pescado marinado al estilo costarricense.",
+    nameEn: "Fish Ceviche",
+    descEs: "Ceviche fresco de pescado.",
     descEn: "Fresh Fish Ceviche.",
     price: 3500,
     badges: ["popular", "seafood"]
@@ -288,8 +279,8 @@ const MENU_ITEMS = [
     id: "cr-ceviche-pequeno",
     category: "comidas-rapidas",
     nameEs: "Ceviche de Pescado Pequeño",
-    nameEn: "Fish Ceviche (Small)",
-    descEs: "Porción personal de ceviche fresco de pescado.",
+    nameEn: "Fish Ceviche (Small size)",
+    descEs: "Porción pequeña de ceviche de pescado.",
     descEn: "Fish Ceviche (Small size).",
     price: 2500,
     badges: ["seafood"]
@@ -299,18 +290,18 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Chifrijo",
     nameEn: "Traditional Chifrijo",
-    descEs: "Arroz, frijoles tiernos, chicharrón, pico de gallo y tortillas tostadas.",
-    descEn: "Fried rice, beans, pork, pico de gallo and toasted tortillas.",
+    descEs: "Arroz, frijoles, pico de gallo y tortillas tostadas.",
+    descEn: "Chifrijo, fried rice, beans, pico de gallo and toast tortilla.",
     price: 4000,
     badges: ["popular"]
   },
   {
     id: "cr-papas-fritas",
     category: "comidas-rapidas",
-    nameEs: "Orden de Papas Fritas",
-    nameEn: "French Fries Order",
-    descEs: "Porción de papas a la francesa doradas al momento.",
-    descEn: "Golden French Fries.",
+    nameEs: "Orden Papas Fritas",
+    nameEn: "French Fries",
+    descEs: "Porción de papas a la francesa.",
+    descEn: "French Fries.",
     price: 2000,
     badges: ["veg"]
   },
@@ -319,7 +310,7 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Orden de Patacones",
     nameEn: "Fried Green Plantains",
-    descEs: "Acompañados de frijoles molidos y pico de gallo fresco.",
+    descEs: "Acompañado de frijoles molidos y pico de gallo.",
     descEn: "Fried green plantains with refried beans and pico de gallo.",
     price: 3000,
     badges: ["popular", "veg"]
@@ -328,9 +319,9 @@ const MENU_ITEMS = [
     id: "cr-yuca-frita",
     category: "comidas-rapidas",
     nameEs: "Orden de Yuca Frita",
-    nameEn: "Fried Yucca Order",
-    descEs: "Porción de yuca frita crujiente.",
-    descEn: "Crispy Fried Yucca.",
+    nameEn: "Fried Yucca",
+    descEs: "Porción de yuca frita dorada al momento.",
+    descEn: "Fried Yucca.",
     price: 2000,
     badges: ["veg"]
   },
@@ -339,8 +330,8 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Chicharrones",
     nameEn: "Pork Rinds with Yucca & Pico de Gallo",
-    descEs: "Servidos con yuca frita y pico de gallo.",
-    descEn: "Pork rinds served with fried yucca and pico de gallo.",
+    descEs: "Yuca y pico de gallo.",
+    descEn: "Pork rinds with yucca and pico de gallo.",
     price: 4000,
     badges: ["popular"]
   },
@@ -348,13 +339,11 @@ const MENU_ITEMS = [
     id: "cr-emparedados",
     category: "comidas-rapidas",
     nameEs: "Emparedados",
-    nameEn: "Artisan Sandwiches",
-    descEs: "Preparados en pan tostado con pollo, carne o jamón y queso.",
+    nameEn: "Sandwiches",
+    descEs: "Pollo, Carne o Jamón y Queso.",
     descEn: "Sandwich (chicken, beef or ham and cheese).",
     price: 2000,
     badges: [],
-    optionLabelEs: "Variedad",
-    optionLabelEn: "Variety",
     options: [
       "Pollo (Chicken)",
       "Carne (Beef)",
@@ -365,8 +354,8 @@ const MENU_ITEMS = [
     id: "cr-hamburguesa-sencilla",
     category: "comidas-rapidas",
     nameEs: "Hamburguesa Sencilla",
-    nameEn: "Classic Hamburger",
-    descEs: "Hamburguesa artesanal con torta de carne, queso y vegetales.",
+    nameEn: "Simple Hamburger",
+    descEs: "Hamburguesa tradicional con torta de carne y vegetales.",
     descEn: "Simple Hamburger.",
     price: 2500,
     badges: []
@@ -376,7 +365,7 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Hamburguesa con Papas",
     nameEn: "Hamburger with French Fries",
-    descEs: "Hamburguesa de la casa acompañada de papas fritas.",
+    descEs: "Hamburguesa acompañada de papas fritas.",
     descEn: "Hamburger with French fries.",
     price: 3000,
     badges: ["popular"]
@@ -386,7 +375,7 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Taco Sencillo",
     nameEn: "Simple Taco",
-    descEs: "Taco tico crujiente con carne, repollo y salsas.",
+    descEs: "Taco crujiente con carne y repollo.",
     descEn: "Simple Taco.",
     price: 2000,
     badges: []
@@ -396,7 +385,7 @@ const MENU_ITEMS = [
     category: "comidas-rapidas",
     nameEs: "Taco con Papas",
     nameEn: "Taco with French Fries",
-    descEs: "Taco tradicional acompañado de papas fritas.",
+    descEs: "Taco acompañado de papas fritas.",
     descEn: "Taco with French fries.",
     price: 2500,
     badges: []
@@ -405,9 +394,9 @@ const MENU_ITEMS = [
     id: "cr-torta-carne",
     category: "comidas-rapidas",
     nameEs: "Torta de Carne",
-    nameEn: "Seasoned Beef Patty",
-    descEs: "Torta de carne sazonada al estilo casero.",
-    descEn: "Homemade seasoned beef patty.",
+    nameEn: "Beef Patty",
+    descEs: "Torta de carne al estilo casero.",
+    descEn: "Beef patty.",
     price: 2000,
     badges: []
   },
@@ -415,8 +404,8 @@ const MENU_ITEMS = [
     id: "cr-salchipapas",
     category: "comidas-rapidas",
     nameEs: "Salchipapas",
-    nameEn: "Sausage & Fries",
-    descEs: "Papas fritas con salchicha dorada y aderezos.",
+    nameEn: "Sausage and Fries",
+    descEs: "Papas fritas con salchicha.",
     descEn: "Sausage and Fries.",
     price: 2500,
     badges: []
@@ -425,8 +414,8 @@ const MENU_ITEMS = [
     id: "cr-gallo-salchichon",
     category: "comidas-rapidas",
     nameEs: "Gallo de Salchichón",
-    nameEn: "Sausage Tortilla Gallo",
-    descEs: "Salchichón criollo servido en tortilla caliente.",
+    nameEn: "Sausage with Tortilla",
+    descEs: "Salchichón servido con tortilla.",
     descEn: "Sausage with tortilla.",
     price: 2000,
     badges: []
@@ -435,8 +424,8 @@ const MENU_ITEMS = [
     id: "cr-gallo-queso",
     category: "comidas-rapidas",
     nameEs: "Gallo de Queso",
-    nameEn: "Fried Cheese Tortilla Gallo",
-    descEs: "Queso dorado a la plancha en tortilla casera.",
+    nameEn: "Cheese with Tortilla",
+    descEs: "Queso servido con tortilla.",
     descEn: "Cheese with tortilla.",
     price: 1500,
     badges: ["veg"]
@@ -445,8 +434,8 @@ const MENU_ITEMS = [
     id: "cr-gallo-pescado",
     category: "comidas-rapidas",
     nameEs: "Gallo de Pescado",
-    nameEn: "Fish Tortilla Gallo",
-    descEs: "Filet de pescado servido en tortilla.",
+    nameEn: "Fish with Tortilla",
+    descEs: "Pescado servido con tortilla.",
     descEn: "Fish with tortilla.",
     price: 2500,
     badges: ["seafood"]
@@ -455,8 +444,8 @@ const MENU_ITEMS = [
     id: "cr-prensadas",
     category: "comidas-rapidas",
     nameEs: "Prensadas",
-    nameEn: "Cheese Crisp Tortilla",
-    descEs: "Tortillas prensadas a la plancha con queso fundido.",
+    nameEn: "Cheese Crisp",
+    descEs: "Tortillas prensadas con queso.",
     descEn: "Cheese crisp.",
     price: 1000,
     badges: ["veg"]
@@ -465,8 +454,8 @@ const MENU_ITEMS = [
     id: "cr-platano-natilla",
     category: "comidas-rapidas",
     nameEs: "Plátano con Natilla",
-    nameEn: "Sweet Plantains with Sour Cream",
-    descEs: "Plátano maduro dorado acompañado de natilla.",
+    nameEn: "Plantains with Sour Cream",
+    descEs: "Plátano maduro con natilla.",
     descEn: "Plantains with sour cream.",
     price: 2000,
     badges: ["veg"]
@@ -478,8 +467,8 @@ const MENU_ITEMS = [
     category: "sopas",
     nameEs: "Sopa Ranchera",
     nameEn: "Ranchero Soup",
-    descEs: "Sopa casera caliente con pollo, vegetales y especias.",
-    descEn: "Homemade hot Ranchero Soup.",
+    descEs: "Sopa tradicional estilo ranchero.",
+    descEn: "Ranchero Soup.",
     price: 3500,
     badges: ["popular"]
   },
@@ -488,8 +477,8 @@ const MENU_ITEMS = [
     category: "sopas",
     nameEs: "Sopa de Mariscos",
     nameEn: "Seafood Soup",
-    descEs: "Sopa de mariscos frescos preparada al momento.",
-    descEn: "Fresh Seafood Soup.",
+    descEs: "Sopa de mariscos frescos.",
+    descEn: "Seafood Soup.",
     price: 5000,
     badges: ["popular", "seafood"]
   },
@@ -499,19 +488,17 @@ const MENU_ITEMS = [
     id: "bf-batidos-leche",
     category: "bebidas-frias",
     nameEs: "Batidos en Leche",
-    nameEn: "Fruit Milkshakes",
-    descEs: "Batido cremoso preparado en leche con fruta seleccionada.",
+    nameEn: "Milkshakes",
+    descEs: "Sabores: Fresa, Cacomal, Crema, Papaya o Mora.",
     descEn: "Milkshakes: Strawberry, Cacomal, Cream, Papaya, Blackberry.",
     price: 2000,
     badges: ["popular"],
-    optionLabelEs: "Sabor",
-    optionLabelEn: "Flavor",
     options: [
-      "Fresa (Strawberry)",
+      "Fresa",
       "Cacomal",
-      "Crema (Cream)",
+      "Crema",
       "Papaya",
-      "Mora (Blackberry)"
+      "Mora"
     ]
   },
   {
@@ -519,8 +506,8 @@ const MENU_ITEMS = [
     category: "bebidas-frias",
     nameEs: "Refrescos Naturales",
     nameEn: "Natural Fruit Juice",
-    descEs: "Fresco natural de fruta del día.",
-    descEn: "Natural fruit juice of the day.",
+    descEs: "Refresco natural del día.",
+    descEn: "Natural fruit juice.",
     price: 1000,
     badges: ["popular"]
   },
@@ -528,8 +515,8 @@ const MENU_ITEMS = [
     id: "bf-gaseosa-desechable",
     category: "bebidas-frias",
     nameEs: "Gaseosa Desechable",
-    nameEn: "Soft Drink (600ml Bottle)",
-    descEs: "Refresco gaseoso en envase desechable.",
+    nameEn: "Soft Drinks (Plastic Bottle)",
+    descEs: "Gaseosa en botella plástica.",
     descEn: "Soft drinks (Plastic bottle).",
     price: 1400,
     badges: []
@@ -537,9 +524,9 @@ const MENU_ITEMS = [
   {
     id: "bf-gaseosa-vidrio",
     category: "bebidas-frias",
-    nameEs: "Gaseosa de Vidrio",
-    nameEn: "Soft Drink (Glass Bottle)",
-    descEs: "Refresco gaseoso en botella de vidrio.",
+    nameEs: "Gaseosas de Vidrio",
+    nameEn: "Soft Drinks (Glass Bottle)",
+    descEs: "Gaseosa en botella de vidrio.",
     descEn: "Soft drinks (Glass bottle).",
     price: 1200,
     badges: []
@@ -547,9 +534,9 @@ const MENU_ITEMS = [
   {
     id: "bf-tropicales",
     category: "bebidas-frias",
-    nameEs: "Tropicales (Vidrio)",
-    nameEn: "Tropical Bottled Juice",
-    descEs: "Fresco o té frío Tropical en botella de vidrio.",
+    nameEs: "Tropicales",
+    nameEn: "Bottled Juice",
+    descEs: "Refresco embotellado.",
     descEn: "Bottled juice.",
     price: 1200,
     badges: []
@@ -558,27 +545,25 @@ const MENU_ITEMS = [
     id: "bf-tropicales-desechables",
     category: "bebidas-frias",
     nameEs: "Tropicales Desechables",
-    nameEn: "Tropical Disposable Bottle",
-    descEs: "Fresco o té frío Tropical en botella desechable.",
-    descEn: "Bottled juice (Plastic bottle).",
+    nameEn: "Bottled Juice (Plastic)",
+    descEs: "Refresco embotellado desechable.",
+    descEn: "Bottled juice.",
     price: 1400,
     badges: []
   },
   {
     id: "bf-cerveza",
     category: "bebidas-frias",
-    nameEs: "Cerveza Nacional",
-    nameEn: "National Beer",
-    descEs: "Cervezas frías (consultar disponibilidad en restaurante).",
-    descEn: "Cold national beers (inquire for brands).",
+    nameEs: "Cerveza",
+    nameEn: "Beer",
+    descEs: "Consultar marcas y disponibilidad en el restaurante.",
+    descEn: "Inquire for available brands.",
     price: 1500,
     badges: [],
-    optionLabelEs: "Preferencia",
-    optionLabelEn: "Preference",
     options: [
       "Imperial",
       "Rock Limón",
-      "Pilsen / Otra"
+      "Otra (Consultar)"
     ]
   },
 
@@ -588,8 +573,8 @@ const MENU_ITEMS = [
     category: "bebidas-calientes",
     nameEs: "Café Negro",
     nameEn: "Black Coffee",
-    descEs: "Café chorreado costarricense recién preparado.",
-    descEn: "Fresh Costa Rican Black Coffee.",
+    descEs: "Café negro recién hecho.",
+    descEn: "Black Coffee.",
     price: 800,
     badges: ["popular"]
   },
@@ -597,19 +582,19 @@ const MENU_ITEMS = [
     id: "bc-cafe-leche",
     category: "bebidas-calientes",
     nameEs: "Café con Leche",
-    nameEn: "Coffee with Milk",
-    descEs: "Café caliente acompañado con leche.",
-    descEn: "Coffee with milk.",
+    nameEn: "Coffee with Cream",
+    descEs: "Café caliente con leche.",
+    descEn: "Coffee with cream.",
     price: 800,
     badges: ["popular"]
   },
   {
     id: "bc-chocolate",
     category: "bebidas-calientes",
-    nameEs: "Chocolate Caliente",
+    nameEs: "Chocolate",
     nameEn: "Hot Chocolate",
-    descEs: "Chocolate caliente cremoso.",
-    descEn: "Creamy Hot Chocolate.",
+    descEs: "Chocolate caliente.",
+    descEn: "Hot Chocolate.",
     price: 1200,
     badges: []
   },
@@ -618,8 +603,8 @@ const MENU_ITEMS = [
     category: "bebidas-calientes",
     nameEs: "Agua Dulce",
     nameEn: "Sugar Cane Tea",
-    descEs: "Infusión tradicional caliente de tapa de dulce.",
-    descEn: "Traditional sugar cane tea.",
+    descEs: "Agua dulce caliente tradicional.",
+    descEn: "Sugar cane tea.",
     price: 800,
     badges: []
   },
@@ -628,7 +613,7 @@ const MENU_ITEMS = [
     category: "bebidas-calientes",
     nameEs: "Agua Dulce con Leche",
     nameEn: "Sugar Cane Tea with Milk",
-    descEs: "Tradicional agua dulce preparada con leche caliente.",
+    descEs: "Agua dulce preparada con leche.",
     descEn: "Sugar cane tea with milk.",
     price: 1200,
     badges: ["popular"]
@@ -637,65 +622,41 @@ const MENU_ITEMS = [
     id: "bc-te-agua",
     category: "bebidas-calientes",
     nameEs: "Té en Agua",
-    nameEn: "Hot Tea",
-    descEs: "Infusión de té caliente.",
-    descEn: "Hot Tea.",
+    nameEn: "Tea",
+    descEs: "Té caliente en agua.",
+    descEn: "Tea.",
     price: 800,
     badges: []
   }
 ];
 
 /* --------------------------------------------------------------------------
-   2. HOSPEDAJE GALLERY SLIDES
+   2. HOSPEDAJE GALLERY SLIDES (ONLY THE 3 REAL PHOTOS PROVIDED BY THE USER)
    -------------------------------------------------------------------------- */
 const LODGING_SLIDES = [
   {
     src: "assets/images/hospedaje-cabana-exterior.jpg",
-    badgeEs: "Arquitectura & Entorno",
-    badgeEn: "Architecture & Surroundings",
-    titleEs: "Cabaña Independiente en Madera",
-    titleEn: "Private Wooden Cabin",
-    descEs: "Rodeada de jardines tropicales y árboles centenarios, diseñada para brindar privacidad y descanso absoluto."
+    badgeEs: "Exterior",
+    badgeEn: "Exterior",
+    titleEs: "Cabaña en Madera Rodeada de Naturaleza",
+    titleEn: "Wooden Cabin Surrounded by Nature",
+    descEs: "Vista exterior de la cabaña rodeada de jardines tropicales y árboles en La Finca."
   },
   {
     src: "assets/images/hospedaje-principal-clean.jpg",
-    badgeEs: "Espacio Interior",
-    badgeEn: "Interior Space",
-    titleEs: "Estudio Equipado de Concepto Abierto",
-    titleEn: "Open-Concept Equipped Studio",
-    descEs: "Integra área de descanso matrimonial, comedor en madera para cuatro personas, cocina completa y terraza hacia el bosque."
+    badgeEs: "Interior Equipado",
+    badgeEn: "Equipped Interior",
+    titleEs: "Habitación, Comedor y Cocina Equipada",
+    titleEn: "Bedroom, Dining & Equipped Kitchen",
+    descEs: "Interior amplio con cama matrimonial, comedor para 4 personas, refrigeradora, microondas y salida al balcón."
   },
   {
     src: "assets/images/hospedaje-bosque-natural.jpg",
-    badgeEs: "Reserva Natural",
-    badgeEn: "Natural Reserve",
-    titleEs: "Inmersión en el Bosque Tropical",
-    titleEn: "Tropical Rainforest Immersion",
-    descEs: "Despierta rodeado de vegetación primaria, aire puro de montaña y avistamiento de aves locales."
-  },
-  {
-    src: "assets/images/hospedaje-cocina-comedor.png",
-    badgeEs: "Equipamiento Completo",
-    badgeEn: "Full Equipment",
-    titleEs: "Cocina Privada & Comedor",
-    titleEn: "Private Kitchen & Dining",
-    descEs: "Refrigeradora de acero inoxidable, microondas, fregadero, menaje completo y mesa de comedor junto a los ventanales."
-  },
-  {
-    src: "assets/images/hospedaje-area-descanso.png",
-    badgeEs: "Confort & Descanso",
-    badgeEn: "Comfort & Rest",
-    titleEs: "Habitación con Salida al Balcón",
-    titleEn: "Bedroom with Balcony Access",
-    descEs: "Cama matrimonial con ropa de cama de calidad, paños incluidos y conexión directa con la terraza exterior."
-  },
-  {
-    src: "assets/images/hospedaje-vista-bosque.png",
-    badgeEs: "Luz Natural",
-    badgeEn: "Natural Light",
-    titleEs: "Ventanales y Terraza al Bosque",
-    titleEn: "Forest Windows & Terrace",
-    descEs: "Iluminación natural y ventilación cruzada a pocos pasos del restaurante de La Finca."
+    badgeEs: "Entorno Natural",
+    badgeEn: "Natural Surroundings",
+    titleEs: "Bosque Tropical en La Finca",
+    titleEn: "Tropical Forest at La Finca",
+    descEs: "Vegetación natural que rodea el hospedaje brindando frescura y tranquilidad."
   }
 ];
 
@@ -703,11 +664,11 @@ const LODGING_SLIDES = [
    3. APPLICATION STATE
    -------------------------------------------------------------------------- */
 const state = {
-  lang: "es",        // 'es' | 'en'
-  currency: "CRC",   // 'CRC' | 'USD'
-  activeCategory: "all",
+  lang: "es",
+  currency: "CRC",
   searchQuery: "",
   dietaryFilter: "all",
+  openCategories: [], // Empty by default so all categories start compactly folded!
   cart: [],
   carouselIndex: 0,
   carouselAutoPlay: true,
@@ -717,9 +678,7 @@ const state = {
 try {
   const savedCart = localStorage.getItem("lafinca_cart_v1");
   if (savedCart) state.cart = JSON.parse(savedCart);
-} catch (err) {
-  console.warn(err);
-}
+} catch (err) {}
 
 function saveCart() {
   try {
@@ -730,8 +689,7 @@ function saveCart() {
 function formatPrice(crcAmount) {
   const val = Number(crcAmount || 0);
   if (state.currency === "USD") {
-    const usd = val / EXCHANGE_RATE_CRC_USD;
-    return "$" + usd.toFixed(2);
+    return "$" + (val / EXCHANGE_RATE_CRC_USD).toFixed(2);
   }
   return "₡" + val.toLocaleString("es-CR");
 }
@@ -741,45 +699,51 @@ function formatColonesExact(crcAmount) {
 }
 
 /* --------------------------------------------------------------------------
-   4. RENDER DIGITAL MENU
+   4. COLLAPSIBLE DIGITAL MENU (ACORDEONES POR CATEGORÍA)
    -------------------------------------------------------------------------- */
-function renderCategoryPills() {
-  const container = document.getElementById("categoryPillsContainer");
-  if (!container) return;
-
-  container.innerHTML = MENU_CATEGORIES.map(cat => {
-    const count = cat.id === "all"
-      ? MENU_ITEMS.length
-      : MENU_ITEMS.filter(item => item.category === cat.id).length;
-
-    const activeClass = state.activeCategory === cat.id ? "active" : "";
-    const label = state.lang === "es" ? cat.nameEs : cat.nameEn;
-
-    return `
-      <button type="button" class="cat-pill ${activeClass}" data-cat="${cat.id}">
-        <span>${label}</span>
-        <span class="count">${count}</span>
-      </button>
-    `;
-  }).join("");
-
-  container.querySelectorAll(".cat-pill").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.activeCategory = btn.getAttribute("data-cat");
-      renderCategoryPills();
-      renderMenuGrid();
-    });
-  });
+function toggleCategoryAccordion(catId) {
+  const idx = state.openCategories.indexOf(catId);
+  if (idx >= 0) {
+    state.openCategories.splice(idx, 1);
+  } else {
+    state.openCategories.push(catId);
+  }
+  renderMenuGrid();
+  updateExpandAllBtnLabel();
 }
+
+function toggleAllCategories() {
+  if (state.openCategories.length === MENU_CATEGORIES.length) {
+    state.openCategories = [];
+  } else {
+    state.openCategories = MENU_CATEGORIES.map(c => c.id);
+  }
+  renderMenuGrid();
+  updateExpandAllBtnLabel();
+}
+
+function updateExpandAllBtnLabel() {
+  const btn = document.getElementById("expandAllMenuBtn");
+  if (!btn) return;
+  const allOpen = state.openCategories.length === MENU_CATEGORIES.length;
+  if (state.lang === "es") {
+    btn.textContent = allOpen ? "Contraer todas" : "Desplegar todas";
+  } else {
+    btn.textContent = allOpen ? "Collapse all" : "Expand all";
+  }
+}
+
+window.toggleCategoryAccordion = toggleCategoryAccordion;
+window.toggleAllCategories = toggleAllCategories;
 
 function renderMenuGrid() {
   const container = document.getElementById("menuContainer");
   if (!container) return;
 
   const q = state.searchQuery.trim().toLowerCase();
+  const isFiltering = q.length > 0 || state.dietaryFilter !== "all";
 
   const filtered = MENU_ITEMS.filter(item => {
-    const matchesCat = state.activeCategory === "all" || item.category === state.activeCategory;
     const matchesDiet = state.dietaryFilter === "all" || (item.badges && item.badges.includes(state.dietaryFilter));
     const matchesSearch = !q ||
       item.nameEs.toLowerCase().includes(q) ||
@@ -787,104 +751,122 @@ function renderMenuGrid() {
       item.descEs.toLowerCase().includes(q) ||
       item.descEn.toLowerCase().includes(q);
 
-    return matchesCat && matchesDiet && matchesSearch;
+    return matchesDiet && matchesSearch;
   });
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div style="text-align:center; padding: 4rem 1.5rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-        <h3 style="font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; margin-bottom: 0.4rem;">
-          ${state.lang === "es" ? "Sin resultados para tu búsqueda" : "No matching dishes found"}
+      <div style="text-align:center; padding: 2.5rem 1.25rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+        <h3 style="font-family: var(--font-serif); font-size: 1.45rem; font-weight: 500; margin-bottom: 0.35rem;">
+          ${state.lang === "es" ? "No se encontraron platillos" : "No dishes found"}
         </h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-          ${state.lang === "es" ? "Intenta con otro término o restablece los filtros del menú." : "Try another keyword or reset the menu filters."}
+        <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 1.15rem;">
+          ${state.lang === "es" ? "Prueba con otra búsqueda o restablece los filtros." : "Try another keyword or reset filters."}
         </p>
         <button type="button" class="btn btn-outline" onclick="resetMenuFilters()">
-          ${state.lang === "es" ? "Restablecer Menú" : "Reset Filters"}
+          ${state.lang === "es" ? "Restablecer filtros" : "Reset filters"}
         </button>
       </div>
     `;
     return;
   }
 
-  const categoriesToRender = state.activeCategory === "all"
-    ? MENU_CATEGORIES.filter(c => c.id !== "all")
-    : MENU_CATEGORIES.filter(c => c.id === state.activeCategory);
+  let html = `<div class="menu-accordions-stack">`;
 
-  let html = "";
-
-  categoriesToRender.forEach(cat => {
+  MENU_CATEGORIES.forEach(cat => {
     const catItems = filtered.filter(i => i.category === cat.id);
     if (catItems.length === 0) return;
 
     const catTitle = state.lang === "es" ? cat.nameEs : cat.nameEn;
     const catSub = state.lang === "es" ? cat.nameEn : cat.nameEs;
 
+    // Calculate price range for category header
+    const prices = catItems.map(i => i.price);
+    const minP = Math.min(...prices);
+    const maxP = Math.max(...prices);
+    const priceRangeText = minP === maxP
+      ? formatPrice(minP)
+      : `${formatPrice(minP)} – ${formatPrice(maxP)}`;
+
+    // Open if user clicked it OR if user is actively searching/filtering
+    const isOpen = isFiltering || state.openCategories.includes(cat.id);
+    const openClass = isOpen ? "open" : "";
+    const toggleWord = isOpen
+      ? (state.lang === "es" ? "Ocultar" : "Hide")
+      : (state.lang === "es" ? "Desplegar" : "Expand");
+
     html += `
-      <div class="menu-category-group">
-        <div class="menu-category-header">
-          <h3 class="menu-category-title">${catTitle}</h3>
-          <span class="menu-category-subtitle">${catSub} — ${catItems.length}</span>
-        </div>
-        <div class="menu-grid">
-          ${catItems.map(item => renderMenuCardHTML(item)).join("")}
+      <div class="menu-accordion ${openClass}" data-accordion-cat="${cat.id}">
+        <button type="button" class="menu-accordion-header" onclick="toggleCategoryAccordion('${cat.id}')" aria-expanded="${isOpen}">
+          <div class="accordion-title-group">
+            <span class="accordion-cat-title">${catTitle}</span>
+            <span class="accordion-cat-meta">${catSub} • ${catItems.length} ${state.lang === "es" ? "opciones" : "items"}</span>
+          </div>
+          <div class="accordion-right-meta">
+            <span class="accordion-price-range">${priceRangeText}</span>
+            <span class="accordion-toggle-indicator">
+              <span>${toggleWord}</span>
+              <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+        </button>
+
+        <div class="menu-accordion-body">
+          <div class="menu-compact-grid">
+            ${catItems.map(item => renderCompactMenuItemHTML(item)).join("")}
+          </div>
         </div>
       </div>
     `;
   });
 
+  html += `</div>`;
   container.innerHTML = html;
   attachMenuCardListeners(container);
+  updateExpandAllBtnLabel();
 }
 
-function renderMenuCardHTML(item) {
+function renderCompactMenuItemHTML(item) {
   const title = state.lang === "es" ? item.nameEs : item.nameEn;
   const desc = state.lang === "es" ? item.descEs : item.descEn;
-  const subLang = state.lang === "es" ? item.nameEn : item.nameEs;
 
-  const badgesHTML = (item.badges || []).map(b => {
-    if (b === "popular") return `<span class="item-badge badge-popular">${state.lang === "es" ? "Recomendado" : "Signature"}</span>`;
-    if (b === "seafood") return `<span class="item-badge badge-seafood">${state.lang === "es" ? "Mariscos" : "Seafood"}</span>`;
-    if (b === "veg") return `<span class="item-badge badge-veg">${state.lang === "es" ? "Vegetariano" : "Vegetarian"}</span>`;
+  const badgeHTML = (item.badges || []).map(b => {
+    if (b === "popular") return `<span class="compact-badge badge-popular">${state.lang === "es" ? "Recomendado" : "Popular"}</span>`;
+    if (b === "seafood") return `<span class="compact-badge badge-seafood">${state.lang === "es" ? "Mariscos" : "Seafood"}</span>`;
+    if (b === "veg") return `<span class="compact-badge badge-veg">${state.lang === "es" ? "Vegetariano" : "Veg"}</span>`;
     return "";
   }).join("");
 
   const hasOptions = Array.isArray(item.options) && item.options.length > 0;
-  const optionLabel = state.lang === "es" ? item.optionLabelEs : item.optionLabelEn;
-
-  const optionsHTML = hasOptions ? `
-    <div class="menu-card-options">
-      <label for="opt-${item.id}">${optionLabel}</label>
-      <select id="opt-${item.id}" class="variant-select" data-item-id="${item.id}">
-        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
-      </select>
-    </div>
-  ` : "";
+  const selectHTML = hasOptions ? `
+    <select class="compact-variant-select variant-select" data-item-id="${item.id}" aria-label="Opción para ${title}">
+      ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
+    </select>
+  ` : `<span style="font-size:0.72rem; color:var(--text-muted);">${item.nameEn}</span>`;
 
   return `
-    <article class="menu-card" data-card-id="${item.id}">
-      <div>
-        <div class="menu-card-top">
-          <div class="menu-item-info">
-            ${badgesHTML ? `<div class="menu-item-badges">${badgesHTML}</div>` : ""}
-            <h4 class="menu-item-name">${title}</h4>
-            <p class="menu-item-desc">${desc}</p>
-            <p class="menu-item-en">${subLang}</p>
-          </div>
-          <div class="menu-item-price">${formatPrice(item.price)}</div>
+    <article class="menu-compact-item" data-card-id="${item.id}">
+      <div class="compact-item-main">
+        <div class="compact-item-title-wrap">
+          <h4 class="compact-item-name">${title}</h4>
+          ${badgeHTML}
+          <p class="compact-item-desc">${desc}</p>
         </div>
+        <div class="compact-item-price">${formatPrice(item.price)}</div>
       </div>
 
-      <div>
-        ${optionsHTML}
-        <div class="menu-card-footer" style="${hasOptions ? 'margin-top:0.65rem;' : ''}">
+      <div class="compact-item-actions">
+        ${selectHTML}
+        <div class="compact-controls-right">
           <div class="qty-stepper">
             <button type="button" class="qty-btn dec-btn" aria-label="Disminuir">−</button>
             <span class="qty-val" data-qty-for="${item.id}">1</span>
             <button type="button" class="qty-btn inc-btn" aria-label="Aumentar">+</button>
           </div>
           <button type="button" class="add-to-order-btn" data-add-id="${item.id}">
-            <span>${state.lang === "es" ? "Agregar a la Orden" : "Add to Order"}</span>
+            ${state.lang === "es" ? "+ Agregar" : "+ Add"}
           </button>
         </div>
       </div>
@@ -893,7 +875,7 @@ function renderMenuCardHTML(item) {
 }
 
 function attachMenuCardListeners(container) {
-  container.querySelectorAll(".menu-card").forEach(card => {
+  container.querySelectorAll(".menu-compact-item").forEach(card => {
     const qtySpan = card.querySelector(".qty-val");
     const decBtn = card.querySelector(".dec-btn");
     const incBtn = card.querySelector(".inc-btn");
@@ -917,28 +899,37 @@ function attachMenuCardListeners(container) {
       addToCart(itemId, qty, variant);
       qtySpan.textContent = "1";
 
-      const originalHTML = addBtn.innerHTML;
+      const originalText = addBtn.textContent;
       addBtn.classList.add("added");
-      addBtn.innerHTML = `<span>${state.lang === "es" ? "Agregado" : "Added"}</span>`;
+      addBtn.textContent = state.lang === "es" ? "✓ Listo" : "✓ Added";
       setTimeout(() => {
         addBtn.classList.remove("added");
-        addBtn.innerHTML = originalHTML;
-      }, 900);
+        addBtn.textContent = originalText;
+      }, 850);
     });
   });
 }
 
 window.resetMenuFilters = function () {
-  state.activeCategory = "all";
   state.searchQuery = "";
   state.dietaryFilter = "all";
   const searchInput = document.getElementById("menuSearchInput");
   if (searchInput) searchInput.value = "";
+  const clearBtn = document.getElementById("clearSearchBtn");
+  if (clearBtn) clearBtn.style.display = "none";
   document.querySelectorAll(".diet-filter-btn").forEach(b => {
     b.classList.toggle("active", b.getAttribute("data-diet") === "all");
   });
-  renderCategoryPills();
   renderMenuGrid();
+};
+
+window.openAndScrollToCategory = function (catId) {
+  if (!state.openCategories.includes(catId)) {
+    state.openCategories.push(catId);
+    renderMenuGrid();
+  }
+  const el = document.querySelector(`[data-accordion-cat="${catId}"]`);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
 /* --------------------------------------------------------------------------
@@ -1029,14 +1020,14 @@ function renderDrawerCartItems() {
 
   if (state.cart.length === 0) {
     listEl.innerHTML = `
-      <div style="text-align:center; padding: 3rem 1rem; color: var(--text-muted);">
-        <p style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--text-primary); margin-bottom: 0.35rem;">
+      <div style="text-align:center; padding: 2.5rem 1rem; color: var(--text-muted);">
+        <p style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 0.3rem;">
           ${state.lang === "es" ? "Tu orden está vacía" : "Your order is empty"}
         </p>
-        <p style="font-size: 0.82rem;">
+        <p style="font-size: 0.8rem;">
           ${state.lang === "es"
-            ? "Selecciona platillos y bebidas del menú digital para retirarlos en el restaurante o cotizar."
-            : "Select dishes and beverages from the digital menu for pick-up or quote."}
+            ? "Despliega las categorías del menú digital para agregar tus platillos."
+            : "Expand the digital menu categories to add dishes."}
         </p>
       </div>
     `;
@@ -1069,7 +1060,7 @@ window.updateCartItemQty = updateCartItemQty;
 window.clearCart = clearCart;
 
 /* --------------------------------------------------------------------------
-   6. HOSPEDAJE GALLERY CAROUSEL
+   6. HOSPEDAJE GALLERY CAROUSEL (3 Real Photos)
    -------------------------------------------------------------------------- */
 function renderCarousel() {
   const stage = document.getElementById("carouselStage");
@@ -1161,7 +1152,6 @@ function initCarouselControls() {
   const nextBtn = document.getElementById("carouselNextBtn");
   const autoPlayBtn = document.getElementById("carouselAutoPlayBtn");
   const zoomBtn = document.getElementById("carouselZoomBtn");
-  const uploadInput = document.getElementById("customPhotosInput");
 
   if (prevBtn) {
     prevBtn.addEventListener("click", () => {
@@ -1193,33 +1183,6 @@ function initCarouselControls() {
     });
   }
 
-  if (uploadInput) {
-    uploadInput.addEventListener("change", (e) => {
-      const files = Array.from(e.target.files || []);
-      if (files.length === 0) return;
-
-      files.forEach((file, i) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          LODGING_SLIDES.push({
-            src: ev.target.result,
-            badgeEs: "Galería Hospedaje",
-            badgeEn: "Lodging Gallery",
-            titleEs: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ") || `Vista #${LODGING_SLIDES.length + 1}`,
-            titleEn: `View #${LODGING_SLIDES.length + 1}`,
-            descEs: "Fotografía adicional del hospedaje La Finca."
-          });
-          renderCarousel();
-          if (i === files.length - 1) {
-            goToSlide(LODGING_SLIDES.length - 1);
-            showToast("Fotografía incorporada a la galería");
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-  }
-
   renderCarousel();
   startCarouselTimer();
 }
@@ -1245,9 +1208,9 @@ function renderPickupQuoterTable() {
 
   if (state.cart.length === 0) {
     container.innerHTML = `
-      <div style="padding: 1.5rem; text-align: center; color: var(--text-muted); background: var(--bg-primary); border-radius: var(--radius-xs); border: 1px solid var(--border-subtle);">
-        No hay platillos seleccionados actualmente.
-        <a href="#menu-digital" style="color: var(--text-primary); font-weight: 600; text-decoration: underline; margin-left: 0.35rem;">Seleccionar del Menú</a>
+      <div style="padding: 1.25rem; text-align: center; color: var(--text-muted); background: var(--bg-primary); border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); font-size: 0.84rem;">
+        No hay platillos seleccionados.
+        <a href="#menu-digital" style="color: var(--text-primary); font-weight: 600; text-decoration: underline; margin-left: 0.35rem;">Ir al Menú Digital</a>
       </div>
     `;
     return;
@@ -1257,9 +1220,9 @@ function renderPickupQuoterTable() {
     <div class="quote-line">
       <div>
         <strong>${item.qty}x ${item.nameEs}</strong>
-        ${item.variant ? `<span style="font-size:0.78rem; color:var(--text-muted);"> (${item.variant})</span>` : ""}
+        ${item.variant ? `<span style="font-size:0.76rem; color:var(--text-muted);"> (${item.variant})</span>` : ""}
       </div>
-      <div style="display:flex; align-items:center; gap:0.75rem;">
+      <div style="display:flex; align-items:center; gap:0.65rem;">
         <span>${formatPrice(item.price * item.qty)}</span>
         <button type="button" onclick="updateCartItemQty('${item.cartKey.replace(/'/g, "\\'")}', -1)" style="color:var(--text-muted); font-weight:600;" title="Disminuir">−</button>
         <button type="button" onclick="updateCartItemQty('${item.cartKey.replace(/'/g, "\\'")}', 1)" style="color:var(--text-primary); font-weight:600;" title="Aumentar">+</button>
@@ -1317,7 +1280,7 @@ function calculateLodgingQuote() {
   if (nightsBadge) nightsBadge.textContent = `${nights} ${nights === 1 ? "noche" : "noches"}`;
   if (guestsBadge) guestsBadge.textContent = `${guests} ${guests === 1 ? "huésped" : "huéspedes"}`;
   if (planBadge) planBadge.textContent = mealLabel;
-  if (mealCostEl) mealCostEl.textContent = mealTotal > 0 ? formatPrice(mealTotal) : "Incluido según selección";
+  if (mealCostEl) mealCostEl.textContent = mealTotal > 0 ? formatPrice(mealTotal) : "Según selección";
   if (cartCostEl) cartCostEl.textContent = formatPrice(foodOrderAddon);
   if (totalFoodEl) {
     totalFoodEl.textContent = estimatedFoodTotal > 0
@@ -1341,7 +1304,7 @@ function calculateLodgingQuote() {
 function copySinpeNumber() {
   if (navigator.clipboard) {
     navigator.clipboard.writeText("85857454");
-    showToast("Número SINPE Móvil 8585-7454 copiado al portapapeles");
+    showToast("Número SINPE Móvil 8585-7454 copiado");
   }
 }
 
@@ -1487,7 +1450,7 @@ function showToast(text) {
     toast.style.opacity = "0";
     toast.style.transition = "opacity 0.25s ease";
     setTimeout(() => toast.remove(), 260);
-  }, 2600);
+  }, 2400);
 }
 
 window.toggleOrderDrawer = toggleOrderDrawer;
@@ -1497,7 +1460,7 @@ window.openLightboxModal = openLightboxModal;
 window.closeLightboxModal = closeLightboxModal;
 
 /* --------------------------------------------------------------------------
-   9. INITIALIZATION & SCROLL REVEAL
+   9. INITIALIZATION
    -------------------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const checkInEl = document.getElementById("lodgeCheckIn");
@@ -1516,7 +1479,6 @@ document.addEventListener("DOMContentLoaded", () => {
     checkOutEl.min = fmt(tomorrow);
   }
 
-  renderCategoryPills();
   renderMenuGrid();
   initCarouselControls();
   updateCartUI();
@@ -1554,14 +1516,13 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       state.lang = btn.getAttribute("data-lang");
       document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b === btn));
-      renderCategoryPills();
       renderMenuGrid();
       renderCarousel();
       updateCartUI();
     });
   });
 
-  // Currency Switcher (CRC / USD)
+  // Currency Switcher
   document.querySelectorAll(".curr-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       state.currency = btn.getAttribute("data-curr");
@@ -1571,7 +1532,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Hero Visual Switcher
+  // Hero Visual Switcher (Using ONLY the 3 real photos provided by the user)
   document.querySelectorAll(".showcase-tab").forEach(tab => {
     tab.addEventListener("click", () => {
       document.querySelectorAll(".showcase-tab").forEach(t => t.classList.remove("active"));
@@ -1583,20 +1544,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (mode === "hospedaje") {
         img.src = "assets/images/hospedaje-cabana-exterior.jpg";
-        title.textContent = "Cabaña Independiente en Madera";
-        sub.textContent = "Privacidad, jardines tropicales y entorno de bosque primario.";
+        title.textContent = "Cabaña en Madera Rodeada de Naturaleza";
+        sub.textContent = "Privacidad, jardines tropicales y árboles en La Finca.";
       } else if (mode === "interior") {
         img.src = "assets/images/hospedaje-principal-clean.jpg";
-        title.textContent = "Estudio Equipado: Cocina, Comedor y Descanso";
-        sub.textContent = "Refrigeradora, microondas, comedor para cuatro personas y terraza.";
-      } else if (mode === "platillos") {
-        img.src = "assets/images/plato-tilapia.jpg";
-        title.textContent = "Cocina Costarricense & Mariscos";
-        sub.textContent = "Platillos preparados al momento para disfrutar en el local o retirar.";
+        title.textContent = "Habitación, Comedor y Cocina Equipada";
+        sub.textContent = "Refrigeradora, microondas, comedor para 4 personas y salida al balcón.";
       } else {
         img.src = "assets/images/hospedaje-bosque-natural.jpg";
-        title.textContent = "Entorno Natural en La Finca";
-        sub.textContent = "Naturaleza y tranquilidad en cada rincón de nuestra propiedad.";
+        title.textContent = "Entorno de Bosque Tropical";
+        sub.textContent = "Naturaleza y tranquilidad en toda la propiedad.";
       }
     });
   });
@@ -1638,15 +1595,4 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener("click", () => navLinks.classList.remove("mobile-open"));
     });
   }
-
-  // Smooth Scroll Reveal Observer
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 });
