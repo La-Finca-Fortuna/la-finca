@@ -1,6 +1,6 @@
 /* ==========================================================================
    LA FINCA — GASTRONOMÍA & HOSPEDAJE
-   Collapsible Digital Menu, Real Lodging Gallery, Pick-Up Order & Quoter
+   Complete Bilingual (ES/EN), Dual-Currency (CRC/USD), Collapsible Menu & Quoter
    WhatsApp Oficial: (+506) 8585-7454
    ========================================================================== */
 
@@ -8,7 +8,351 @@ const WHATSAPP_NUMBER = "50685857454";
 const EXCHANGE_RATE_CRC_USD = 515;
 
 /* --------------------------------------------------------------------------
-   1. COMPLETE DIGITAL MENU DATASET (57 Authentic Items from La Finca)
+   1. FULL-PAGE BILINGUAL DICTIONARY (ES / EN)
+   -------------------------------------------------------------------------- */
+const UI_TRANSLATIONS = {
+  es: {
+    "brand.tagline": "Gastronomía & Hospedaje",
+    "nav.home": "Inicio",
+    "nav.menu": "Menú Digital",
+    "nav.lodging": "Hospedaje",
+    "nav.quoter": "Pedidos & Cotizaciones",
+    "nav.location": "Ubicación",
+    "nav.contact": "Contacto",
+    "nav.orderBtn": "Orden",
+
+    "hero.eyebrow": "Restaurante & Estancia Natural",
+    "hero.title": "Cocina tradicional y refugio privado en <em>La Finca</em>",
+    "hero.desc": "Accede a nuestro menú digital desplegable por categorías, realiza tus pedidos para retirar en el restaurante, conoce nuestra cabaña equipada y gestiona tu cotización directamente con nosotros.",
+    "hero.btnMenu": "Ver Menú Digital",
+    "hero.btnLodging": "Conocer el Hospedaje",
+    "hero.btnQuoter": "Cotizar en Línea",
+    "hero.m1Title": "Menú Desplegable",
+    "hero.m1Desc": "Platos fuertes, comidas rápidas, sopas y bebidas organizadas por categoría.",
+    "hero.m2Title": "Retiro en Local",
+    "hero.m2Desc": "Ordena en línea y pasa a retirar recién preparado sin esperas.",
+    "hero.m3Title": "Cabaña Equipada",
+    "hero.m3Desc": "Cocina privada, comedor, habitación matrimonial y bosque natural.",
+    "hero.tabCabin": "Cabaña",
+    "hero.tabInterior": "Interior",
+    "hero.tabForest": "Bosque",
+
+    "menu.eyebrow": "Gastronomía",
+    "menu.title": "Menú Digital Desplegable",
+    "menu.subtitle": "Haz clic en cualquier categoría para desplegar sus platillos y agregarlos a tu pedido para retirar o a tu cotización.",
+    "menu.searchPlaceholder": "Buscar platillo o bebida (al escribir se despliegan las coincidencias)...",
+    "menu.filterAll": "Todos",
+    "menu.filterPopular": "Recomendados",
+    "menu.filterSeafood": "Mariscos",
+    "menu.filterVeg": "Vegetariano",
+    "menu.viewPhysical": "Ver Menú Físico",
+
+    "lodge.eyebrow": "Estancia Privada",
+    "lodge.title": "Hospedaje La Finca",
+    "lodge.subtitle": "Cabaña independiente en madera, totalmente equipada en su interior y rodeada por la tranquilidad del bosque.",
+    "lodge.zoomBtn": "Ampliar",
+    "lodge.specEyebrow": "Comodidades",
+    "lodge.specTitle": "Privacidad, amplitud y equipamiento completo",
+    "lodge.specDesc": "Ideal para parejas, familias o estancias de descanso, con acceso directo a los platillos de nuestro restaurante.",
+    "lodge.am1Title": "Cabaña Independiente",
+    "lodge.am1Desc": "Construcción en madera con corredor y terraza hacia el bosque.",
+    "lodge.am2Title": "Cocina Equipada",
+    "lodge.am2Desc": "Refrigeradora de acero inoxidable, microondas, fregadero y menaje.",
+    "lodge.am3Title": "Área de Descanso",
+    "lodge.am3Desc": "Cama matrimonial vestida con ropa de cama y paños incluidos.",
+    "lodge.am4Title": "Comedor & Restaurante",
+    "lodge.am4Desc": "Mesa para 4 personas y servicio directo del restaurante La Finca.",
+    "lodge.btnQuote": "Cotizar Estadía",
+    "lodge.btnWa": "Consultar por WhatsApp (8585-7454)",
+
+    "quoter.eyebrow": "Gestión en Línea",
+    "quoter.title": "Pedidos para Retirar & Cotizador",
+    "quoter.subtitle": "Envía tu pedido listo para retirar en el restaurante o cotiza tu estadía y alimentación directamente a nuestro WhatsApp.",
+    "quoter.tab1": "Pedidos para Retirar / Cotizar Menú",
+    "quoter.tab2": "Cotizar Hospedaje & Estadía",
+    "quoter.p1Title": "Detalles del Pedido o Cotización",
+    "quoter.p1Desc": "Completa la información para preparar tu orden a tiempo o enviarte una cotización formal.",
+    "quoter.lblName": "Nombre Completo",
+    "quoter.phName": "Nombre y apellido",
+    "quoter.lblPhone": "Teléfono de Contacto",
+    "quoter.lblMode": "Modalidad",
+    "quoter.modePickup": "Pedido para Retirar en el Restaurante",
+    "quoter.modeQuote": "Cotización de Alimentación / Grupo",
+    "quoter.modeTable": "Reserva de Mesa con Pedido Anticipado",
+    "quoter.lblTime": "Hora Estimada de Retiro",
+    "quoter.timeAsap": "Lo antes posible (20 - 30 min)",
+    "quoter.time45": "En 45 minutos",
+    "quoter.time60": "En 1 hora",
+    "quoter.timeCustom": "Hora específica (indicar en notas)",
+    "quoter.lblPayment": "Método de Pago",
+    "quoter.paySinpe": "SINPE Móvil (8585-7454)",
+    "quoter.payCash": "Efectivo al retirar",
+    "quoter.payCard": "Tarjeta en el restaurante",
+    "quoter.lblSplit": "Dividir estimado entre (personas)",
+    "quoter.lblNotes": "Observaciones o Instrucciones Especiales",
+    "quoter.phNotes": "Indicaciones de preparación, hora exacta de retiro o detalles adicionales...",
+    "quoter.btnSendWa": "Enviar por WhatsApp (8585-7454)",
+    "quoter.btnPrint": "Imprimir / PDF",
+    "quoter.sumTitle": "Resumen de la Orden",
+    "quoter.btnClear": "Vaciar selección",
+    "quoter.sumSub": "Platillos seleccionados desde el Menú Digital:",
+    "quoter.lblPerPerson": "Monto estimado por persona",
+    "quoter.lblTotalEst": "Total Estimado",
+    "quoter.sinpeTitle": "Pago por SINPE Móvil",
+    "quoter.btnCopy": "Copiar Número",
+    "quoter.btnAddMore": "Añadir más platillos del menú",
+
+    "quoter.p2Title": "Cotizar Estadía en Hospedaje",
+    "quoter.p2Desc": "Indica las fechas deseadas, cantidad de huéspedes y plan de alimentación para confirmar disponibilidad.",
+    "quoter.lblCheckIn": "Fecha de Entrada (Check-in)",
+    "quoter.lblCheckOut": "Fecha de Salida (Check-out)",
+    "quoter.lblGuests": "Huéspedes",
+    "quoter.g1": "1 Huésped",
+    "quoter.g2": "2 Huéspedes",
+    "quoter.g3": "3 Huéspedes",
+    "quoter.g4": "4 Huéspedes",
+    "quoter.lblMealPlan": "Plan de Alimentación",
+    "quoter.includeCartLbl": "Incluir también los platillos seleccionados en mi orden actual dentro de la cotización",
+    "quoter.lblLodgeNotes": "Comentarios o Requerimientos Especiales",
+    "quoter.phLodgeNotes": "Hora estimada de llegada o consultas adicionales...",
+    "quoter.btnSendLodge": "Solicitar Disponibilidad y Cotización (8585-7454)",
+    "quoter.lodgeSumTitle": "Resumen de Estadía",
+    "quoter.lodgeSumSub": "Detalle de la solicitud para recepción:",
+    "quoter.lblDuration": "Estadía",
+    "quoter.lblCap": "Capacidad seleccionada",
+    "quoter.lblUnit": "Unidad",
+    "quoter.valUnit": "Cabaña Equipada",
+    "quoter.lblRegime": "Régimen",
+    "quoter.lblMealEst": "Alimentación estimada",
+    "quoter.lblCartAddon": "Orden de menú adjunta",
+    "quoter.lblQuoteStatus": "Cotización",
+    "quoter.lodgeFootNote": "Al enviar tu solicitud recibirás atención directa por WhatsApp al (+506) 8585-7454 con la disponibilidad y tarifa vigente para tus fechas.",
+
+    "contact.eyebrow": "Atención & Ubicación",
+    "contact.title": "Contacto Directo",
+    "contact.subtitle": "Comunícate con nosotros al (+506) 8585-7454 o visítanos directamente siguiendo nuestra ubicación oficial en Google Maps y Waze.",
+    "contact.c1Eyebrow": "Consultas Frecuentes",
+    "contact.c1Title": "Atención por WhatsApp",
+    "contact.c1Desc": "Selecciona un motivo de consulta para iniciar la conversación:",
+    "contact.wa1": "Ordenar comida para retirar",
+    "contact.wa2": "Disponibilidad y tarifa de hospedaje",
+    "contact.wa3": "Cotización para grupos o eventos",
+    "contact.wa4": "Consultar horario de atención",
+    "contact.c2Eyebrow": "Servicios",
+    "contact.c2Title": "Gastronomía & Estancia",
+    "contact.c2Desc": "Experiencia integral para visitantes del restaurante y huéspedes:",
+    "contact.s1Title": "Restaurante & Para Llevar",
+    "contact.s1Desc": "Platos fuertes, mariscos, arroces, casados, sopas y comidas rápidas preparadas al momento.",
+    "contact.s2Title": "Hospedaje Privado",
+    "contact.s2Desc": "Cabaña equipada con cocina, refrigeradora, microondas, comedor y terraza.",
+    "contact.s3Title": "Facilidades de Pago",
+    "contact.s3Desc": "Aceptamos SINPE Móvil (8585-7454), efectivo y tarjeta.",
+    "contact.c3Eyebrow": "Línea Oficial",
+    "contact.c3Title": "Reservaciones & Pedidos",
+    "contact.c3Desc": "Atención directa para pedidos de retiro en el restaurante, reservaciones de mesa y estadías en el hospedaje.",
+    "contact.lblPhoneWa": "Teléfono & WhatsApp",
+    "contact.btnWriteWa": "Escribir por WhatsApp",
+    "contact.btnCall": "Llamar al 8585-7454",
+
+    "loc.eyebrow": "Ubicación",
+    "loc.title": "Cómo llegar a La Finca",
+    "loc.desc": "Encuéntranos fácilmente a través de Google Maps o Waze. Contamos con acceso cómodo y espacio de parqueo para clientes del restaurante y huéspedes.",
+    "loc.destLbl": "Destino:",
+    "loc.coordsLbl": "Coordenadas:",
+    "loc.routePhoneLbl": "Contacto en ruta:",
+    "loc.btnMaps": "Abrir en Google Maps",
+    "loc.btnWaze": "Navegar con Waze",
+
+    "footer.desc": "Cocina costarricense, mariscos frescos, comidas rápidas y hospedaje privado rodeado de naturaleza.",
+    "footer.secTitle": "Secciones",
+    "footer.catTitle": "Categorías del Menú",
+    "footer.locTitle": "Ubicación & Orden",
+    "footer.locDesc": "Realiza tu pedido en línea para retirar en el restaurante o consulta disponibilidad de hospedaje.",
+    "footer.rights": "© 2026 La Finca — Restaurante & Hospedaje. Todos los derechos reservados.",
+
+    "drawer.title": "Tu Orden",
+    "drawer.sub": "La Finca — Retiro en Restaurante o Cotización",
+    "drawer.shipTitle": "Datos de Envío (WhatsApp 8585-7454)",
+    "drawer.btnFullQuoter": "Abrir Cotizador Completo",
+    "drawer.btnClear": "Vaciar",
+    "modal.physTitle": "Menú Impreso Original — La Finca",
+    "modal.physSub": "Fotografías de nuestro menú físico en el restaurante.",
+    "modal.close": "Cerrar",
+    "mobile.viewOrder": "Ver Orden"
+  },
+  en: {
+    "brand.tagline": "Gastronomy & Lodging",
+    "nav.home": "Home",
+    "nav.menu": "Digital Menu",
+    "nav.lodging": "Lodging",
+    "nav.quoter": "Orders & Quotes",
+    "nav.location": "Location",
+    "nav.contact": "Contact",
+    "nav.orderBtn": "Order",
+
+    "hero.eyebrow": "Restaurant & Nature Stay",
+    "hero.title": "Traditional cuisine and private retreat at <em>La Finca</em>",
+    "hero.desc": "Browse our collapsible digital menu by category, place pick-up orders for the restaurant, explore our equipped cabin, and request quotes directly with us.",
+    "hero.btnMenu": "View Digital Menu",
+    "hero.btnLodging": "Explore Lodging",
+    "hero.btnQuoter": "Online Quoter",
+    "hero.m1Title": "Collapsible Menu",
+    "hero.m1Desc": "Main dishes, fast food, soups, and beverages organized by category.",
+    "hero.m2Title": "Restaurant Pick-Up",
+    "hero.m2Desc": "Order online and pick up freshly prepared without waiting.",
+    "hero.m3Title": "Equipped Cabin",
+    "hero.m3Desc": "Private kitchen, dining area, queen bedroom, and natural forest.",
+    "hero.tabCabin": "Cabin",
+    "hero.tabInterior": "Interior",
+    "hero.tabForest": "Forest",
+
+    "menu.eyebrow": "Gastronomy",
+    "menu.title": "Collapsible Digital Menu",
+    "menu.subtitle": "Click on any category to expand its dishes and add them to your pick-up order or quote.",
+    "menu.searchPlaceholder": "Search dish or drink (matching categories expand automatically)...",
+    "menu.filterAll": "All",
+    "menu.filterPopular": "Featured",
+    "menu.filterSeafood": "Seafood",
+    "menu.filterVeg": "Vegetarian",
+    "menu.viewPhysical": "Original Menu Photos",
+
+    "lodge.eyebrow": "Private Stay",
+    "lodge.title": "La Finca Lodging",
+    "lodge.subtitle": "Independent wooden cabin, fully equipped inside and surrounded by the tranquility of the rainforest.",
+    "lodge.zoomBtn": "Fullscreen",
+    "lodge.specEyebrow": "Amenities",
+    "lodge.specTitle": "Privacy, space, and full equipment",
+    "lodge.specDesc": "Ideal for couples, families, or relaxing getaways, with direct access to our restaurant dishes.",
+    "lodge.am1Title": "Independent Cabin",
+    "lodge.am1Desc": "Wooden construction with porch and terrace facing the forest.",
+    "lodge.am2Title": "Equipped Kitchen",
+    "lodge.am2Desc": "Stainless steel refrigerator, microwave, sink, and cookware.",
+    "lodge.am3Title": "Sleeping Area",
+    "lodge.am3Desc": "Double bed with fresh linens and towels included.",
+    "lodge.am4Title": "Dining & Restaurant",
+    "lodge.am4Desc": "Table for 4 guests and direct service from La Finca restaurant.",
+    "lodge.btnQuote": "Quote Your Stay",
+    "lodge.btnWa": "Inquire via WhatsApp (8585-7454)",
+
+    "quoter.eyebrow": "Online Management",
+    "quoter.title": "Pick-Up Orders & Quoter",
+    "quoter.subtitle": "Send your order ready for pick-up at the restaurant or quote your stay and meals directly via WhatsApp.",
+    "quoter.tab1": "Pick-Up Orders / Menu Quote",
+    "quoter.tab2": "Quote Lodging & Stay",
+    "quoter.p1Title": "Order or Quote Details",
+    "quoter.p1Desc": "Complete your details so we can prepare your order on time or send you a formal quote.",
+    "quoter.lblName": "Full Name",
+    "quoter.phName": "First and last name",
+    "quoter.lblPhone": "Contact Phone",
+    "quoter.lblMode": "Request Type",
+    "quoter.modePickup": "Pick-Up Order at Restaurant",
+    "quoter.modeQuote": "Food / Group Quote",
+    "quoter.modeTable": "Table Reservation with Pre-Order",
+    "quoter.lblTime": "Estimated Pick-Up Time",
+    "quoter.timeAsap": "As soon as possible (20 - 30 min)",
+    "quoter.time45": "In 45 minutes",
+    "quoter.time60": "In 1 hour",
+    "quoter.timeCustom": "Specific time (indicate in notes)",
+    "quoter.lblPayment": "Payment Method",
+    "quoter.paySinpe": "SINPE Móvil (8585-7454)",
+    "quoter.payCash": "Cash upon pick-up",
+    "quoter.payCard": "Card at the restaurant",
+    "quoter.lblSplit": "Split estimate among (people)",
+    "quoter.lblNotes": "Special Instructions or Notes",
+    "quoter.phNotes": "Preparation notes, exact pick-up time, or additional details...",
+    "quoter.btnSendWa": "Send via WhatsApp (8585-7454)",
+    "quoter.btnPrint": "Print / PDF",
+    "quoter.sumTitle": "Order Summary",
+    "quoter.btnClear": "Clear selection",
+    "quoter.sumSub": "Dishes selected from the Digital Menu:",
+    "quoter.lblPerPerson": "Estimated amount per person",
+    "quoter.lblTotalEst": "Estimated Total",
+    "quoter.sinpeTitle": "SINPE Móvil Payment",
+    "quoter.btnCopy": "Copy Number",
+    "quoter.btnAddMore": "Add more dishes from menu",
+
+    "quoter.p2Title": "Quote Lodging Stay",
+    "quoter.p2Desc": "Select your dates, number of guests, and meal plan to confirm availability.",
+    "quoter.lblCheckIn": "Check-in Date",
+    "quoter.lblCheckOut": "Check-out Date",
+    "quoter.lblGuests": "Guests",
+    "quoter.g1": "1 Guest",
+    "quoter.g2": "2 Guests",
+    "quoter.g3": "3 Guests",
+    "quoter.g4": "4 Guests",
+    "quoter.lblMealPlan": "Meal Plan",
+    "quoter.includeCartLbl": "Also include the dishes currently selected in my order within this quote",
+    "quoter.lblLodgeNotes": "Comments or Special Requests",
+    "quoter.phLodgeNotes": "Estimated arrival time or additional questions...",
+    "quoter.btnSendLodge": "Request Availability & Quote (8585-7454)",
+    "quoter.lodgeSumTitle": "Stay Summary",
+    "quoter.lodgeSumSub": "Request details for reception:",
+    "quoter.lblDuration": "Duration",
+    "quoter.lblCap": "Selected capacity",
+    "quoter.lblUnit": "Unit",
+    "quoter.valUnit": "Equipped Cabin",
+    "quoter.lblRegime": "Meal Plan",
+    "quoter.lblMealEst": "Estimated meals",
+    "quoter.lblCartAddon": "Attached menu order",
+    "quoter.lblQuoteStatus": "Quote Total",
+    "quoter.lodgeFootNote": "Upon sending your request you will receive direct assistance via WhatsApp at (+506) 8585-7454 with availability and rates for your dates.",
+
+    "contact.eyebrow": "Assistance & Location",
+    "contact.title": "Direct Contact",
+    "contact.subtitle": "Reach us at (+506) 8585-7454 or visit us directly following our official location on Google Maps and Waze.",
+    "contact.c1Eyebrow": "Frequent Inquiries",
+    "contact.c1Title": "WhatsApp Concierge",
+    "contact.c1Desc": "Select an inquiry topic to start chatting immediately:",
+    "contact.wa1": "Order food for pick-up",
+    "contact.wa2": "Lodging availability & nightly rate",
+    "contact.wa3": "Quote for groups or family events",
+    "contact.wa4": "Check today's opening hours",
+    "contact.c2Eyebrow": "Services",
+    "contact.c2Title": "Gastronomy & Stay",
+    "contact.c2Desc": "A complete experience for both restaurant visitors and lodging guests:",
+    "contact.s1Title": "Restaurant & Takeout",
+    "contact.s1Desc": "Main dishes, seafood, rice specialties, casados, soups, and fast food cooked to order.",
+    "contact.s2Title": "Private Lodging",
+    "contact.s2Desc": "Equipped cabin with kitchen, refrigerator, microwave, dining table, and terrace.",
+    "contact.s3Title": "Payment Methods",
+    "contact.s3Desc": "We accept SINPE Móvil (8585-7454), cash, and credit/debit cards.",
+    "contact.c3Eyebrow": "Official Line",
+    "contact.c3Title": "Reservations & Orders",
+    "contact.c3Desc": "Direct assistance for restaurant pick-up orders, table reservations, and lodging stays.",
+    "contact.lblPhoneWa": "Phone & WhatsApp",
+    "contact.btnWriteWa": "Chat on WhatsApp",
+    "contact.btnCall": "Call 8585-7454",
+
+    "loc.eyebrow": "Location",
+    "loc.title": "How to get to La Finca",
+    "loc.desc": "Find us easily via Google Maps or Waze. Convenient access and private parking available for restaurant guests and lodging visitors.",
+    "loc.destLbl": "Destination:",
+    "loc.coordsLbl": "Coordinates:",
+    "loc.routePhoneLbl": "On-route contact:",
+    "loc.btnMaps": "Open in Google Maps",
+    "loc.btnWaze": "Navigate with Waze",
+
+    "footer.desc": "Costa Rican cuisine, fresh seafood, casual dining, and private lodging surrounded by nature.",
+    "footer.secTitle": "Sections",
+    "footer.catTitle": "Menu Categories",
+    "footer.locTitle": "Location & Orders",
+    "footer.locDesc": "Place your online order for restaurant pick-up or inquire about lodging availability.",
+    "footer.rights": "© 2026 La Finca — Restaurant & Lodging. All rights reserved.",
+
+    "drawer.title": "Your Order",
+    "drawer.sub": "La Finca — Restaurant Pick-Up or Quote",
+    "drawer.shipTitle": "Dispatch Details (WhatsApp 8585-7454)",
+    "drawer.btnFullQuoter": "Open Full Quoter",
+    "drawer.btnClear": "Clear",
+    "modal.physTitle": "Original Printed Menu — La Finca",
+    "modal.physSub": "Photographs of our physical menu at the restaurant.",
+    "modal.close": "Close",
+    "mobile.viewOrder": "View Order"
+  }
+};
+
+/* --------------------------------------------------------------------------
+   2. COMPLETE DIGITAL MENU DATASET (57 Authentic Items)
    -------------------------------------------------------------------------- */
 const MENU_CATEGORIES = [
   { id: "platos-fuertes", nameEs: "Platos Fuertes", nameEn: "Main Dishes" },
@@ -29,10 +373,8 @@ const MENU_ITEMS = [
     descEn: "French fries and salad or fried yucca with banana ceviche.",
     price: 7500,
     badges: ["popular", "seafood"],
-    options: [
-      "Papas fritas y ensalada",
-      "Yuca frita y ceviche de banano"
-    ]
+    optionsEs: ["Papas fritas y ensalada", "Yuca frita y ceviche de banano"],
+    optionsEn: ["French fries and salad", "Fried yucca and banana ceviche"]
   },
   {
     id: "pf-filet-tilapia-plancha",
@@ -203,13 +545,8 @@ const MENU_ITEMS = [
     descEn: "With Chicken, Skirt steak, Stewed beef, Fish or Pork Chop.",
     price: 4000,
     badges: ["popular"],
-    options: [
-      "Pollo (Chicken)",
-      "Bistec (Skirt Steak)",
-      "Carne en Salsa (Stewed Beef)",
-      "Pescado (Fish)",
-      "Chuleta (Pork Chop)"
-    ]
+    optionsEs: ["Pollo", "Bistec", "Carne en Salsa", "Pescado", "Chuleta"],
+    optionsEn: ["Chicken", "Skirt Steak", "Stewed Beef", "Fish", "Pork Chop"]
   },
   {
     id: "pf-casado-vegetariano",
@@ -229,7 +566,7 @@ const MENU_ITEMS = [
     nameEs: "Nachos Mixtos",
     nameEn: "Mixed Nachos",
     descEs: "Nachos con combinación mixta de carnes, queso y aderezos.",
-    descEn: "Mixed Nachos.",
+    descEn: "Mixed Nachos with beef, chicken, cheese and toppings.",
     price: 4500,
     badges: ["popular"]
   },
@@ -242,7 +579,8 @@ const MENU_ITEMS = [
     descEn: "Chicken or Beef Nachos.",
     price: 4000,
     badges: [],
-    options: ["Pollo (Chicken)", "Carne (Beef)"]
+    optionsEs: ["Pollo", "Carne"],
+    optionsEn: ["Chicken", "Beef"]
   },
   {
     id: "cr-papanachos-pollo-carne",
@@ -250,10 +588,11 @@ const MENU_ITEMS = [
     nameEs: "Papanachos de Pollo o Carne",
     nameEn: "Chicken or Beef Papanachos",
     descEs: "Papas y nachos con queso, aderezos y proteína.",
-    descEn: "Chicken or Beef Papanachos.",
+    descEn: "French fries and nachos topped with cheese and protein.",
     price: 5000,
     badges: ["popular"],
-    options: ["Pollo (Chicken)", "Carne (Beef)"]
+    optionsEs: ["Pollo", "Carne"],
+    optionsEn: ["Chicken", "Beef"]
   },
   {
     id: "cr-papanachos-mixtos",
@@ -261,7 +600,7 @@ const MENU_ITEMS = [
     nameEs: "Papanachos Mixtos",
     nameEn: "Mixed Papanachos",
     descEs: "Papanachos con combinación de pollo y carne.",
-    descEn: "Mixed Papanachos.",
+    descEn: "Mixed chicken and beef Papanachos.",
     price: 5500,
     badges: ["popular"]
   },
@@ -291,7 +630,7 @@ const MENU_ITEMS = [
     nameEs: "Chifrijo",
     nameEn: "Traditional Chifrijo",
     descEs: "Arroz, frijoles, pico de gallo y tortillas tostadas.",
-    descEn: "Chifrijo, fried rice, beans, pico de gallo and toast tortilla.",
+    descEn: "Fried rice, beans, pork, pico de gallo and toast tortilla.",
     price: 4000,
     badges: ["popular"]
   },
@@ -301,7 +640,7 @@ const MENU_ITEMS = [
     nameEs: "Orden Papas Fritas",
     nameEn: "French Fries",
     descEs: "Porción de papas a la francesa.",
-    descEn: "French Fries.",
+    descEn: "Golden French Fries.",
     price: 2000,
     badges: ["veg"]
   },
@@ -321,7 +660,7 @@ const MENU_ITEMS = [
     nameEs: "Orden de Yuca Frita",
     nameEn: "Fried Yucca",
     descEs: "Porción de yuca frita dorada al momento.",
-    descEn: "Fried Yucca.",
+    descEn: "Crispy Fried Yucca.",
     price: 2000,
     badges: ["veg"]
   },
@@ -344,11 +683,8 @@ const MENU_ITEMS = [
     descEn: "Sandwich (chicken, beef or ham and cheese).",
     price: 2000,
     badges: [],
-    options: [
-      "Pollo (Chicken)",
-      "Carne (Beef)",
-      "Jamón y Queso (Ham & Cheese)"
-    ]
+    optionsEs: ["Pollo", "Carne", "Jamón y Queso"],
+    optionsEn: ["Chicken", "Beef", "Ham & Cheese"]
   },
   {
     id: "cr-hamburguesa-sencilla",
@@ -356,7 +692,7 @@ const MENU_ITEMS = [
     nameEs: "Hamburguesa Sencilla",
     nameEn: "Simple Hamburger",
     descEs: "Hamburguesa tradicional con torta de carne y vegetales.",
-    descEn: "Simple Hamburger.",
+    descEn: "Simple Hamburger with beef patty and vegetables.",
     price: 2500,
     badges: []
   },
@@ -376,7 +712,7 @@ const MENU_ITEMS = [
     nameEs: "Taco Sencillo",
     nameEn: "Simple Taco",
     descEs: "Taco crujiente con carne y repollo.",
-    descEn: "Simple Taco.",
+    descEn: "Crispy Taco with beef and cabbage salad.",
     price: 2000,
     badges: []
   },
@@ -396,7 +732,7 @@ const MENU_ITEMS = [
     nameEs: "Torta de Carne",
     nameEn: "Beef Patty",
     descEs: "Torta de carne al estilo casero.",
-    descEn: "Beef patty.",
+    descEn: "Seasoned homemade beef patty.",
     price: 2000,
     badges: []
   },
@@ -446,7 +782,7 @@ const MENU_ITEMS = [
     nameEs: "Prensadas",
     nameEn: "Cheese Crisp",
     descEs: "Tortillas prensadas con queso.",
-    descEn: "Cheese crisp.",
+    descEn: "Grilled tortillas with melted cheese.",
     price: 1000,
     badges: ["veg"]
   },
@@ -456,7 +792,7 @@ const MENU_ITEMS = [
     nameEs: "Plátano con Natilla",
     nameEn: "Plantains with Sour Cream",
     descEs: "Plátano maduro con natilla.",
-    descEn: "Plantains with sour cream.",
+    descEn: "Sweet plantains with sour cream.",
     price: 2000,
     badges: ["veg"]
   },
@@ -468,7 +804,7 @@ const MENU_ITEMS = [
     nameEs: "Sopa Ranchera",
     nameEn: "Ranchero Soup",
     descEs: "Sopa tradicional estilo ranchero.",
-    descEn: "Ranchero Soup.",
+    descEn: "Traditional Ranchero Soup.",
     price: 3500,
     badges: ["popular"]
   },
@@ -478,7 +814,7 @@ const MENU_ITEMS = [
     nameEs: "Sopa de Mariscos",
     nameEn: "Seafood Soup",
     descEs: "Sopa de mariscos frescos.",
-    descEn: "Seafood Soup.",
+    descEn: "Fresh Seafood Soup.",
     price: 5000,
     badges: ["popular", "seafood"]
   },
@@ -490,16 +826,11 @@ const MENU_ITEMS = [
     nameEs: "Batidos en Leche",
     nameEn: "Milkshakes",
     descEs: "Sabores: Fresa, Cacomal, Crema, Papaya o Mora.",
-    descEn: "Milkshakes: Strawberry, Cacomal, Cream, Papaya, Blackberry.",
+    descEn: "Flavors: Strawberry, Cacomal, Cream, Papaya, Blackberry.",
     price: 2000,
     badges: ["popular"],
-    options: [
-      "Fresa",
-      "Cacomal",
-      "Crema",
-      "Papaya",
-      "Mora"
-    ]
+    optionsEs: ["Fresa", "Cacomal", "Crema", "Papaya", "Mora"],
+    optionsEn: ["Strawberry", "Cacomal", "Cream", "Papaya", "Blackberry"]
   },
   {
     id: "bf-refrescos-naturales",
@@ -507,7 +838,7 @@ const MENU_ITEMS = [
     nameEs: "Refrescos Naturales",
     nameEn: "Natural Fruit Juice",
     descEs: "Refresco natural del día.",
-    descEn: "Natural fruit juice.",
+    descEn: "Natural fruit juice of the day.",
     price: 1000,
     badges: ["popular"]
   },
@@ -535,7 +866,7 @@ const MENU_ITEMS = [
     id: "bf-tropicales",
     category: "bebidas-frias",
     nameEs: "Tropicales",
-    nameEn: "Bottled Juice",
+    nameEn: "Bottled Juice (Glass)",
     descEs: "Refresco embotellado.",
     descEn: "Bottled juice.",
     price: 1200,
@@ -547,7 +878,7 @@ const MENU_ITEMS = [
     nameEs: "Tropicales Desechables",
     nameEn: "Bottled Juice (Plastic)",
     descEs: "Refresco embotellado desechable.",
-    descEn: "Bottled juice.",
+    descEn: "Bottled juice (Plastic bottle).",
     price: 1400,
     badges: []
   },
@@ -560,11 +891,8 @@ const MENU_ITEMS = [
     descEn: "Inquire for available brands.",
     price: 1500,
     badges: [],
-    options: [
-      "Imperial",
-      "Rock Limón",
-      "Otra (Consultar)"
-    ]
+    optionsEs: ["Imperial", "Rock Limón", "Otra (Consultar)"],
+    optionsEn: ["Imperial", "Rock Limón", "Other (Inquire)"]
   },
 
   // ==================== BEBIDAS CALIENTES / HOT BEVERAGES ====================
@@ -574,7 +902,7 @@ const MENU_ITEMS = [
     nameEs: "Café Negro",
     nameEn: "Black Coffee",
     descEs: "Café negro recién hecho.",
-    descEn: "Black Coffee.",
+    descEn: "Freshly brewed Black Coffee.",
     price: 800,
     badges: ["popular"]
   },
@@ -582,9 +910,9 @@ const MENU_ITEMS = [
     id: "bc-cafe-leche",
     category: "bebidas-calientes",
     nameEs: "Café con Leche",
-    nameEn: "Coffee with Cream",
+    nameEn: "Coffee with Milk",
     descEs: "Café caliente con leche.",
-    descEn: "Coffee with cream.",
+    descEn: "Hot coffee with milk.",
     price: 800,
     badges: ["popular"]
   },
@@ -604,7 +932,7 @@ const MENU_ITEMS = [
     nameEs: "Agua Dulce",
     nameEn: "Sugar Cane Tea",
     descEs: "Agua dulce caliente tradicional.",
-    descEn: "Sugar cane tea.",
+    descEn: "Traditional hot sugar cane tea.",
     price: 800,
     badges: []
   },
@@ -622,16 +950,16 @@ const MENU_ITEMS = [
     id: "bc-te-agua",
     category: "bebidas-calientes",
     nameEs: "Té en Agua",
-    nameEn: "Tea",
+    nameEn: "Hot Tea",
     descEs: "Té caliente en agua.",
-    descEn: "Tea.",
+    descEn: "Hot Tea.",
     price: 800,
     badges: []
   }
 ];
 
 /* --------------------------------------------------------------------------
-   2. HOSPEDAJE GALLERY SLIDES (ONLY THE 3 REAL PHOTOS PROVIDED BY THE USER)
+   3. HOSPEDAJE GALLERY SLIDES (ONLY USER'S 3 REAL PHOTOS)
    -------------------------------------------------------------------------- */
 const LODGING_SLIDES = [
   {
@@ -640,7 +968,8 @@ const LODGING_SLIDES = [
     badgeEn: "Exterior",
     titleEs: "Cabaña en Madera Rodeada de Naturaleza",
     titleEn: "Wooden Cabin Surrounded by Nature",
-    descEs: "Vista exterior de la cabaña rodeada de jardines tropicales y árboles en La Finca."
+    descEs: "Vista exterior de la cabaña rodeada de jardines tropicales y árboles en La Finca.",
+    descEn: "Exterior view of the wooden cabin surrounded by tropical gardens and trees at La Finca."
   },
   {
     src: "assets/images/hospedaje-principal-clean.jpg",
@@ -648,7 +977,8 @@ const LODGING_SLIDES = [
     badgeEn: "Equipped Interior",
     titleEs: "Habitación, Comedor y Cocina Equipada",
     titleEn: "Bedroom, Dining & Equipped Kitchen",
-    descEs: "Interior amplio con cama matrimonial, comedor para 4 personas, refrigeradora, microondas y salida al balcón."
+    descEs: "Interior amplio con cama matrimonial, comedor para 4 personas, refrigeradora, microondas y salida al balcón.",
+    descEn: "Spacious interior with double bed, dining table for 4, refrigerator, microwave, and balcony access."
   },
   {
     src: "assets/images/hospedaje-bosque-natural.jpg",
@@ -656,23 +986,25 @@ const LODGING_SLIDES = [
     badgeEn: "Natural Surroundings",
     titleEs: "Bosque Tropical en La Finca",
     titleEn: "Tropical Forest at La Finca",
-    descEs: "Vegetación natural que rodea el hospedaje brindando frescura y tranquilidad."
+    descEs: "Vegetación natural que rodea el hospedaje brindando frescura y tranquilidad.",
+    descEn: "Lush natural vegetation surrounding the lodging, providing fresh air and tranquility."
   }
 ];
 
 /* --------------------------------------------------------------------------
-   3. APPLICATION STATE
+   4. APPLICATION STATE & HELPERS
    -------------------------------------------------------------------------- */
 const state = {
   lang: "es",
   currency: "CRC",
   searchQuery: "",
   dietaryFilter: "all",
-  openCategories: [], // Empty by default so all categories start compactly folded!
+  openCategories: [],
   cart: [],
   carouselIndex: 0,
   carouselAutoPlay: true,
-  carouselTimer: null
+  carouselTimer: null,
+  heroMode: "hospedaje"
 };
 
 try {
@@ -699,7 +1031,126 @@ function formatColonesExact(crcAmount) {
 }
 
 /* --------------------------------------------------------------------------
-   4. COLLAPSIBLE DIGITAL MENU (ACORDEONES POR CATEGORÍA)
+   5. LANGUAGE & CURRENCY SWITCHERS (GLOBAL FULL-PAGE UPDATE)
+   -------------------------------------------------------------------------- */
+function applyStaticTranslations() {
+  const dict = UI_TRANSLATIONS[state.lang] || UI_TRANSLATIONS.es;
+  document.documentElement.lang = state.lang;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] !== undefined) {
+      el.innerHTML = dict[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key] !== undefined) {
+      el.setAttribute("placeholder", dict[key]);
+    }
+  });
+
+  // Update Meal Plan select options with current language and currency
+  const mealPlanSelect = document.getElementById("lodgeMealPlan");
+  if (mealPlanSelect) {
+    const pDesayuno = formatPrice(4500);
+    const pMedia = formatPrice(5000);
+    const pCompleta = formatPrice(9500);
+
+    if (state.lang === "es") {
+      mealPlanSelect.options[0].textContent = "Solo Hospedaje (Cocina equipada)";
+      mealPlanSelect.options[1].textContent = `Con Desayuno en Restaurante (+${pDesayuno}/p día)`;
+      mealPlanSelect.options[2].textContent = `Media Pensión: Almuerzo o Cena (+${pMedia}/p día)`;
+      mealPlanSelect.options[3].textContent = `Pensión Completa: 3 Tiempos (+${pCompleta}/p día)`;
+    } else {
+      mealPlanSelect.options[0].textContent = "Lodging Only (Equipped kitchen)";
+      mealPlanSelect.options[1].textContent = `With Breakfast at Restaurant (+${pDesayuno}/p day)`;
+      mealPlanSelect.options[2].textContent = `Half Board: Lunch or Dinner (+${pMedia}/p day)`;
+      mealPlanSelect.options[3].textContent = `Full Board: 3 Meals (+${pCompleta}/p day)`;
+    }
+  }
+
+  // Update Hero Showcase caption
+  updateHeroShowcaseText(state.heroMode);
+
+  // Update Carousel Play/Pause button text
+  const autoPlayBtn = document.getElementById("carouselAutoPlayBtn");
+  if (autoPlayBtn) {
+    if (state.lang === "es") {
+      autoPlayBtn.textContent = state.carouselAutoPlay ? "Pausar" : "Reproducir";
+    } else {
+      autoPlayBtn.textContent = state.carouselAutoPlay ? "Pause" : "Play";
+    }
+  }
+}
+
+function updateHeroShowcaseText(mode) {
+  state.heroMode = mode || "hospedaje";
+  const img = document.getElementById("heroShowcaseImg");
+  const title = document.getElementById("heroShowcaseTitle");
+  const sub = document.getElementById("heroShowcaseSub");
+  if (!img || !title || !sub) return;
+
+  if (state.heroMode === "hospedaje") {
+    img.src = "assets/images/hospedaje-cabana-exterior.jpg";
+    title.textContent = state.lang === "es"
+      ? "Cabaña en Madera Rodeada de Naturaleza"
+      : "Wooden Cabin Surrounded by Nature";
+    sub.textContent = state.lang === "es"
+      ? "Privacidad, jardines tropicales y árboles en La Finca."
+      : "Privacy, tropical gardens, and trees at La Finca.";
+  } else if (state.heroMode === "interior") {
+    img.src = "assets/images/hospedaje-principal-clean.jpg";
+    title.textContent = state.lang === "es"
+      ? "Habitación, Comedor y Cocina Equipada"
+      : "Bedroom, Dining & Equipped Kitchen";
+    sub.textContent = state.lang === "es"
+      ? "Refrigeradora, microondas, comedor para 4 personas y salida al balcón."
+      : "Refrigerator, microwave, dining table for 4, and balcony access.";
+  } else {
+    img.src = "assets/images/hospedaje-bosque-natural.jpg";
+    title.textContent = state.lang === "es"
+      ? "Entorno de Bosque Tropical"
+      : "Tropical Rainforest Surroundings";
+    sub.textContent = state.lang === "es"
+      ? "Naturaleza y tranquilidad en toda la propiedad."
+      : "Pure nature and tranquility throughout the property.";
+  }
+}
+
+function setLanguage(lang) {
+  state.lang = lang === "en" ? "en" : "es";
+  document.querySelectorAll(".lang-btn").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === state.lang);
+  });
+  applyStaticTranslations();
+  renderMenuGrid();
+  renderCarousel();
+  updateCartUI();
+  showToast(state.lang === "es" ? "Idioma: Español" : "Language: English");
+}
+
+function setCurrency(curr) {
+  state.currency = curr === "USD" ? "USD" : "CRC";
+  document.querySelectorAll(".curr-btn").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-curr") === state.currency);
+  });
+  applyStaticTranslations();
+  renderMenuGrid();
+  updateCartUI();
+  showToast(
+    state.currency === "USD"
+      ? (state.lang === "es" ? "Precios en Dólares ($ USD)" : "Prices in US Dollars ($ USD)")
+      : (state.lang === "es" ? "Precios en Colones (₡ CRC)" : "Prices in Colones (₡ CRC)")
+  );
+}
+
+window.setLanguage = setLanguage;
+window.setCurrency = setCurrency;
+
+/* --------------------------------------------------------------------------
+   6. COLLAPSIBLE DIGITAL MENU (ACORDEONES POR CATEGORÍA)
    -------------------------------------------------------------------------- */
 function toggleCategoryAccordion(catId) {
   const idx = state.openCategories.indexOf(catId);
@@ -780,7 +1231,6 @@ function renderMenuGrid() {
     const catTitle = state.lang === "es" ? cat.nameEs : cat.nameEn;
     const catSub = state.lang === "es" ? cat.nameEn : cat.nameEs;
 
-    // Calculate price range for category header
     const prices = catItems.map(i => i.price);
     const minP = Math.min(...prices);
     const maxP = Math.max(...prices);
@@ -788,7 +1238,6 @@ function renderMenuGrid() {
       ? formatPrice(minP)
       : `${formatPrice(minP)} – ${formatPrice(maxP)}`;
 
-    // Open if user clicked it OR if user is actively searching/filtering
     const isOpen = isFiltering || state.openCategories.includes(cat.id);
     const openClass = isOpen ? "open" : "";
     const toggleWord = isOpen
@@ -831,20 +1280,22 @@ function renderMenuGrid() {
 function renderCompactMenuItemHTML(item) {
   const title = state.lang === "es" ? item.nameEs : item.nameEn;
   const desc = state.lang === "es" ? item.descEs : item.descEn;
+  const secondaryName = state.lang === "es" ? item.nameEn : item.nameEs;
 
   const badgeHTML = (item.badges || []).map(b => {
-    if (b === "popular") return `<span class="compact-badge badge-popular">${state.lang === "es" ? "Recomendado" : "Popular"}</span>`;
+    if (b === "popular") return `<span class="compact-badge badge-popular">${state.lang === "es" ? "Recomendado" : "Featured"}</span>`;
     if (b === "seafood") return `<span class="compact-badge badge-seafood">${state.lang === "es" ? "Mariscos" : "Seafood"}</span>`;
     if (b === "veg") return `<span class="compact-badge badge-veg">${state.lang === "es" ? "Vegetariano" : "Veg"}</span>`;
     return "";
   }).join("");
 
-  const hasOptions = Array.isArray(item.options) && item.options.length > 0;
+  const opts = state.lang === "es" ? item.optionsEs : item.optionsEn;
+  const hasOptions = Array.isArray(opts) && opts.length > 0;
   const selectHTML = hasOptions ? `
-    <select class="compact-variant-select variant-select" data-item-id="${item.id}" aria-label="Opción para ${title}">
-      ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
+    <select class="compact-variant-select variant-select" data-item-id="${item.id}" aria-label="${title}">
+      ${opts.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
     </select>
-  ` : `<span style="font-size:0.72rem; color:var(--text-muted);">${item.nameEn}</span>`;
+  ` : `<span style="font-size:0.72rem; color:var(--text-muted);">${secondaryName}</span>`;
 
   return `
     <article class="menu-compact-item" data-card-id="${item.id}">
@@ -933,7 +1384,7 @@ window.openAndScrollToCategory = function (catId) {
 };
 
 /* --------------------------------------------------------------------------
-   5. CART / PICK-UP ORDER & QUOTER ENGINE
+   7. CART / PICK-UP ORDER & QUOTER ENGINE
    -------------------------------------------------------------------------- */
 function addToCart(itemId, qty = 1, variant = "") {
   const item = MENU_ITEMS.find(i => i.id === itemId);
@@ -1002,7 +1453,11 @@ function updateCartUI() {
   const mobileCount = document.getElementById("mobileCartCount");
   const mobileTotal = document.getElementById("mobileCartTotal");
   if (mobileBar) mobileBar.classList.toggle("has-items", totalItems > 0);
-  if (mobileCount) mobileCount.textContent = `${totalItems} ${totalItems === 1 ? "ítem" : "ítems"}`;
+  if (mobileCount) {
+    mobileCount.textContent = state.lang === "es"
+      ? `${totalItems} ${totalItems === 1 ? "ítem" : "ítems"}`
+      : `${totalItems} ${totalItems === 1 ? "item" : "items"}`;
+  }
   if (mobileTotal) mobileTotal.textContent = formatPrice(subtotal);
 
   renderDrawerCartItems();
@@ -1042,7 +1497,7 @@ function renderDrawerCartItems() {
         <div class="cart-item-details">
           <h4>${name}</h4>
           ${item.variant ? `<p>${item.variant}</p>` : ""}
-          <p>${formatPrice(item.price)} c/u — <strong>${formatPrice(lineTotal)}</strong></p>
+          <p>${formatPrice(item.price)} — <strong>${formatPrice(lineTotal)}</strong></p>
         </div>
         <div class="cart-item-controls">
           <div class="qty-stepper">
@@ -1060,7 +1515,7 @@ window.updateCartItemQty = updateCartItemQty;
 window.clearCart = clearCart;
 
 /* --------------------------------------------------------------------------
-   6. HOSPEDAJE GALLERY CAROUSEL (3 Real Photos)
+   8. HOSPEDAJE GALLERY CAROUSEL (3 Real Photos)
    -------------------------------------------------------------------------- */
 function renderCarousel() {
   const stage = document.getElementById("carouselStage");
@@ -1072,6 +1527,7 @@ function renderCarousel() {
     const active = idx === state.carouselIndex ? "active" : "";
     const badge = state.lang === "es" ? slide.badgeEs : slide.badgeEn;
     const title = state.lang === "es" ? slide.titleEs : slide.titleEn;
+    const desc = state.lang === "es" ? slide.descEs : slide.descEn;
     return `
       <div class="carousel-slide ${active}" data-slide-idx="${idx}">
         <img src="${slide.src}" alt="${title}" loading="${idx === 0 ? 'eager' : 'lazy'}" />
@@ -1079,7 +1535,7 @@ function renderCarousel() {
           <div class="carousel-caption-text">
             <span class="badge">${badge}</span>
             <h3>${title}</h3>
-            <p>${slide.descEs}</p>
+            <p>${desc}</p>
           </div>
         </div>
       </div>
@@ -1170,7 +1626,11 @@ function initCarouselControls() {
   if (autoPlayBtn) {
     autoPlayBtn.addEventListener("click", () => {
       state.carouselAutoPlay = !state.carouselAutoPlay;
-      autoPlayBtn.textContent = state.carouselAutoPlay ? "Pausar" : "Reproducir";
+      if (state.lang === "es") {
+        autoPlayBtn.textContent = state.carouselAutoPlay ? "Pausar" : "Reproducir";
+      } else {
+        autoPlayBtn.textContent = state.carouselAutoPlay ? "Pause" : "Play";
+      }
       if (state.carouselAutoPlay) startCarouselTimer();
       else stopCarouselTimer();
     });
@@ -1179,7 +1639,10 @@ function initCarouselControls() {
   if (zoomBtn) {
     zoomBtn.addEventListener("click", () => {
       const currentSlide = LODGING_SLIDES[state.carouselIndex];
-      if (currentSlide) openLightboxModal(currentSlide.src, currentSlide.titleEs);
+      if (currentSlide) {
+        const cap = state.lang === "es" ? currentSlide.titleEs : currentSlide.titleEn;
+        openLightboxModal(currentSlide.src, cap);
+      }
     });
   }
 
@@ -1188,7 +1651,7 @@ function initCarouselControls() {
 }
 
 /* --------------------------------------------------------------------------
-   7. QUOTER & PICK-UP ORDER DISPATCH
+   9. QUOTER & PICK-UP ORDER DISPATCH
    -------------------------------------------------------------------------- */
 function renderPickupQuoterTable() {
   const container = document.getElementById("pickupQuoterItemsBox");
@@ -1209,26 +1672,31 @@ function renderPickupQuoterTable() {
   if (state.cart.length === 0) {
     container.innerHTML = `
       <div style="padding: 1.25rem; text-align: center; color: var(--text-muted); background: var(--bg-primary); border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); font-size: 0.84rem;">
-        No hay platillos seleccionados.
-        <a href="#menu-digital" style="color: var(--text-primary); font-weight: 600; text-decoration: underline; margin-left: 0.35rem;">Ir al Menú Digital</a>
+        ${state.lang === "es" ? "No hay platillos seleccionados." : "No dishes selected yet."}
+        <a href="#menu-digital" style="color: var(--text-primary); font-weight: 600; text-decoration: underline; margin-left: 0.35rem;">
+          ${state.lang === "es" ? "Ir al Menú Digital" : "Go to Digital Menu"}
+        </a>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = state.cart.map(item => `
-    <div class="quote-line">
-      <div>
-        <strong>${item.qty}x ${item.nameEs}</strong>
-        ${item.variant ? `<span style="font-size:0.76rem; color:var(--text-muted);"> (${item.variant})</span>` : ""}
+  container.innerHTML = state.cart.map(item => {
+    const itemName = state.lang === "es" ? item.nameEs : item.nameEn;
+    return `
+      <div class="quote-line">
+        <div>
+          <strong>${item.qty}x ${itemName}</strong>
+          ${item.variant ? `<span style="font-size:0.76rem; color:var(--text-muted);"> (${item.variant})</span>` : ""}
+        </div>
+        <div style="display:flex; align-items:center; gap:0.65rem;">
+          <span>${formatPrice(item.price * item.qty)}</span>
+          <button type="button" onclick="updateCartItemQty('${item.cartKey.replace(/'/g, "\\'")}', -1)" style="color:var(--text-muted); font-weight:600;" title="−">−</button>
+          <button type="button" onclick="updateCartItemQty('${item.cartKey.replace(/'/g, "\\'")}', 1)" style="color:var(--text-primary); font-weight:600;" title="+">+</button>
+        </div>
       </div>
-      <div style="display:flex; align-items:center; gap:0.65rem;">
-        <span>${formatPrice(item.price * item.qty)}</span>
-        <button type="button" onclick="updateCartItemQty('${item.cartKey.replace(/'/g, "\\'")}', -1)" style="color:var(--text-muted); font-weight:600;" title="Disminuir">−</button>
-        <button type="button" onclick="updateCartItemQty('${item.cartKey.replace(/'/g, "\\'")}', 1)" style="color:var(--text-primary); font-weight:600;" title="Aumentar">+</button>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function calculateLodgingQuote() {
@@ -1253,16 +1721,25 @@ function calculateLodgingQuote() {
   const includeCart = includeCartEl ? includeCartEl.checked : true;
 
   let mealCostPerDayPerGuest = 0;
-  let mealLabel = "Solo Hospedaje (Cocina equipada disponible)";
+  let mealLabel = state.lang === "es"
+    ? "Solo Hospedaje (Cocina equipada)"
+    : "Lodging Only (Equipped kitchen)";
+
   if (mealPlan === "desayuno") {
     mealCostPerDayPerGuest = 4500;
-    mealLabel = "Desayuno y Café en el Restaurante";
+    mealLabel = state.lang === "es"
+      ? "Desayuno y Café en el Restaurante"
+      : "Breakfast & Coffee at Restaurant";
   } else if (mealPlan === "media-pension") {
     mealCostPerDayPerGuest = 5000;
-    mealLabel = "Almuerzo o Cena en el Restaurante";
+    mealLabel = state.lang === "es"
+      ? "Almuerzo o Cena en el Restaurante"
+      : "Lunch or Dinner at Restaurant";
   } else if (mealPlan === "pension-completa") {
     mealCostPerDayPerGuest = 9500;
-    mealLabel = "Alimentación Completa (3 tiempos)";
+    mealLabel = state.lang === "es"
+      ? "Alimentación Completa (3 tiempos)"
+      : "Full Board (3 meals daily)";
   }
 
   const mealTotal = mealCostPerDayPerGuest * guests * nights;
@@ -1277,15 +1754,27 @@ function calculateLodgingQuote() {
   const cartCostEl = document.getElementById("quoteCartAddonCost");
   const totalFoodEl = document.getElementById("quoteFoodCombinedTotal");
 
-  if (nightsBadge) nightsBadge.textContent = `${nights} ${nights === 1 ? "noche" : "noches"}`;
-  if (guestsBadge) guestsBadge.textContent = `${guests} ${guests === 1 ? "huésped" : "huéspedes"}`;
+  if (nightsBadge) {
+    nightsBadge.textContent = state.lang === "es"
+      ? `${nights} ${nights === 1 ? "noche" : "noches"}`
+      : `${nights} ${nights === 1 ? "night" : "nights"}`;
+  }
+  if (guestsBadge) {
+    guestsBadge.textContent = state.lang === "es"
+      ? `${guests} ${guests === 1 ? "huésped" : "huéspedes"}`
+      : `${guests} ${guests === 1 ? "guest" : "guests"}`;
+  }
   if (planBadge) planBadge.textContent = mealLabel;
-  if (mealCostEl) mealCostEl.textContent = mealTotal > 0 ? formatPrice(mealTotal) : "Según selección";
+  if (mealCostEl) {
+    mealCostEl.textContent = mealTotal > 0
+      ? formatPrice(mealTotal)
+      : (state.lang === "es" ? "Según selección" : "Per selection");
+  }
   if (cartCostEl) cartCostEl.textContent = formatPrice(foodOrderAddon);
   if (totalFoodEl) {
     totalFoodEl.textContent = estimatedFoodTotal > 0
-      ? `${formatPrice(estimatedFoodTotal)} + Tarifa de Estadía`
-      : "Confirmar tarifa por fechas";
+      ? `${formatPrice(estimatedFoodTotal)} + ${state.lang === "es" ? "Tarifa de Estadía" : "Lodging Rate"}`
+      : (state.lang === "es" ? "Confirmar tarifa por fechas" : "Confirm rate for dates");
   }
 
   return {
@@ -1304,7 +1793,7 @@ function calculateLodgingQuote() {
 function copySinpeNumber() {
   if (navigator.clipboard) {
     navigator.clipboard.writeText("85857454");
-    showToast("Número SINPE Móvil 8585-7454 copiado");
+    showToast(state.lang === "es" ? "Número SINPE Móvil 8585-7454 copiado" : "SINPE Móvil number 8585-7454 copied");
   }
 }
 
@@ -1318,7 +1807,7 @@ function sendOrderViaWhatsApp(source = "drawer") {
   const notes = (document.getElementById(isDrawer ? "drawerOrderNotes" : "pickupOrderNotes")?.value || "").trim();
 
   if (state.cart.length === 0) {
-    showToast("Agrega al menos un platillo del menú antes de enviar.");
+    showToast(state.lang === "es" ? "Agrega al menos un platillo antes de enviar." : "Add at least one dish before sending.");
     return;
   }
 
@@ -1400,7 +1889,7 @@ window.openWhatsAppWithText = openWhatsAppWithText;
 window.copySinpeNumber = copySinpeNumber;
 
 /* --------------------------------------------------------------------------
-   8. MODALS, DRAWER & TOAST HELPERS
+   10. MODALS, DRAWER & TOAST HELPERS
    -------------------------------------------------------------------------- */
 function toggleOrderDrawer(open) {
   const drawer = document.getElementById("orderDrawer");
@@ -1460,7 +1949,7 @@ window.openLightboxModal = openLightboxModal;
 window.closeLightboxModal = closeLightboxModal;
 
 /* --------------------------------------------------------------------------
-   9. INITIALIZATION
+   11. INITIALIZATION
    -------------------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const checkInEl = document.getElementById("lodgeCheckIn");
@@ -1479,6 +1968,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkOutEl.min = fmt(tomorrow);
   }
 
+  applyStaticTranslations();
   renderMenuGrid();
   initCarouselControls();
   updateCartUI();
@@ -1511,50 +2001,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Language Switcher
-  document.querySelectorAll(".lang-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.lang = btn.getAttribute("data-lang");
-      document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b === btn));
-      renderMenuGrid();
-      renderCarousel();
-      updateCartUI();
-    });
-  });
-
-  // Currency Switcher
-  document.querySelectorAll(".curr-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.currency = btn.getAttribute("data-curr");
-      document.querySelectorAll(".curr-btn").forEach(b => b.classList.toggle("active", b === btn));
-      renderMenuGrid();
-      updateCartUI();
-    });
-  });
-
-  // Hero Visual Switcher (Using ONLY the 3 real photos provided by the user)
+  // Hero Visual Switcher
   document.querySelectorAll(".showcase-tab").forEach(tab => {
     tab.addEventListener("click", () => {
       document.querySelectorAll(".showcase-tab").forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
-      const img = document.getElementById("heroShowcaseImg");
-      const title = document.getElementById("heroShowcaseTitle");
-      const sub = document.getElementById("heroShowcaseSub");
-      const mode = tab.getAttribute("data-showcase");
-
-      if (mode === "hospedaje") {
-        img.src = "assets/images/hospedaje-cabana-exterior.jpg";
-        title.textContent = "Cabaña en Madera Rodeada de Naturaleza";
-        sub.textContent = "Privacidad, jardines tropicales y árboles en La Finca.";
-      } else if (mode === "interior") {
-        img.src = "assets/images/hospedaje-principal-clean.jpg";
-        title.textContent = "Habitación, Comedor y Cocina Equipada";
-        sub.textContent = "Refrigeradora, microondas, comedor para 4 personas y salida al balcón.";
-      } else {
-        img.src = "assets/images/hospedaje-bosque-natural.jpg";
-        title.textContent = "Entorno de Bosque Tropical";
-        sub.textContent = "Naturaleza y tranquilidad en toda la propiedad.";
-      }
+      updateHeroShowcaseText(tab.getAttribute("data-showcase"));
     });
   });
 
