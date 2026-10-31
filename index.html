@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Finca | Restaurante &amp; Hospedaje — Menú Digital, Cotizaciones y Pedidos</title>
-  <meta name="description" content="Bienvenido a La Finca: Restaurante y Hospedaje en Costa Rica. Explora nuestro menú digital interactivo, haz pedidos para retirar en el restaurante, cotiza tu estadía o evento y contáctanos por WhatsApp al 8585-7454." />
+  <title>La Finca — Restaurante &amp; Hospedaje</title>
+  <meta name="description" content="La Finca: Gastronomía costarricense y hospedaje privado rodeado de naturaleza. Menú digital interactivo, pedidos para retirar en el restaurante y cotizaciones por WhatsApp al 8585-7454." />
 
-  <!-- Google Fonts -->
+  <!-- Editorial & Geometric Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css" />
@@ -17,41 +17,15 @@
 <body>
 
   <!-- ========================================================================
-       1. TOP ANNOUNCEMENT & DIRECT WHATSAPP BAR
-       ======================================================================== -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="top-bar-left">
-        <span class="status-pill">
-          <span class="status-dot"></span>
-          Restaurante &amp; Hospedaje Activo
-        </span>
-        <span>🌿 Pedidos para retirar en el restaurante, reservaciones y cotizaciones en línea</span>
-      </div>
-      <div class="top-bar-right">
-        <a href="https://maps.app.goo.gl/84bTFVTSJA6YsUF87" target="_blank" rel="noopener noreferrer" class="top-bar-link" title="Ver ubicación en Google Maps">
-          📍 Ubicación Google Maps
-        </a>
-        <a href="tel:+50685857454" class="top-bar-link" title="Llamar a La Finca">
-          📞 (+506) 8585-7454
-        </a>
-        <a href="https://wa.me/50685857454?text=Hola%20La%20Finca,%20me%20gustar%C3%ADa%20hacer%20una%20consulta." target="_blank" rel="noopener noreferrer" class="top-bar-link">
-          💬 WhatsApp Directo: 8585 7454
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================
-       2. STICKY NAVBAR
+       1. NAVIGATION HEADER
        ======================================================================== -->
   <header class="site-header" id="siteHeader">
     <div class="container navbar">
       <a href="#inicio" class="brand-logo">
-        <div class="brand-emblem">LF</div>
+        <div class="brand-monogram">LF</div>
         <div class="brand-text">
           <span class="brand-name">La Finca</span>
-          <span class="brand-tagline">Restaurante &amp; Hospedaje</span>
+          <span class="brand-tagline">Gastronomía &amp; Hospedaje</span>
         </div>
       </a>
 
@@ -59,123 +33,350 @@
         <li><a href="#inicio" class="nav-link">Inicio</a></li>
         <li><a href="#menu-digital" class="nav-link">Menú Digital</a></li>
         <li><a href="#hospedaje" class="nav-link">Hospedaje</a></li>
-        <li><a href="#cotizador" class="nav-link">Cotizar &amp; Pedidos</a></li>
+        <li><a href="#cotizador" class="nav-link">Pedidos &amp; Cotizaciones</a></li>
         <li><a href="#ubicacion" class="nav-link">Ubicación</a></li>
-        <li><a href="#contacto" class="nav-link">Consultas WhatsApp</a></li>
+        <li><a href="#contacto" class="nav-link">Contacto</a></li>
       </ul>
 
       <div class="nav-actions">
-        <div class="lang-toggle" aria-label="Selector de idioma">
-          <button type="button" class="lang-btn active" data-lang="es">ES</button>
-          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <!-- Currency Switcher -->
+        <div class="segmented-pill" aria-label="Selector de moneda">
+          <button type="button" class="seg-btn curr-btn active" data-curr="CRC">₡ CRC</button>
+          <button type="button" class="seg-btn curr-btn" data-curr="USD">$ USD</button>
         </div>
 
+        <!-- Language Switcher -->
+        <div class="segmented-pill" aria-label="Selector de idioma">
+          <button type="button" class="seg-btn lang-btn active" data-lang="es">ES</button>
+          <button type="button" class="seg-btn lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <!-- Order / Quote Drawer Trigger -->
         <button type="button" class="cart-trigger-btn" onclick="toggleOrderDrawer(true)">
-          <span>🧺</span>
-          <span>Mi Pedido</span>
+          <svg class="icon-svg" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Orden</span>
           <span class="cart-count-badge" id="headerCartCount">0</span>
-          <span id="headerCartTotal" style="font-size:0.82rem; opacity:0.92;">₡0</span>
+          <span id="headerCartTotal" style="font-size:0.8rem; opacity:0.85; font-variant-numeric:tabular-nums;">₡0</span>
         </button>
 
         <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú">
-          ☰
+          <svg class="icon-svg" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </button>
       </div>
     </div>
   </header>
 
   <!-- ========================================================================
-       3. HERO SECTION
+       2. EDITORIAL HERO SECTION
        ======================================================================== -->
   <section class="hero-section" id="inicio">
     <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="dot"></span>
-          <span>Sabor Auténtico &amp; Descanso Rodeado de Naturaleza</span>
-        </div>
+      <div class="hero-content reveal">
+        <div class="eyebrow-label">Restaurante &amp; Estancia Natural</div>
 
         <h1 class="hero-title">
-          Vive la experiencia de <em>La Finca</em>: Gastronomía y Hospedaje
+          Cocina tradicional y refugio privado en <em>La Finca</em>
         </h1>
 
         <p class="hero-description">
-          Explora nuestro <strong>menú digital completo</strong>, arma tu <strong>pedido para retirar en el restaurante</strong> sin filas, conoce nuestro <strong>hospedaje totalmente equipado</strong> y realiza tus cotizaciones o consultas directo a nuestro WhatsApp <strong>8585-7454</strong>.
+          Accede a nuestro menú digital interactivo, programa tus pedidos para retirar en el restaurante, explora nuestra cabaña equipada y gestiona tu cotización o reserva directamente con nosotros.
         </p>
 
         <div class="hero-cta-group">
           <a href="#menu-digital" class="btn btn-primary">
-            <span>🍽️</span>
-            <span>Ver Menú Digital y Pedir</span>
+            <span>Explorar Menú Digital</span>
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </a>
-          <a href="#hospedaje" class="btn btn-forest">
-            <span>🏡</span>
-            <span>Ver Hospedaje y Carrete</span>
+          <a href="#hospedaje" class="btn btn-outline">
+            <span>Conocer el Hospedaje</span>
           </a>
           <a href="#cotizador" class="btn btn-outline">
-            <span>📋</span>
-            <span>Cotizador en Línea</span>
+            <span>Cotizar en Línea</span>
           </a>
         </div>
 
-        <div class="hero-highlights">
-          <div class="highlight-item">
-            <div class="highlight-icon">🥡</div>
-            <div>
-              <h4>Pedidos para Retirar</h4>
-              <p>Ordena desde tu celular y retira recién hecho en el restaurante.</p>
-            </div>
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <h4>Menú Digital</h4>
+            <p>Platos fuertes, mariscos, comidas rápidas y bebidas.</p>
           </div>
-          <div class="highlight-item">
-            <div class="highlight-icon">🛏️</div>
-            <div>
-              <h4>Hospedaje Equipado</h4>
-              <p>Cocina privada, comedor, cama matrimonial y balcón al bosque.</p>
-            </div>
+          <div class="metric-item">
+            <h4>Retiro en Local</h4>
+            <p>Ordena en línea y retira recién preparado sin esperas.</p>
           </div>
-          <div class="highlight-item">
-            <div class="highlight-icon">💬</div>
-            <div>
-              <h4>Atención Directa</h4>
-              <p>Cotizaciones y consultas inmediatas al WhatsApp 8585-7454.</p>
-            </div>
+          <div class="metric-item">
+            <h4>Cabaña Equipada</h4>
+            <p>Cocina privada, comedor, terraza y entorno de bosque.</p>
           </div>
         </div>
       </div>
 
-      <!-- Interactive Hero Showcase -->
-      <div class="hero-visual">
+      <!-- Interactive Visual Frame -->
+      <div class="hero-visual reveal">
         <div class="hero-showcase-card">
           <div class="showcase-switcher">
-            <button type="button" class="showcase-tab active" data-showcase="hospedaje">🏡 Cabaña</button>
-            <button type="button" class="showcase-tab" data-showcase="interior">🛏️ Interior</button>
-            <button type="button" class="showcase-tab" data-showcase="platillos">🐟 Platillos</button>
-            <button type="button" class="showcase-tab" data-showcase="ambiente">🌿 Ambiente</button>
+            <button type="button" class="showcase-tab active" data-showcase="hospedaje">Cabaña</button>
+            <button type="button" class="showcase-tab" data-showcase="interior">Interior</button>
+            <button type="button" class="showcase-tab" data-showcase="platillos">Gastronomía</button>
+            <button type="button" class="showcase-tab" data-showcase="bosque">Bosque</button>
           </div>
 
           <img src="assets/images/hospedaje-cabana-exterior.jpg" alt="Cabaña Hospedaje La Finca" id="heroShowcaseImg" />
 
           <div class="hero-showcase-overlay">
-            <h3 id="heroShowcaseTitle" style="font-family:var(--font-display); font-size:1.35rem; margin-bottom:0.2rem;">
-              Cabaña en Madera &amp; Hospedaje Equipado
+            <h3 id="heroShowcaseTitle" style="font-family:var(--font-serif); font-size:1.55rem; font-weight:500; margin-bottom:0.2rem;">
+              Cabaña Independiente en Madera
             </h3>
-            <p id="heroShowcaseSub" style="font-size:0.86rem; opacity:0.88;">
-              Exterior rodeado de jardines tropicales e interior con cocina, comedor y cama matrimonial.
+            <p id="heroShowcaseSub" style="font-size:0.85rem; color:rgba(255,255,255,0.78);">
+              Privacidad, jardines tropicales y entorno de bosque primario.
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="floating-badge-card">
-          <div class="floating-badge-icon">📲</div>
-          <div>
-            <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--clr-burgundy-700);">
-              WhatsApp Oficial
+  <!-- ========================================================================
+       3. DIGITAL MENU SECTION
+       ======================================================================== -->
+  <section class="section-padding menu-section" id="menu-digital">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <div class="eyebrow-label">Propuesta Gastronómica</div>
+          <h2 class="section-title">Menú Digital</h2>
+        </div>
+        <p class="section-subtitle">
+          Selecciona tus platillos y personaliza tus acompañamientos para ordenar para retirar en el restaurante o elaborar una cotización.
+        </p>
+      </div>
+
+      <!-- Editorial Featured Trio -->
+      <div class="featured-dishes-strip reveal">
+        <div class="featured-dish-card">
+          <img src="assets/images/plato-tilapia.jpg" alt="Tilapia Entera Frita La Finca" />
+          <div class="featured-dish-overlay">
+            <span class="featured-dish-tag">Especialidad de la Casa</span>
+            <h4>Tilapia Entera Frita</h4>
+            <p>Servida con papas fritas y ensalada o yuca frita y ceviche de banano</p>
+          </div>
+        </div>
+
+        <div class="featured-dish-card">
+          <img src="assets/images/menu-foto-arroz.png" alt="Arroces y Casados La Finca" />
+          <div class="featured-dish-overlay">
+            <span class="featured-dish-tag">Cocina Costarricense</span>
+            <h4>Arroces &amp; Casados</h4>
+            <p>Camarones, mariscos, cantonés, pollo y casados tradicionales</p>
+          </div>
+        </div>
+
+        <div class="featured-dish-card">
+          <img src="assets/images/menu-foto-rapidas.png" alt="Comidas Rápidas y Ceviche La Finca" />
+          <div class="featured-dish-overlay">
+            <span class="featured-dish-tag">Para Compartir</span>
+            <h4>Comidas Rápidas &amp; Ceviche</h4>
+            <p>Papanachos, chifrijo, patacones, chicharrones y hamburguesas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Search & Filter Bar -->
+      <div class="menu-toolbar">
+        <div class="menu-toolbar-top">
+          <div class="search-input-wrap">
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="menuSearchInput"
+              class="menu-search-input"
+              placeholder="Buscar platillo o bebida (ej. Tilapia, Casado, Chifrijo, Papanachos, Batido)..."
+            />
+            <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Limpiar búsqueda">✕</button>
+          </div>
+
+          <div class="menu-toolbar-actions">
+            <button type="button" class="filter-chip diet-filter-btn active" data-diet="all">Todos</button>
+            <button type="button" class="filter-chip diet-filter-btn" data-diet="popular">Recomendados</button>
+            <button type="button" class="filter-chip diet-filter-btn" data-diet="seafood">Mariscos</button>
+            <button type="button" class="filter-chip diet-filter-btn" data-diet="veg">Vegetariano</button>
+
+            <button type="button" class="view-physical-menu-btn" onclick="openPhysicalMenuModal()">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px; height:15px;">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+              <span>Menú Impreso Original</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Navigation Pills -->
+        <div class="category-pills" id="categoryPillsContainer"></div>
+      </div>
+
+      <!-- Dynamic Menu Grid -->
+      <div id="menuContainer"></div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. HOSPEDAJE SECTION & ARCHITECTURAL CAROUSEL
+       ======================================================================== -->
+  <section class="section-padding lodging-section" id="hospedaje">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <div class="eyebrow-label">Estancia Privada</div>
+          <h2 class="section-title">Hospedaje La Finca</h2>
+        </div>
+        <p class="section-subtitle">
+          Una cabaña independiente diseñada para el descanso, totalmente equipada y rodeada por la serenidad del bosque tropical.
+        </p>
+      </div>
+
+      <div class="lodging-layout reveal">
+        <!-- Left: Cinema Carousel -->
+        <div class="carousel-wrapper">
+          <div class="carousel-main-stage">
+            <div class="carousel-top-controls">
+              <span class="carousel-counter" id="carouselCounter">01 / 06</span>
+              <div style="display:flex; gap:0.4rem;">
+                <button type="button" class="carousel-action-pill" id="carouselAutoPlayBtn">
+                  Pausar
+                </button>
+                <button type="button" class="carousel-action-pill" id="carouselZoomBtn">
+                  Pantalla Completa
+                </button>
+              </div>
             </div>
-            <div style="font-weight:800; font-size:1.05rem; color:var(--clr-forest-950);">
-              (+506) 8585-7454
+
+            <button type="button" class="carousel-nav-btn prev" id="carouselPrevBtn" aria-label="Anterior">
+              <svg class="icon-svg" viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="carousel-nav-btn next" id="carouselNextBtn" aria-label="Siguiente">
+              <svg class="icon-svg" viewBox="0 0 24 24">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+
+            <div id="carouselStage" style="width:100%; height:100%;"></div>
+          </div>
+
+          <div class="carousel-thumbnails" id="carouselThumbs"></div>
+
+          <div class="upload-more-photos-bar">
+            <span>Galería fotográfica del exterior, interior equipado y entorno natural.</span>
+            <label class="upload-photo-label" for="customPhotosInput">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px; height:15px;">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Añadir fotografías</span>
+              <input type="file" id="customPhotosInput" accept="image/*" multiple style="display:none;" />
+            </label>
+          </div>
+        </div>
+
+        <!-- Right: Specifications & Amenities -->
+        <div class="lodging-info-card">
+          <div class="lodging-info-header">
+            <div class="eyebrow-label" style="margin-bottom:0.65rem;">Especificaciones</div>
+            <h3>Privacidad, amplitud y equipamiento completo</h3>
+            <p style="color:var(--text-on-dark-muted); font-size:0.9rem;">
+              Ideal para parejas, familias o estancias de desconexión, con acceso inmediato a los servicios gastronómicos de nuestro restaurante.
+            </p>
+          </div>
+
+          <div class="amenities-list">
+            <div class="amenity-item">
+              <div class="amenity-icon-box">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h4>Cabaña Independiente</h4>
+                <p>Construcción en madera con corredor y terraza hacia el bosque.</p>
+              </div>
             </div>
-            <a href="https://wa.me/50685857454?text=Hola%20La%20Finca,%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener noreferrer" style="font-size:0.78rem; font-weight:700; color:var(--clr-forest-700); text-decoration:underline;">
-              Enviar mensaje ahora →
+
+            <div class="amenity-item">
+              <div class="amenity-icon-box">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                  <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                  <line x1="4" y1="10" x2="20" y2="10"></line>
+                  <line x1="8" y1="6" x2="8" y2="6.01"></line>
+                  <line x1="8" y1="14" x2="8" y2="14.01"></line>
+                </svg>
+              </div>
+              <div>
+                <h4>Cocina Equipada</h4>
+                <p>Refrigeradora de acero inoxidable, microondas, fregadero y menaje.</p>
+              </div>
+            </div>
+
+            <div class="amenity-item">
+              <div class="amenity-icon-box">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                  <path d="M2 4v16"></path>
+                  <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
+                  <path d="M2 17h20"></path>
+                  <path d="M6 8v9"></path>
+                </svg>
+              </div>
+              <div>
+                <h4>Área de Descanso</h4>
+                <p>Cama matrimonial vestida con ropa de cama y paños incluidos.</p>
+              </div>
+            </div>
+
+            <div class="amenity-item">
+              <div class="amenity-icon-box">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                  <line x1="6" y1="1" x2="6" y2="4"></line>
+                  <line x1="10" y1="1" x2="10" y2="4"></line>
+                  <line x1="14" y1="1" x2="14" y2="4"></line>
+                </svg>
+              </div>
+              <div>
+                <h4>Comedor &amp; Restaurante</h4>
+                <p>Mesa para 4 personas y servicio directo del restaurante La Finca.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding-top:1.5rem; border-top:1px solid var(--border-dark); display:flex; flex-direction:column; gap:0.75rem;">
+            <a href="#cotizador" class="btn btn-secondary" style="width:100%;" onclick="document.querySelector('[data-quoter-tab=panel-hospedaje]')?.click()">
+              <span>Cotizar Fechas de Estadía</span>
+            </a>
+            <a
+              href="https://wa.me/50685857454?text=Hola%20La%20Finca,%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20y%20tarifa%20del%20hospedaje."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline"
+              style="width:100%; color:#fff; border-color:rgba(255,255,255,0.22);"
+            >
+              <span>Consultar por WhatsApp (8585-7454)</span>
             </a>
           </div>
         </div>
@@ -184,262 +385,27 @@
   </section>
 
   <!-- ========================================================================
-       4. DIGITAL MENU SECTION (MENÚ DIGITAL INTERACTIVO)
-       ======================================================================== -->
-  <section class="section-padding menu-section" id="menu-digital">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">🍽️ Menú Digital Oficial • La Finca</span>
-        <h2 class="section-title">Nuestro Menú Interactivo</h2>
-        <p class="section-subtitle">
-          Explora nuestras comidas rápidas, sopas, platos fuertes y bebidas. Elige tus opciones preferidas y agrégalas a tu <strong>pedido para retirar en el restaurante</strong> o a tu <strong>cotización</strong>.
-        </p>
-      </div>
-
-      <!-- Featured Dishes Visual Strip (Using Real + Curated Dish Photos) -->
-      <div class="featured-dishes-strip">
-        <div class="featured-dish-card">
-          <img src="assets/images/plato-tilapia.jpg" alt="Tilapia Entera Frita La Finca" />
-          <div class="featured-dish-overlay">
-            <span class="featured-dish-tag">Especialidad • ₡7,500</span>
-            <h4>Tilapia Entera Frita</h4>
-            <p>Con papas fritas y ensalada o yuca frita y ceviche de banano</p>
-          </div>
-        </div>
-
-        <div class="featured-dish-card">
-          <img src="assets/images/menu-foto-arroz.png" alt="Arroz con Camarones y Casados La Finca" />
-          <div class="featured-dish-overlay">
-            <span class="featured-dish-tag">Platos Fuertes • Desde ₡3,500</span>
-            <h4>Arroces Especiales &amp; Casados</h4>
-            <p>Arroz con camarones, mariscos, cantonés, pollo y casados típicos</p>
-          </div>
-        </div>
-
-        <div class="featured-dish-card">
-          <img src="assets/images/menu-foto-rapidas.png" alt="Comidas Rápidas y Ceviche La Finca" />
-          <div class="featured-dish-overlay">
-            <span class="featured-dish-tag">Para Compartir • Desde ₡1,000</span>
-            <h4>Comidas Rápidas &amp; Ceviche</h4>
-            <p>Papanachos, chifrijo, patacones, chicharrones, hamburguesas y más</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sticky Search & Filter Toolbar -->
-      <div class="menu-toolbar">
-        <div class="menu-toolbar-top">
-          <div class="search-input-wrap">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input
-              type="search"
-              id="menuSearchInput"
-              class="menu-search-input"
-              placeholder="Buscar platillo o bebida (ej. Tilapia, Casado, Chifrijo, Papanachos, Batido...)"
-            />
-            <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Limpiar búsqueda">✕</button>
-          </div>
-
-          <div class="menu-toolbar-actions">
-            <button type="button" class="cat-pill diet-filter-btn active" data-diet="all">Todos</button>
-            <button type="button" class="cat-pill diet-filter-btn" data-diet="popular">★ Favoritos</button>
-            <button type="button" class="cat-pill diet-filter-btn" data-diet="seafood">🐟 Mariscos</button>
-            <button type="button" class="cat-pill diet-filter-btn" data-diet="veg">🌿 Vegetariano</button>
-
-            <button type="button" class="view-physical-menu-btn" onclick="openPhysicalMenuModal()">
-              <span>📖</span>
-              <span>Ver Fotos del Menú Físico</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Dynamic Category Pills -->
-        <div class="category-pills" id="categoryPillsContainer"></div>
-      </div>
-
-      <!-- Dynamic Menu Cards Container -->
-      <div id="menuContainer"></div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       5. HOSPEDAJE SECTION & INTERACTIVE PHOTO CAROUSEL (CARRETE)
-       ======================================================================== -->
-  <section class="section-padding lodging-section" id="hospedaje">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">🏡 Hospedaje La Finca • Confort &amp; Naturaleza</span>
-        <h2 class="section-title">Descansa en Nuestro Hospedaje Equipado</h2>
-        <p class="section-subtitle">
-          Un espacio moderno, privado y acogedor rodeado del bosque tropical. Ideal para parejas, familias o viajeros que buscan tranquilidad con todas las comodidades y la mejor gastronomía a pocos pasos.
-        </p>
-      </div>
-
-      <div class="lodging-layout">
-        <!-- Left: Interactive Carousel (Carrete de Fotografías) -->
-        <div class="carousel-wrapper">
-          <div class="carousel-main-stage">
-            <div class="carousel-top-controls">
-              <span class="carousel-counter" id="carouselCounter">1 / 5</span>
-              <div style="display:flex; gap:0.4rem;">
-                <button type="button" class="carousel-action-pill" id="carouselAutoPlayBtn" title="Pausar/Reanudar rotación automática">
-                  ⏸ Auto
-                </button>
-                <button type="button" class="carousel-action-pill" id="carouselZoomBtn" title="Ampliar fotografía">
-                  🔍 Ampliar
-                </button>
-              </div>
-            </div>
-
-            <button type="button" class="carousel-nav-btn prev" id="carouselPrevBtn" aria-label="Fotografía anterior">
-              ❮
-            </button>
-            <button type="button" class="carousel-nav-btn next" id="carouselNextBtn" aria-label="Fotografía siguiente">
-              ❯
-            </button>
-
-            <!-- Dynamic Slides Injected by JS -->
-            <div id="carouselStage" style="width:100%; height:100%;"></div>
-          </div>
-
-          <!-- Thumbnails Strip -->
-          <div class="carousel-thumbnails" id="carouselThumbs"></div>
-
-          <!-- Dynamic Photo Loader so the owner/user can preview or add extra photos anytime -->
-          <div class="upload-more-photos-bar">
-            <span>📸 <strong>Carrete interactivo:</strong> Incluye las vistas de la habitación, cocina, comedor y balcón.</span>
-            <label class="upload-photo-label" for="customPhotosInput">
-              <span>➕</span>
-              <span>Agregar más fotos al carrete</span>
-              <input type="file" id="customPhotosInput" accept="image/*" multiple style="display:none;" />
-            </label>
-          </div>
-        </div>
-
-        <!-- Right: Complete Lodging Information & Amenities -->
-        <div class="lodging-info-card">
-          <div class="lodging-info-header">
-            <span style="font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--clr-gold-400); font-weight:800;">
-              Estudio &amp; Cabaña Equipada
-            </span>
-            <h3>Comodidad como en casa, rodeado de paz</h3>
-            <p style="color:rgba(255,255,255,0.8); font-size:0.93rem;">
-              Nuestro hospedaje en La Finca cuenta con acabados modernos en porcelanato, techos altos frescos, amplios ventanales con vista al bosque y equipamiento completo para estadías cortas o prolongadas.
-            </p>
-            <div class="lodging-highlights-badges">
-              <span class="lodge-pill">🛏️ Cama Matrimonial</span>
-              <span class="lodge-pill">🍳 Cocina Equipada</span>
-              <span class="lodge-pill">🍷 Comedor 4 Personas</span>
-              <span class="lodge-pill">🌳 Balcón al Bosque</span>
-            </div>
-          </div>
-
-          <div class="amenities-grid">
-            <div class="amenity-item">
-              <span class="amenity-icon">❄️</span>
-              <div>
-                <h4>Refrigeradora y Microondas</h4>
-                <p>Refrigeradora grande de acero inoxidable con dispensador, microondas y fregadero.</p>
-              </div>
-            </div>
-
-            <div class="amenity-item">
-              <span class="amenity-icon">🍽️</span>
-              <div>
-                <h4>Comedor y Menaje</h4>
-                <p>Mesa de madera para 4 personas, copas, vajilla y utensilios de cocina listos para usar.</p>
-              </div>
-            </div>
-
-            <div class="amenity-item">
-              <span class="amenity-icon">🛌</span>
-              <div>
-                <h4>Área de Descanso Confortable</h4>
-                <p>Cama matrimonial vestida con ropa de cama limpia y paños incluidos para tu estadía.</p>
-              </div>
-            </div>
-
-            <div class="amenity-item">
-              <span class="amenity-icon">🌿</span>
-              <div>
-                <h4>Balcón y Vista Natural</h4>
-                <p>Puerta directa hacia terraza/balcón con baranda de madera y vista a la vegetación.</p>
-              </div>
-            </div>
-
-            <div class="amenity-item">
-              <span class="amenity-icon">🍛</span>
-              <div>
-                <h4>Servicio de Restaurante</h4>
-                <p>Acceso directo al menú de La Finca para desayunos, almuerzos, cenas o pedidos.</p>
-              </div>
-            </div>
-
-            <div class="amenity-item">
-              <span class="amenity-icon">🚗</span>
-              <div>
-                <h4>Atención Personalizada</h4>
-                <p>Ambiente seguro, privado y familiar con coordinación directa al 8585-7454.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="lodging-cta-box">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-              <div>
-                <h4 style="font-size:1.05rem; color:#fff;">¿Deseas consultar disponibilidad o reservar?</h4>
-                <p style="font-size:0.82rem; color:rgba(255,255,255,0.78);">
-                  Cotiza tus fechas con o sin alimentación incluida y recibe atención inmediata.
-                </p>
-              </div>
-            </div>
-            <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
-              <a href="#cotizador" class="btn btn-primary" style="flex:1;">
-                <span>📅</span>
-                <span>Cotizar Estadía Ahora</span>
-              </a>
-              <a
-                href="https://wa.me/50685857454?text=Hola%20La%20Finca,%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20y%20tarifa%20del%20hospedaje."
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-whatsapp"
-                style="flex:1;"
-              >
-                <span>💬</span>
-                <span>Consultar al 8585-7454</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       6. INTERACTIVE QUOTER & PICK-UP ORDER HUB (COTIZADOR Y PEDIDOS)
+       5. QUOTER & PICK-UP ORDER HUB
        ======================================================================== -->
   <section class="section-padding quoter-section" id="cotizador">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">🧮 Cotizador Inteligente &amp; Pedidos en Línea</span>
-        <h2 class="section-title">Cotiza tu Estadía o Confirma tu Pedido para Retirar</h2>
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <div class="eyebrow-label">Gestión en Línea</div>
+          <h2 class="section-title">Pedidos para Retirar &amp; Cotizador</h2>
+        </div>
         <p class="section-subtitle">
-          Selecciona qué deseas gestionar: arma y envía tu <strong>pedido de comida para retirar en el restaurante</strong>, cotiza un <strong>pedido para grupo/evento</strong>, o cotiza tu <strong>hospedaje en La Finca</strong>.
+          Envía tu pedido listo para retirar en el restaurante o cotiza tu estadía y alimentación directamente a nuestro WhatsApp.
         </p>
       </div>
 
-      <!-- Quoter Mode Selector Tabs -->
-      <div class="quoter-tabs-nav">
+      <!-- Segmented Mode Selector -->
+      <div class="quoter-tabs-nav reveal">
         <button type="button" class="quoter-tab-btn active" data-quoter-tab="panel-pedidos">
-          <span>🥡</span>
-          <span>1. Pedido para Retirar / Cotizar Menú</span>
+          Pedidos para Retirar / Cotizar Menú
         </button>
         <button type="button" class="quoter-tab-btn" data-quoter-tab="panel-hospedaje">
-          <span>🏡</span>
-          <span>2. Cotizar Hospedaje (+ Alimentación)</span>
+          Cotizar Hospedaje &amp; Estadía
         </button>
       </div>
 
@@ -447,126 +413,135 @@
       <div class="quoter-panel active" id="panel-pedidos">
         <div class="quoter-grid">
           <div class="form-card">
-            <h3>Datos para Retiro en Restaurante o Cotización</h3>
-            <p style="color:var(--clr-text-secondary); font-size:0.9rem; margin-bottom:1.35rem;">
-              Completa tus datos y envía tu orden lista por WhatsApp al <strong>8585-7454</strong> para que la preparemos a tiempo.
+            <h3>Detalles del Pedido o Cotización</h3>
+            <p style="color:var(--text-secondary); font-size:0.88rem; margin-bottom:1.5rem;">
+              Completa la información para preparar tu orden a tiempo o enviarte una cotización formal.
             </p>
 
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="pickupCustomerName">Tu Nombre Completo *</label>
-                <input type="text" id="pickupCustomerName" class="form-control" placeholder="Ej. Carlos Rodríguez" />
+                <label for="pickupCustomerName">Nombre Completo</label>
+                <input type="text" id="pickupCustomerName" class="form-control" placeholder="Nombre y apellido" />
               </div>
               <div class="form-group">
-                <label for="pickupCustomerPhone">Teléfono / WhatsApp</label>
-                <input type="tel" id="pickupCustomerPhone" class="form-control" placeholder="Ej. 8888-8888" />
+                <label for="pickupCustomerPhone">Teléfono de Contacto</label>
+                <input type="tel" id="pickupCustomerPhone" class="form-control" placeholder="8888-8888" />
               </div>
             </div>
 
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="pickupOrderMode">Tipo de Solicitud</label>
+                <label for="pickupOrderMode">Modalidad</label>
                 <select id="pickupOrderMode" class="form-control">
-                  <option value="Pedido para Retirar en Restaurante">🥡 Pedido para Retirar en el Restaurante</option>
-                  <option value="Cotización de Menú / Grupo">📋 Cotización de Comida / Evento / Grupo</option>
-                  <option value="Pedido Anticipado para Comer en el Local">🍽️ Reserva de Mesa con Pedido Anticipado</option>
+                  <option value="Pedido para Retirar en Restaurante">Pedido para Retirar en el Restaurante</option>
+                  <option value="Cotización de Menú / Grupo">Cotización de Alimentación / Grupo</option>
+                  <option value="Reserva de Mesa con Pedido Anticipado">Reserva de Mesa con Pedido Anticipado</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="pickupTimeSelect">Hora Estimada de Retiro</label>
                 <select id="pickupTimeSelect" class="form-control">
-                  <option value="Lo antes posible (20 - 30 min)">⚡ Lo antes posible (20 - 30 min)</option>
-                  <option value="En 45 minutos">🕒 En 45 minutos</option>
-                  <option value="En 1 hora">🕓 En 1 hora</option>
-                  <option value="Hora específica (indicada en notas)">📅 Hora o fecha específica (indicar en notas)</option>
+                  <option value="Lo antes posible (20 - 30 min)">Lo antes posible (20 - 30 min)</option>
+                  <option value="En 45 minutos">En 45 minutos</option>
+                  <option value="En 1 hora">En 1 hora</option>
+                  <option value="Hora específica (indicada en notas)">Hora específica (indicar en notas)</option>
                 </select>
               </div>
             </div>
 
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="pickupPaymentMethod">Método de Pago Preferido</label>
+                <label for="pickupPaymentMethod">Método de Pago</label>
                 <select id="pickupPaymentMethod" class="form-control">
-                  <option value="SINPE Móvil">📲 SINPE Móvil</option>
-                  <option value="Efectivo al retirar">💵 Efectivo al retirar</option>
-                  <option value="Tarjeta en el restaurante">💳 Tarjeta en el restaurante</option>
+                  <option value="SINPE Móvil">SINPE Móvil (8585-7454)</option>
+                  <option value="Efectivo al retirar">Efectivo al retirar</option>
+                  <option value="Tarjeta en el restaurante">Tarjeta en el restaurante</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="pickupGroupSize">Dividir cotización entre (personas)</label>
+                <label for="pickupGroupSize">Dividir estimado entre (personas)</label>
                 <input type="number" id="pickupGroupSize" class="form-control" min="1" max="200" value="1" />
               </div>
             </div>
 
             <div class="form-group">
-              <label for="pickupOrderNotes">Notas Especiales (Salsas, alergias, hora exacta, detalles)</label>
-              <textarea id="pickupOrderNotes" class="form-control" rows="2" placeholder="Ej. Sin cebolla en la hamburguesa, pasamos a retirar a la 1:15 PM..."></textarea>
+              <label for="pickupOrderNotes">Observaciones o Instrucciones Especiales</label>
+              <textarea id="pickupOrderNotes" class="form-control" rows="2" placeholder="Indicaciones de preparación, hora exacta de retiro o detalles adicionales..."></textarea>
             </div>
 
-            <div style="display:flex; flex-wrap:wrap; gap:0.85rem; margin-top:1.25rem;">
-              <button type="button" class="btn btn-whatsapp" style="flex:1;" onclick="sendOrderViaWhatsApp('quoter')">
-                <span>📲</span>
-                <span>Enviar Pedido / Cotización al 8585-7454</span>
+            <div style="display:flex; flex-wrap:wrap; gap:0.85rem; margin-top:1.5rem;">
+              <button type="button" class="btn btn-primary" style="flex:1;" onclick="sendOrderViaWhatsApp('quoter')">
+                <span>Enviar por WhatsApp (8585-7454)</span>
               </button>
               <button type="button" class="btn btn-outline" onclick="window.print()">
-                <span>🖨️</span>
                 <span>Imprimir / PDF</span>
               </button>
             </div>
           </div>
 
-          <!-- Right Summary of Selected Menu Items -->
           <div class="summary-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-              <h3>Resumen de Platillos</h3>
-              <button type="button" onclick="clearCart()" style="font-size:0.8rem; color:var(--clr-burgundy-700); font-weight:700; text-decoration:underline;">
-                Vaciar lista
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.5rem;">
+              <h3>Resumen de la Orden</h3>
+              <button type="button" onclick="clearCart()" style="font-size:0.76rem; color:var(--text-muted); text-decoration:underline;">
+                Vaciar selección
               </button>
             </div>
-            <p style="font-size:0.85rem; color:var(--clr-text-muted); margin-bottom:1rem;">
-              Platillos agregados desde el Menú Digital:
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
+              Platillos seleccionados desde el Menú Digital:
             </p>
 
-            <div id="pickupQuoterItemsBox" style="max-height: 310px; overflow-y: auto; padding-right: 0.25rem;"></div>
+            <div id="pickupQuoterItemsBox" style="max-height: 290px; overflow-y: auto;"></div>
 
             <div class="quote-summary-box">
               <div class="quote-line">
-                <span>Estimado por persona (según divisor):</span>
+                <span>Monto estimado por persona</span>
                 <strong id="pickupPerPersonEstimate">₡0</strong>
               </div>
               <div class="quote-line total">
-                <span>Total del Pedido / Cotización:</span>
+                <span>Total Estimado</span>
                 <span id="pickupQuoterTotal">₡0</span>
               </div>
             </div>
 
-            <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
-              <a href="#menu-digital" class="btn btn-forest" style="width:100%;">
-                <span>➕</span>
-                <span>Agregar más platillos del Menú Digital</span>
-              </a>
+            <!-- SINPE Móvil Helper -->
+            <div class="sinpe-box">
+              <div>
+                <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); font-weight:600;">
+                  Pago por SINPE Móvil
+                </div>
+                <div style="font-size:0.92rem; font-weight:600; color:var(--text-primary);">
+                  (+506) 8585-7454
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline" style="padding:0.45rem 0.85rem; font-size:0.76rem;" onclick="copySinpeNumber()">
+                Copiar Número
+              </button>
             </div>
+
+            <a href="#menu-digital" class="btn btn-outline" style="width:100%;">
+              Añadir más platillos del menú
+            </a>
           </div>
         </div>
       </div>
 
-      <!-- PANEL 2: LODGING QUOTER (COTIZADOR DE HOSPEDAJE + ALIMENTACIÓN) -->
+      <!-- PANEL 2: LODGING QUOTER -->
       <div class="quoter-panel" id="panel-hospedaje">
         <div class="quoter-grid">
           <div class="form-card">
-            <h3>Cotizar Estadía en Hospedaje La Finca</h3>
-            <p style="color:var(--clr-text-secondary); font-size:0.9rem; margin-bottom:1.35rem;">
-              Selecciona tus fechas, cantidad de huéspedes y si deseas incluir alimentación en nuestro restaurante.
+            <h3>Cotizar Estadía en Hospedaje</h3>
+            <p style="color:var(--text-secondary); font-size:0.88rem; margin-bottom:1.5rem;">
+              Indica las fechas deseadas, cantidad de huéspedes y plan de alimentación para confirmar disponibilidad.
             </p>
 
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="lodgeCustomerName">Tu Nombre Completo</label>
-                <input type="text" id="lodgeCustomerName" class="form-control" placeholder="Ej. María Fernanda Solís" />
+                <label for="lodgeCustomerName">Nombre Completo</label>
+                <input type="text" id="lodgeCustomerName" class="form-control" placeholder="Nombre y apellido" />
               </div>
               <div class="form-group">
                 <label for="lodgeCustomerPhone">Teléfono / WhatsApp</label>
-                <input type="tel" id="lodgeCustomerPhone" class="form-control" placeholder="Ej. 8585-0000" />
+                <input type="tel" id="lodgeCustomerPhone" class="form-control" placeholder="8888-8888" />
               </div>
             </div>
 
@@ -583,83 +558,82 @@
 
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="lodgeGuests">Cantidad de Huéspedes</label>
+                <label for="lodgeGuests">Huéspedes</label>
                 <select id="lodgeGuests" class="form-control">
-                  <option value="1">1 Huésped (Individual)</option>
-                  <option value="2" selected>2 Huéspedes (Pareja / Doble)</option>
+                  <option value="1">1 Huésped</option>
+                  <option value="2" selected>2 Huéspedes</option>
                   <option value="3">3 Huéspedes</option>
-                  <option value="4">4 Huéspedes (Familiar / Grupo)</option>
+                  <option value="4">4 Huéspedes</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="lodgeMealPlan">Plan de Alimentación en Restaurante</label>
+                <label for="lodgeMealPlan">Plan de Alimentación</label>
                 <select id="lodgeMealPlan" class="form-control">
-                  <option value="solo-hospedaje">Solo Hospedaje (Uso de cocina privada)</option>
-                  <option value="desayuno">Incluir Desayuno y Café (+₡4,500/p por día)</option>
-                  <option value="media-pension">Incluir Almuerzo o Cena (+₡5,000/p por día)</option>
-                  <option value="pension-completa">Pensión Completa: 3 Tiempos (+₡9,500/p por día)</option>
+                  <option value="solo-hospedaje">Solo Hospedaje (Cocina equipada)</option>
+                  <option value="desayuno">Con Desayuno en Restaurante (+₡4,500/p día)</option>
+                  <option value="media-pension">Media Pensión: Almuerzo o Cena (+₡5,000/p día)</option>
+                  <option value="pension-completa">Pensión Completa: 3 Tiempos (+₡9,500/p día)</option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group" style="display:flex; align-items:center; gap:0.6rem; background:var(--clr-bg); padding:0.75rem 1rem; border-radius:var(--radius-sm); border:1px solid var(--clr-border);">
-              <input type="checkbox" id="lodgeIncludeCart" checked style="width:18px; height:18px; accent-color:var(--clr-forest-800);" />
-              <label for="lodgeIncludeCart" style="margin:0; cursor:pointer; font-size:0.88rem;">
-                Incluir también los platillos que tengo seleccionados en "Mi Pedido" dentro de esta cotización
+            <div class="form-group" style="display:flex; align-items:center; gap:0.65rem; background:var(--bg-primary); padding:0.75rem 1rem; border-radius:var(--radius-xs); border:1px solid var(--border-subtle);">
+              <input type="checkbox" id="lodgeIncludeCart" checked style="width:16px; height:16px; accent-color:var(--accent-primary);" />
+              <label for="lodgeIncludeCart" style="margin:0; cursor:pointer; font-size:0.82rem; text-transform:none; letter-spacing:0;">
+                Incluir también los platillos seleccionados en mi orden actual dentro de la cotización
               </label>
             </div>
 
             <div class="form-group">
-              <label for="lodgeNotes">Consultas adicionales (Hora de llegada, mascotas, decoración especial)</label>
-              <textarea id="lodgeNotes" class="form-control" rows="2" placeholder="Ej. Llegamos alrededor de las 3:00 PM, queremos consultar tarifa por noche..."></textarea>
+              <label for="lodgeNotes">Comentarios o Requerimientos Especiales</label>
+              <textarea id="lodgeNotes" class="form-control" rows="2" placeholder="Hora estimada de llegada o consultas adicionales..."></textarea>
             </div>
 
-            <button type="button" class="btn btn-whatsapp" style="width:100%;" onclick="sendLodgingQuoteViaWhatsApp()">
-              <span>💬</span>
-              <span>Solicitar Cotización y Disponibilidad al WhatsApp 8585-7454</span>
+            <button type="button" class="btn btn-primary" style="width:100%;" onclick="sendLodgingQuoteViaWhatsApp()">
+              <span>Solicitar Disponibilidad y Cotización (8585-7454)</span>
             </button>
           </div>
 
           <div class="summary-card">
-            <h3>Resumen de tu Solicitud de Hospedaje</h3>
-            <p style="font-size:0.85rem; color:var(--clr-text-muted); margin-bottom:1rem;">
-              Revisa los detalles que se enviarán a nuestra recepción por WhatsApp:
+            <h3>Resumen de Estadía</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
+              Detalle de la solicitud para recepción:
             </p>
 
             <div class="quote-summary-box">
               <div class="quote-line">
-                <span>Duración de la estadía:</span>
+                <span>Estadía</span>
                 <strong id="quoteNightsDisplay">2 noches</strong>
               </div>
               <div class="quote-line">
-                <span>Huéspedes:</span>
+                <span>Capacidad seleccionada</span>
                 <strong id="quoteGuestsDisplay">2 huéspedes</strong>
               </div>
               <div class="quote-line">
-                <span>Habitación:</span>
-                <strong>Estudio Equipado (Cocina, Comedor, Cama, Balcón)</strong>
+                <span>Unidad</span>
+                <strong>Cabaña Estudio Equipada</strong>
               </div>
               <div class="quote-line">
-                <span>Plan de Alimentación:</span>
+                <span>Régimen</span>
                 <strong id="quotePlanDisplay">Solo Hospedaje</strong>
               </div>
               <div class="quote-line">
-                <span>Estimado Plan Alimentación:</span>
-                <strong id="quoteMealPlanCost">₡0 (Solo estadía)</strong>
+                <span>Alimentación estimada</span>
+                <strong id="quoteMealPlanCost">Incluido según selección</strong>
               </div>
               <div class="quote-line">
-                <span>Platillos agregados del Menú Digital:</span>
+                <span>Orden de menú adjunta</span>
                 <strong id="quoteCartAddonCost">₡0</strong>
               </div>
               <div class="quote-line total">
-                <span>Resumen Cotización:</span>
-                <span id="quoteFoodCombinedTotal" style="text-align:right; font-size:0.98rem;">Confirmar tarifa por fechas</span>
+                <span>Cotización</span>
+                <span id="quoteFoodCombinedTotal" style="font-size:0.92rem;">Confirmar tarifa por fechas</span>
               </div>
             </div>
 
-            <div style="background:var(--clr-forest-50); border:1px solid var(--clr-forest-100); border-radius:var(--radius-sm); padding:1rem; font-size:0.84rem; color:var(--clr-forest-900);">
-              <strong>💡 Atención directa sin intermediarios:</strong> Al enviar tu solicitud al <strong>8585-7454</strong> te confirmamos de inmediato la disponibilidad en tus fechas y el precio exacto o promoción vigente por noche.
-            </div>
+            <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+              Al enviar tu solicitud recibirás atención directa por WhatsApp al <strong>(+506) 8585-7454</strong> con la disponibilidad y tarifa vigente para tus fechas.
+            </p>
           </div>
         </div>
       </div>
@@ -667,117 +641,115 @@
   </section>
 
   <!-- ========================================================================
-       7. DIRECT CONTACT & WHATSAPP QUICK INQUIRIES (8585 7454)
+       6. LOCATION & DIRECT CONTACT SECTION
        ======================================================================== -->
   <section class="section-padding" id="contacto">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">📲 Contacto Directo • (+506) 8585-7454</span>
-        <h2 class="section-title">Consultas Rápidas y Atención Personalizada</h2>
+      <div class="section-header reveal">
+        <div class="section-header-left">
+          <div class="eyebrow-label">Atención &amp; Ubicación</div>
+          <h2 class="section-title">Contacto Directo</h2>
+        </div>
         <p class="section-subtitle">
-          ¿Tienes alguna duda sobre un platillo, quieres encargar un pedido para pasar a recoger o consultar por el hospedaje? Haz clic en cualquiera de las opciones rápidas.
+          Comunícate con nosotros al (+506) 8585-7454 o visítanos directamente siguiendo nuestra ubicación oficial en Google Maps y Waze.
         </p>
       </div>
 
-      <div class="contact-cards-grid">
-        <!-- Card 1: Quick WhatsApp Templates -->
+      <div class="contact-cards-grid reveal">
+        <!-- Card 1: Quick Inquiries -->
         <div class="contact-card">
           <div>
-            <div class="contact-card-icon">💬</div>
-            <h3 style="font-family:var(--font-display); font-size:1.35rem; margin-bottom:0.4rem;">
-              Mensajes Rápidos por WhatsApp
+            <div class="eyebrow-label" style="margin-bottom:0.5rem;">Consultas Frecuentes</div>
+            <h3 style="font-family:var(--font-serif); font-size:1.5rem; font-weight:500; margin-bottom:0.5rem;">
+              Atención por WhatsApp
             </h3>
-            <p style="font-size:0.88rem; color:var(--clr-text-secondary); margin-bottom:1rem;">
-              Toca una consulta frecuente para abrir el chat con el número <strong>8585-7454</strong>:
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.15rem;">
+              Selecciona un motivo de consulta para iniciar la conversación de inmediato:
             </p>
             <div class="quick-wa-chips">
               <button
                 type="button"
                 class="wa-chip-btn"
-                onclick="openWhatsAppWithText('¡Hola La Finca! Me gustaría hacer un pedido para pasar a retirar al restaurante.')"
+                onclick="openWhatsAppWithText('Hola La Finca, me gustaría realizar un pedido para pasar a retirar al restaurante.')"
               >
-                <span>🥡 Quiero hacer un pedido para retirar</span>
+                <span>Ordenar comida para retirar</span>
                 <span>→</span>
               </button>
               <button
                 type="button"
                 class="wa-chip-btn"
-                onclick="openWhatsAppWithText('¡Hola La Finca! Quisiera consultar la tarifa por noche y disponibilidad del hospedaje.')"
+                onclick="openWhatsAppWithText('Hola La Finca, quisiera consultar disponibilidad y tarifa por noche del hospedaje.')"
               >
-                <span>🏡 Consultar tarifa y fechas del hospedaje</span>
+                <span>Disponibilidad y tarifa de hospedaje</span>
                 <span>→</span>
               </button>
               <button
                 type="button"
                 class="wa-chip-btn"
-                onclick="openWhatsAppWithText('¡Hola La Finca! Me gustaría cotizar alimentación o reserva para un grupo/familia.')"
+                onclick="openWhatsAppWithText('Hola La Finca, deseo solicitar una cotización para un grupo o evento familiar.')"
               >
-                <span>👨‍👩‍👧‍👦 Cotizar para una familia o grupo</span>
+                <span>Cotización para grupos o eventos</span>
                 <span>→</span>
               </button>
               <button
                 type="button"
                 class="wa-chip-btn"
-                onclick="openWhatsAppWithText('¡Hola La Finca! ¿Me podrían confirmar el horario de atención de hoy?')"
+                onclick="openWhatsAppWithText('Hola La Finca, ¿me podrían confirmar el horario de atención de hoy?')"
               >
-                <span>🕒 Consultar horario de atención de hoy</span>
+                <span>Consultar horario de atención</span>
                 <span>→</span>
               </button>
-              <a
-                href="https://maps.app.goo.gl/84bTFVTSJA6YsUF87"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="wa-chip-btn"
-              >
-                <span>📍 Abrir ubicación exacta en Google Maps</span>
-                <span>↗</span>
-              </a>
             </div>
           </div>
         </div>
 
-        <!-- Card 2: Restaurant Service Info -->
+        <!-- Card 2: Service Modalities -->
         <div class="contact-card">
           <div>
-            <div class="contact-card-icon">🍽️</div>
-            <h3 style="font-family:var(--font-display); font-size:1.35rem; margin-bottom:0.4rem;">
-              Restaurante &amp; Pedidos para Llevar
+            <div class="eyebrow-label" style="margin-bottom:0.5rem;">Servicios</div>
+            <h3 style="font-family:var(--font-serif); font-size:1.5rem; font-weight:500; margin-bottom:0.5rem;">
+              Gastronomía &amp; Estancia
             </h3>
-            <p style="font-size:0.88rem; color:var(--clr-text-secondary); margin-bottom:1rem;">
-              Preparamos todos nuestros platillos al momento con ingredientes frescos:
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">
+              Ofrecemos una experiencia integral tanto para visitantes del restaurante como para huéspedes:
             </p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.88rem; color:var(--clr-text-main);">
-              <li>✅ <strong>Platos Fuertes:</strong> Tilapia entera, filetes, camarones, arroces y casados.</li>
-              <li>✅ <strong>Comidas Rápidas:</strong> Papanachos, nachos, chifrijo, ceviche, patacones, chicharrones y hamburguesas.</li>
-              <li>✅ <strong>Sopas y Bebidas:</strong> Sopa de mariscos, sopa ranchera, batidos en leche, frescos naturales y café.</li>
-              <li>✅ <strong>Modalidad:</strong> Para comer en el restaurante o retirar empaquetado listo para llevar.</li>
-            </ul>
+            <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.85rem; color:var(--text-secondary);">
+              <div style="padding-bottom:0.65rem; border-bottom:1px solid var(--border-subtle);">
+                <strong style="color:var(--text-primary); display:block;">Restaurante &amp; Para Llevar</strong>
+                Mariscos, carnes, arroces, casados, sopas y comidas rápidas preparadas al momento.
+              </div>
+              <div style="padding-bottom:0.65rem; border-bottom:1px solid var(--border-subtle);">
+                <strong style="color:var(--text-primary); display:block;">Hospedaje Privado</strong>
+                Cabaña equipada con cocina, refrigeradora, microondas, comedor y terraza.
+              </div>
+              <div>
+                <strong style="color:var(--text-primary); display:block;">Facilidades de Pago</strong>
+                Aceptamos SINPE Móvil (8585-7454), efectivo y tarjeta.
+              </div>
+            </div>
           </div>
           <a href="#menu-digital" class="btn btn-outline" style="width:100%;">
-            Ir al Menú Digital ↑
+            Ver Menú Digital
           </a>
         </div>
 
-        <!-- Card 3: Direct Phone & WhatsApp Card -->
-        <div class="contact-card" style="background:linear-gradient(155deg, var(--clr-forest-900), var(--clr-forest-950)); color:#fff; border-color:var(--clr-forest-800);">
+        <!-- Card 3: Direct Phone -->
+        <div class="contact-card" style="background:var(--bg-dark); color:#fff; border-color:var(--bg-dark);">
           <div>
-            <div class="contact-card-icon" style="background:rgba(212,155,56,0.2); color:var(--clr-gold-400);">📞</div>
-            <h3 style="font-family:var(--font-display); font-size:1.4rem; margin-bottom:0.4rem; color:#fff;">
-              Línea Directa La Finca
+            <div class="eyebrow-label" style="margin-bottom:0.5rem;">Línea Oficial</div>
+            <h3 style="font-family:var(--font-serif); font-size:1.55rem; font-weight:500; margin-bottom:0.5rem; color:#fff;">
+              Reservaciones &amp; Pedidos
             </h3>
-            <p style="font-size:0.88rem; color:rgba(255,255,255,0.8); margin-bottom:1.25rem;">
-              Comunícate directamente con nosotros por llamada telefónica o WhatsApp para pedidos, reservas y consultas generales:
+            <p style="font-size:0.85rem; color:var(--text-on-dark-muted); margin-bottom:1.5rem;">
+              Atención directa para pedidos de retiro en el restaurante, reservaciones de mesa y estadías en el hospedaje.
             </p>
 
-            <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); padding:1.1rem; border-radius:var(--radius-md); text-align:center; margin-bottom:1rem;">
-              <div style="font-size:0.74rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--clr-gold-400); font-weight:700;">
-                WhatsApp &amp; Teléfono
+            <div style="padding:1.25rem; border:1px solid var(--border-dark); border-radius:var(--radius-xs); margin-bottom:1.25rem;">
+              <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; color:#E2C799; margin-bottom:0.25rem;">
+                Teléfono &amp; WhatsApp
               </div>
-              <div style="font-family:var(--font-display); font-size:2rem; font-weight:800; letter-spacing:0.02em; color:#fff;">
-                8585 7454
-              </div>
-              <div style="font-size:0.8rem; color:rgba(255,255,255,0.7);">
-                Código de país Costa Rica (+506)
+              <div style="font-family:var(--font-serif); font-size:2.1rem; font-weight:500; color:#fff; line-height:1.1;">
+                (+506) 8585-7454
               </div>
             </div>
           </div>
@@ -790,36 +762,35 @@
               class="btn btn-whatsapp"
               style="width:100%;"
             >
-              <span>💬</span>
-              <span>Abrir Chat en WhatsApp</span>
+              <span>Escribir por WhatsApp</span>
             </a>
-            <a href="tel:+50685857454" class="btn btn-outline" style="width:100%; background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.25);">
-              <span>📞</span>
+            <a
+              href="tel:+50685857454"
+              class="btn btn-outline"
+              style="width:100%; color:#fff; border-color:var(--border-dark);"
+            >
               <span>Llamar al 8585-7454</span>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- Interactive Google Maps & Location Showcase -->
-      <div class="location-showcase-card" id="ubicacion">
+      <!-- Location & Google Maps Embed -->
+      <div class="location-showcase-card reveal" id="ubicacion">
         <div class="location-info-pane">
           <div>
-            <span class="location-coords-pill">
-              <span>📍</span>
-              <span>Ubicación Oficial • La Finca</span>
-            </span>
-            <h3 style="font-family:var(--font-display); font-size:1.75rem; color:var(--clr-forest-950); margin:0.85rem 0 0.5rem;">
-              ¿Cómo llegar a Restaurante y Hospedaje La Finca?
+            <div class="eyebrow-label" style="margin-bottom:0.65rem;">Ubicación</div>
+            <h3 style="font-family:var(--font-serif); font-size:1.85rem; font-weight:500; color:var(--text-primary); margin-bottom:0.6rem;">
+              Cómo llegar a La Finca
             </h3>
-            <p style="font-size:0.94rem; color:var(--clr-text-secondary); margin-bottom:1.1rem;">
-              Encuéntranos fácilmente con un clic en Google Maps o Waze. Puedes pasar directamente a retirar tus pedidos del menú digital o llegar a tu check-in en el hospedaje con parqueo disponible.
+            <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1.25rem;">
+              Encuéntranos fácilmente a través de Google Maps o Waze. Contamos con acceso cómodo y espacio de parqueo para clientes del restaurante y huéspedes.
             </p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; font-size:0.88rem; color:var(--clr-text-main);">
-              <li>📌 <strong>Punto en Mapa:</strong> Hospedaje y Restaurante La Finca (10.36766, -84.59328)</li>
-              <li>🥡 <strong>Retiro de Pedidos:</strong> Ordena en línea y pasa a recoger sin esperas.</li>
-              <li>🏡 <strong>Recepción Hospedaje:</strong> Coordina tu llegada al WhatsApp <strong>8585-7454</strong>.</li>
-            </ul>
+            <div style="font-size:0.84rem; color:var(--text-secondary); display:flex; flex-direction:column; gap:0.45rem;">
+              <div><strong style="color:var(--text-primary);">Destino:</strong> Hospedaje y Restaurante La Finca</div>
+              <div><strong style="color:var(--text-primary);">Coordenadas:</strong> 10.36766, -84.59328</div>
+              <div><strong style="color:var(--text-primary);">Contacto en ruta:</strong> (+506) 8585-7454</div>
+            </div>
           </div>
 
           <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
@@ -827,10 +798,9 @@
               href="https://maps.app.goo.gl/84bTFVTSJA6YsUF87"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-forest"
+              class="btn btn-primary"
               style="flex:1;"
             >
-              <span>🗺️</span>
               <span>Abrir en Google Maps</span>
             </a>
             <a
@@ -840,15 +810,14 @@
               class="btn btn-outline"
               style="flex:1;"
             >
-              <span>🚗</span>
-              <span>Ir con Waze</span>
+              <span>Navegar con Waze</span>
             </a>
           </div>
         </div>
 
         <div class="location-map-pane">
           <iframe
-            title="Mapa de Ubicación Hospedaje y Restaurante La Finca"
+            title="Ubicación La Finca en Google Maps"
             src="https://maps.google.com/maps?q=10.3676637,-84.5932826&hl=es&z=16&output=embed"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -860,83 +829,83 @@
   </section>
 
   <!-- ========================================================================
-       8. FOOTER
+       7. FOOTER
        ======================================================================== -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <div class="brand-logo" style="margin-bottom:0.85rem;">
-            <div class="brand-emblem">LF</div>
+          <div class="brand-logo" style="margin-bottom:1rem;">
+            <div class="brand-monogram" style="border-color:rgba(255,255,255,0.3); color:#fff;">LF</div>
             <div class="brand-text">
               <span class="brand-name" style="color:#fff;">La Finca</span>
-              <span class="brand-tagline" style="color:var(--clr-gold-400);">Restaurante &amp; Hospedaje</span>
+              <span class="brand-tagline" style="color:var(--text-on-dark-muted);">Gastronomía &amp; Hospedaje</span>
             </div>
           </div>
-          <p style="font-size:0.88rem; line-height:1.55; margin-bottom:1rem;">
-            Gastronomía costarricense auténtica, comidas rápidas, mariscos frescos y hospedaje equipado rodeado de naturaleza.
+          <p style="font-size:0.85rem; line-height:1.6; margin-bottom:1rem; max-width:320px;">
+            Cocina costarricense, mariscos frescos, comidas rápidas y hospedaje privado rodeado de naturaleza.
           </p>
-          <p style="font-size:0.88rem; color:var(--clr-gold-400); font-weight:700; margin-bottom:0.35rem;">
-            📞 WhatsApp y Pedidos: (+506) 8585-7454
-          </p>
-          <p style="font-size:0.86rem;">
-            <a href="https://maps.app.goo.gl/84bTFVTSJA6YsUF87" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:underline;">
-              📍 Ver ubicación en Google Maps →
-            </a>
+          <p style="font-size:0.85rem; color:#fff;">
+            WhatsApp &amp; Teléfono: (+506) 8585-7454
           </p>
         </div>
 
         <div class="footer-col">
-          <h4>Navegación</h4>
+          <h4>Secciones</h4>
           <ul class="footer-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#menu-digital">Menú Digital</a></li>
-            <li><a href="#hospedaje">Hospedaje y Carrete</a></li>
-            <li><a href="#cotizador">Cotizador en Línea</a></li>
-            <li><a href="#ubicacion">Ubicación y Mapa</a></li>
-            <li><a href="#contacto">Contacto y Consultas</a></li>
+            <li><a href="#hospedaje">Hospedaje</a></li>
+            <li><a href="#cotizador">Pedidos y Cotizaciones</a></li>
+            <li><a href="#ubicacion">Ubicación</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Categorías del Menú</h4>
+          <h4>Menú</h4>
           <ul class="footer-links">
-            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=platos-fuertes]')?.click()">Platos Fuertes y Casados</a></li>
-            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=comidas-rapidas]')?.click()">Comidas Rápidas y Papanachos</a></li>
-            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=sopas]')?.click()">Sopa de Mariscos y Ranchera</a></li>
-            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=bebidas-frias]')?.click()">Batidos y Bebidas Frías</a></li>
-            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=bebidas-calientes]')?.click()">Café y Bebidas Calientes</a></li>
+            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=platos-fuertes]')?.click()">Platos Fuertes</a></li>
+            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=comidas-rapidas]')?.click()">Comidas Rápidas</a></li>
+            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=sopas]')?.click()">Sopas</a></li>
+            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=bebidas-frias]')?.click()">Bebidas Frías</a></li>
+            <li><a href="#menu-digital" onclick="document.querySelector('[data-cat=bebidas-calientes]')?.click()">Bebidas Calientes</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Pedidos y Reservas</h4>
-          <p style="font-size:0.85rem; margin-bottom:0.9rem;">
-            Haz tu pedido desde el menú digital para retirar en el restaurante o cotiza tu hospedaje en segundos.
+          <h4>Ubicación &amp; Orden</h4>
+          <p style="font-size:0.84rem; margin-bottom:1rem;">
+            Realiza tu pedido en línea para retirar en el restaurante o consulta disponibilidad de hospedaje.
           </p>
-          <button type="button" class="btn btn-primary" style="width:100%; font-size:0.86rem; padding:0.7rem 1rem;" onclick="toggleOrderDrawer(true)">
-            🧺 Ver Mi Pedido Actual
-          </button>
+          <a
+            href="https://maps.app.goo.gl/84bTFVTSJA6YsUF87"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+            style="width:100%; color:#fff; border-color:var(--border-dark); font-size:0.8rem; padding:0.65rem 1rem;"
+          >
+            Ver en Google Maps
+          </a>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 <strong>La Finca — Restaurante &amp; Hospedaje</strong>. Todos los derechos reservados.</span>
-        <span>Atención y Pedidos por WhatsApp: <a href="https://wa.me/50685857454" target="_blank" rel="noopener noreferrer" style="color:var(--clr-gold-400); font-weight:700;">8585-7454</a></span>
+        <span>© 2026 La Finca — Restaurante &amp; Hospedaje. Todos los derechos reservados.</span>
+        <span>Consultas y Pedidos: <a href="https://wa.me/50685857454" target="_blank" rel="noopener noreferrer" style="color:#fff;">(+506) 8585-7454</a></span>
       </div>
     </div>
   </footer>
 
   <!-- ========================================================================
-       9. SLIDE-OVER ORDER & QUOTE DRAWER (MI PEDIDO PARA RETIRAR)
+       8. SLIDE-OVER ORDER DRAWER
        ======================================================================== -->
   <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleOrderDrawer(false)"></div>
 
-  <aside class="order-drawer" id="orderDrawer" aria-label="Carrito de pedido y cotización">
+  <aside class="order-drawer" id="orderDrawer" aria-label="Resumen de orden">
     <div class="drawer-header">
       <div>
-        <h3>🧺 Tu Pedido / Cotización</h3>
-        <p style="font-size:0.76rem; color:rgba(255,255,255,0.75);">La Finca • Retiro en Restaurante o Cotización</p>
+        <h3>Tu Orden</h3>
+        <p style="font-size:0.74rem; color:var(--text-on-dark-muted);">La Finca — Retiro en Restaurante o Cotización</p>
       </div>
       <button type="button" class="drawer-close-btn" onclick="toggleOrderDrawer(false)" aria-label="Cerrar">✕</button>
     </div>
@@ -944,35 +913,34 @@
     <div class="drawer-body">
       <div id="drawerCartList"></div>
 
-      <!-- Quick Pick-up Details inside Drawer -->
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:2px solid var(--clr-border);">
-        <h4 style="font-size:0.95rem; color:var(--clr-forest-950); margin-bottom:0.75rem;">
-          📋 Datos para Enviar a La Finca (8585-7454)
+      <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--border-medium);">
+        <h4 style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-secondary); margin-bottom:0.85rem;">
+          Datos de Envío (WhatsApp 8585-7454)
         </h4>
 
         <div class="form-group">
           <label for="drawerOrderType">Modalidad</label>
           <select id="drawerOrderType" class="form-control">
-            <option value="Pedido para Retirar en el Restaurante">🥡 Pedido para Retirar en el Restaurante</option>
-            <option value="Cotización de Menú">📋 Solicitud de Cotización</option>
-            <option value="Pedido para Huésped del Hospedaje">🏡 Pedido de Huésped en Hospedaje</option>
+            <option value="Pedido para Retirar en el Restaurante">Pedido para Retirar en el Restaurante</option>
+            <option value="Cotización de Menú">Solicitud de Cotización</option>
+            <option value="Pedido para Huésped del Hospedaje">Pedido de Huésped en Hospedaje</option>
           </select>
         </div>
 
         <div class="form-grid-2">
           <div class="form-group">
-            <label for="drawerCustomerName">Tu Nombre</label>
+            <label for="drawerCustomerName">Nombre</label>
             <input type="text" id="drawerCustomerName" class="form-control" placeholder="Tu nombre" />
           </div>
           <div class="form-group">
-            <label for="drawerCustomerPhone">Tu Teléfono</label>
+            <label for="drawerCustomerPhone">Teléfono</label>
             <input type="tel" id="drawerCustomerPhone" class="form-control" placeholder="8888-8888" />
           </div>
         </div>
 
         <div class="form-grid-2">
           <div class="form-group">
-            <label for="drawerPickupTime">Hora de retiro</label>
+            <label for="drawerPickupTime">Retiro</label>
             <select id="drawerPickupTime" class="form-control">
               <option value="En 20-30 minutos">En 20-30 min</option>
               <option value="En 45 minutos">En 45 min</option>
@@ -991,29 +959,28 @@
         </div>
 
         <div class="form-group" style="margin-bottom:0;">
-          <label for="drawerOrderNotes">Instrucciones o notas</label>
-          <input type="text" id="drawerOrderNotes" class="form-control" placeholder="Ej. Salsa aparte, sin cebolla..." />
+          <label for="drawerOrderNotes">Notas</label>
+          <input type="text" id="drawerOrderNotes" class="form-control" placeholder="Instrucciones especiales..." />
         </div>
       </div>
     </div>
 
     <div class="drawer-footer">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem;">
-        <span style="font-weight:700; color:var(--clr-text-secondary);">Total Estimado:</span>
-        <span id="drawerSubtotal" style="font-family:var(--font-display); font-size:1.45rem; font-weight:800; color:var(--clr-burgundy-700);">₡0</span>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:1rem;">
+        <span style="font-size:0.84rem; color:var(--text-secondary);">Total Estimado</span>
+        <span id="drawerSubtotal" style="font-family:var(--font-serif); font-size:1.6rem; font-weight:600; color:var(--text-primary); font-variant-numeric:tabular-nums;">₡0</span>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:0.55rem;">
-        <button type="button" class="btn btn-whatsapp" style="width:100%;" onclick="sendOrderViaWhatsApp('drawer')">
-          <span>📲</span>
-          <span>Enviar Pedido por WhatsApp (8585-7454)</span>
+        <button type="button" class="btn btn-primary" style="width:100%;" onclick="sendOrderViaWhatsApp('drawer')">
+          <span>Enviar por WhatsApp (8585-7454)</span>
         </button>
         <div style="display:flex; gap:0.5rem;">
-          <button type="button" class="btn btn-outline" style="flex:1; padding:0.55rem; font-size:0.82rem;" onclick="clearCart()">
+          <button type="button" class="btn btn-outline" style="flex:1; padding:0.55rem; font-size:0.78rem;" onclick="clearCart()">
             Vaciar
           </button>
-          <a href="#cotizador" class="btn btn-outline" style="flex:2; padding:0.55rem; font-size:0.82rem;" onclick="toggleOrderDrawer(false)">
-            Ir al Cotizador Completo
+          <a href="#cotizador" class="btn btn-outline" style="flex:2; padding:0.55rem; font-size:0.78rem;" onclick="toggleOrderDrawer(false)">
+            Abrir Cotizador Completo
           </a>
         </div>
       </div>
@@ -1021,84 +988,72 @@
   </aside>
 
   <!-- ========================================================================
-       10. MODAL: ORIGINAL PHYSICAL MENU PHOTOS
+       9. MODALS (ORIGINAL MENU & LIGHTBOX)
        ======================================================================== -->
   <div class="modal-overlay" id="physicalMenuModal" onclick="if(event.target===this) closePhysicalMenuModal()">
     <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
         <div>
-          <h3 style="font-family:var(--font-display); font-size:1.5rem; color:var(--clr-forest-950);">
-            📖 Fotografías del Menú Físico — La Finca
+          <h3 style="font-family:var(--font-serif); font-size:1.65rem; font-weight:500;">
+            Menú Impreso Original — La Finca
           </h3>
-          <p style="font-size:0.85rem; color:var(--clr-text-muted);">
-            Puedes revisar las páginas originales de nuestro menú o hacer tu pedido directo en las tarjetas interactivas.
+          <p style="font-size:0.84rem; color:var(--text-muted);">
+            Fotografías de nuestro menú físico en el restaurante.
           </p>
         </div>
-        <button type="button" class="btn btn-outline" style="padding:0.45rem 0.9rem;" onclick="closePhysicalMenuModal()">
-          ✕ Cerrar
+        <button type="button" class="btn btn-outline" style="padding:0.45rem 0.9rem; font-size:0.8rem;" onclick="closePhysicalMenuModal()">
+          Cerrar
         </button>
       </div>
 
       <div class="physical-menu-pages">
-        <div>
-          <h4 style="margin-bottom:0.4rem; color:var(--clr-burgundy-800);">1. Comidas Rápidas y Sopas</h4>
-          <img src="assets/images/menu-original-1.png" alt="Menú Comidas Rápidas La Finca" loading="lazy" />
-        </div>
-        <div>
-          <h4 style="margin-bottom:0.4rem; color:var(--clr-burgundy-800);">2. Platos Fuertes y Casados</h4>
-          <img src="assets/images/menu-original-2.png" alt="Menú Platos Fuertes La Finca" loading="lazy" />
-        </div>
-        <div>
-          <h4 style="margin-bottom:0.4rem; color:var(--clr-burgundy-800);">3. Bebidas Calientes y Frías</h4>
-          <img src="assets/images/menu-original-3.png" alt="Menú Bebidas La Finca" loading="lazy" />
-        </div>
+        <img src="assets/images/menu-original-1.png" alt="Menú Comidas Rápidas La Finca" loading="lazy" />
+        <img src="assets/images/menu-original-2.png" alt="Menú Platos Fuertes La Finca" loading="lazy" />
+        <img src="assets/images/menu-original-3.png" alt="Menú Bebidas La Finca" loading="lazy" />
       </div>
     </div>
   </div>
 
-  <!-- ========================================================================
-       11. MODAL: FULLSCREEN PHOTO LIGHTBOX FOR HOSPEDAJE CAROUSEL
-       ======================================================================== -->
   <div class="modal-overlay" id="lightboxModal" onclick="if(event.target===this) closeLightboxModal()">
     <div class="modal-box" style="background:transparent; box-shadow:none; text-align:center; padding:0;">
-      <div style="display:flex; justify-content:flex-end; margin-bottom:0.5rem;">
-        <button type="button" class="btn btn-outline" style="background:#fff; padding:0.4rem 0.9rem;" onclick="closeLightboxModal()">
-          ✕ Cerrar Vista Ampliada
+      <div style="display:flex; justify-content:flex-end; margin-bottom:0.65rem;">
+        <button type="button" class="btn btn-outline" style="background:#fff; padding:0.45rem 1rem; font-size:0.8rem;" onclick="closeLightboxModal()">
+          Cerrar
         </button>
       </div>
-      <img id="lightboxImage" src="" alt="Vista ampliada Hospedaje La Finca" style="max-height:80vh; width:auto; margin:0 auto; border-radius:var(--radius-md); border:3px solid #fff;" />
-      <p id="lightboxCaption" style="color:#fff; font-weight:700; margin-top:0.65rem; font-size:1rem;"></p>
+      <img id="lightboxImage" src="" alt="Hospedaje La Finca" style="max-height:82vh; width:auto; margin:0 auto; border-radius:var(--radius-xs);" />
+      <p id="lightboxCaption" style="color:#fff; font-family:var(--font-serif); font-size:1.2rem; margin-top:0.75rem;"></p>
     </div>
   </div>
 
   <!-- ========================================================================
-       12. FLOATING WHATSAPP BUTTON & MOBILE STICKY ORDER BAR
+       10. FLOATING WHATSAPP & MOBILE STICKY BAR
        ======================================================================== -->
   <a
     href="https://wa.me/50685857454?text=Hola%20La%20Finca,%20me%20gustar%C3%ADa%20hacer%20una%20consulta."
     target="_blank"
     rel="noopener noreferrer"
     class="floating-wa-btn"
-    title="Chatear por WhatsApp con La Finca (8585-7454)"
+    title="WhatsApp La Finca (8585-7454)"
   >
-    <span>💬</span>
+    <svg class="icon-svg" viewBox="0 0 24 24" style="width:17px; height:17px;">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg>
     <span>WhatsApp 8585-7454</span>
   </a>
 
   <div class="mobile-sticky-order-bar" id="mobileStickyOrderBar">
     <div>
-      <div id="mobileCartCount" style="font-size:0.78rem; color:var(--clr-gold-400); font-weight:700;">0 platillos</div>
-      <div id="mobileCartTotal" style="font-size:1.15rem; font-weight:800;">₡0</div>
+      <div id="mobileCartCount" style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-on-dark-muted);">0 ítems</div>
+      <div id="mobileCartTotal" style="font-size:1.1rem; font-weight:600; font-variant-numeric:tabular-nums;">₡0</div>
     </div>
-    <button type="button" class="btn btn-primary" style="padding:0.65rem 1.2rem; font-size:0.88rem;" onclick="toggleOrderDrawer(true)">
-      Ver Pedido y Enviar →
+    <button type="button" class="btn btn-secondary" style="padding:0.6rem 1.15rem; font-size:0.82rem;" onclick="toggleOrderDrawer(true)">
+      Ver Orden
     </button>
   </div>
 
-  <!-- Toast Notifications Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Main Application Script -->
   <script src="js/app.js"></script>
 </body>
 </html>
