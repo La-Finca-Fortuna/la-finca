@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta name="theme-color" content="#065f46" id="meta-theme-color" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f5f5f4" id="meta-theme-color" />
   <meta name="description" content="Cabaña La Finca y Restaurante La Finca en San Isidro de Peñas Blancas, Costa Rica. Hospedaje cerca de La Fortuna y el Volcán Arenal, y gastronomía típica costarricense." />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="La Finca" />
 
-  <title>La Finca · Cabaña &amp; Restaurante | San Isidro de Peñas Blancas</title>
+  <title>La Finca · Cabaña &amp; Restaurante | Peñas Blancas</title>
 
   <!-- PWA Manifest & Favicon -->
   <link rel="manifest" href="./manifest.json" />
@@ -31,39 +32,20 @@
             sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
             display: ['"Fraunces"', 'Georgia', 'serif'],
           },
-          colors: {
-            finca: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              200: '#a7f3d0',
-              300: '#6ee7b7',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-              800: '#065f46',
-              900: '#064e3b',
-            }
-          },
           animation: {
             'float-slow': 'floatSlow 5s ease-in-out infinite',
-            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
             'rain-drop': 'rainDrop 1.4s linear infinite',
             'sun-spin': 'sunSpin 18s linear infinite',
           },
           keyframes: {
             floatSlow: {
               '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-6px)' },
-            },
-            pulseSoft: {
-              '0%, 100%': { opacity: '1' },
-              '50%': { opacity: '0.72' },
+              '50%': { transform: 'translateY(-4px)' },
             },
             rainDrop: {
-              '0%': { transform: 'translateY(-6px)', opacity: '0' },
+              '0%': { transform: 'translateY(-5px)', opacity: '0' },
               '50%': { opacity: '1' },
-              '100%': { transform: 'translateY(8px)', opacity: '0' },
+              '100%': { transform: 'translateY(6px)', opacity: '0' },
             },
             sunSpin: {
               '0%': { transform: 'rotate(0deg)' },
@@ -76,22 +58,16 @@
   </script>
 
   <style>
-    /* Ocultar barras de desplazamiento en carruseles manteniendo scroll táctil */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    /* Transiciones suaves para cambio de vistas SPA */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     .spa-view {
-      transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
     .spa-view.view-hidden {
       display: none;
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(6px);
     }
     .spa-view.view-active {
       display: block;
@@ -101,902 +77,653 @@
   </style>
 </head>
 
-<!-- Paleta modo claro: stone/slate cálido | Paleta modo oscuro de bajo contraste: zinc-900 / slate-800 evitando negros puros -->
-<body class="bg-stone-50 text-slate-800 dark:bg-zinc-900 dark:text-slate-100 font-sans antialiased selection:bg-emerald-600 selection:text-white transition-colors duration-300 min-h-screen flex flex-col">
+<!-- Modo Claro: stone-100 / slate-800 | Modo Oscuro de bajo contraste: zinc-900 / slate-800 (sin negros puros) -->
+<body class="bg-stone-100 text-slate-800 dark:bg-zinc-900 dark:text-slate-100 font-sans antialiased selection:bg-emerald-600 selection:text-white transition-colors duration-300 min-h-screen flex flex-col">
 
   <!-- =========================================================================
-       BARRA SUPERIOR GLOBAL (Visible en vistas internas Cabaña / Restaurante)
+       BARRA SUPERIOR COMPACTA Y UNIFICADA (Siempre visible en Celular y Desktop)
        ========================================================================= -->
-  <header id="global-navbar" class="sticky top-0 z-40 hidden backdrop-blur-md bg-white/85 dark:bg-zinc-900/85 border-b border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
-      <!-- Logo & Botón Volver al Inicio -->
-      <div class="flex items-center gap-3">
+  <header class="sticky top-0 z-40 h-14 backdrop-blur-md bg-white/90 dark:bg-zinc-900/90 border-b border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 h-full flex items-center justify-between gap-1.5 sm:gap-3">
+
+      <!-- Logo compacto (Vuelve al inicio) -->
+      <button
+        type="button"
+        onclick="App.navigateTo('landing')"
+        class="flex items-center gap-2 text-left shrink-0 group focus:outline-none"
+        aria-label="Inicio La Finca"
+      >
+        <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center shadow-sm group-active:scale-95 transition-transform">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </div>
+        <span class="font-display font-bold text-sm sm:text-base tracking-tight text-slate-900 dark:text-slate-100 hidden xs:inline sm:inline">La Finca</span>
+      </button>
+
+      <!-- Selector Compacto de Vistas (Inicio / Cabaña / Restaurante) en una sola fila -->
+      <nav class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200/70 dark:border-slate-700/70">
         <button
           type="button"
+          id="nav-btn-landing"
           onclick="App.navigateTo('landing')"
-          class="group flex items-center gap-2.5 text-left focus:outline-none"
-          aria-label="Volver a la pantalla de bienvenida"
+          class="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-semibold transition-all"
+          data-i18n="nav.home"
         >
-          <div class="w-10 h-10 rounded-xl bg-emerald-800 dark:bg-emerald-700/90 text-emerald-50 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-          </div>
-          <div>
-            <span class="font-display font-bold text-lg tracking-tight text-slate-900 dark:text-slate-100 block leading-none">La Finca</span>
-            <span class="text-xs text-slate-500 dark:text-zinc-400" data-i18n="nav.subtitle">Peñas Blancas, CR</span>
-          </div>
+          Inicio
         </button>
+        <button
+          type="button"
+          id="nav-btn-cabin"
+          onclick="App.navigateTo('cabin')"
+          class="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-semibold transition-all flex items-center gap-1"
+        >
+          <span>🏡</span>
+          <span data-i18n="nav.cabinShort">Cabaña</span>
+        </button>
+        <button
+          type="button"
+          id="nav-btn-restaurant"
+          onclick="App.navigateTo('restaurant')"
+          class="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-semibold transition-all flex items-center gap-1"
+        >
+          <span>🍽️</span>
+          <span data-i18n="nav.restShort">Menú</span>
+        </button>
+      </nav>
 
-        <!-- Selector rápido de sección (Cabaña / Restaurante) -->
-        <nav class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-xl border border-slate-200/70 dark:border-slate-700/70 ml-4">
-          <button
-            type="button"
-            id="nav-btn-cabin"
-            onclick="App.navigateTo('cabin')"
-            class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5"
-          >
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" />
-            </svg>
-            <span data-i18n="nav.cabin">Cabaña La Finca</span>
-          </button>
-          <button
-            type="button"
-            id="nav-btn-restaurant"
-            onclick="App.navigateTo('restaurant')"
-            class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5"
-          >
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            <span data-i18n="nav.restaurant">Restaurante La Finca</span>
-          </button>
-        </nav>
-      </div>
-
-      <!-- Controles Globales: Idioma, Moneda, Tema y Carrito -->
-      <div class="flex items-center gap-1.5 sm:gap-2.5">
-        <!-- Toggle Idioma (ES / EN) -->
+      <!-- Controles Globales Compactos: Idioma, Moneda, Tema (Claro/Oscuro) y Carrito -->
+      <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+        <!-- Idioma ES/EN -->
         <button
           type="button"
           onclick="App.toggleLanguage()"
-          class="h-9 px-2.5 sm:px-3 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 transition-all"
-          title="Cambiar idioma / Switch language"
+          class="h-8 px-2 rounded-lg bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 transition-all active:scale-95"
+          title="Idioma / Language"
         >
-          <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-          </svg>
           <span class="lang-indicator">ES</span>
         </button>
 
-        <!-- Toggle Moneda (CRC / USD) -->
+        <!-- Moneda CRC/USD -->
         <button
           type="button"
           onclick="App.toggleCurrency()"
-          class="h-9 px-2.5 sm:px-3 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1 transition-all"
-          title="Cambiar moneda / Switch currency"
+          class="h-8 px-2 rounded-lg bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 flex items-center gap-0.5 transition-all active:scale-95"
+          title="Moneda / Currency"
         >
-          <span class="text-amber-600 dark:text-amber-400 font-bold currency-symbol-indicator">₡</span>
+          <span class="text-amber-600 dark:text-amber-400 currency-symbol-indicator">₡</span>
           <span class="currency-code-indicator">CRC</span>
         </button>
 
-        <!-- Toggle Tema (Claro / Oscuro de bajo contraste) -->
+        <!-- Switch Modo Claro / Oscuro (Visible y táctil en celular y desktop) -->
         <button
           type="button"
           onclick="App.toggleTheme()"
-          class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center transition-all"
-          aria-label="Alternar tema claro u oscuro"
-          title="Alternar tema / Toggle theme"
+          class="h-8 px-2 sm:px-2.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center gap-1 text-[11px] font-semibold transition-all active:scale-95"
+          aria-label="Cambiar entre modo claro y oscuro"
         >
-          <!-- Icono Sol (visible en modo oscuro) -->
-          <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <!-- Icono Sol (visible en oscuro para pasar a claro) -->
+          <svg class="w-3.5 h-3.5 hidden dark:block text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <!-- Icono Luna (visible en modo claro) -->
-          <svg class="w-4 h-4 block dark:hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <!-- Icono Luna (visible en claro para pasar a oscuro) -->
+          <svg class="w-3.5 h-3.5 block dark:hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
+          <span id="theme-mode-label" class="hidden md:inline">Claro</span>
         </button>
 
-        <!-- Botón Carrito en barra superior -->
+        <!-- Botón Carrito Compacto -->
         <button
           type="button"
           onclick="App.toggleCartDrawer(true)"
-          class="relative h-9 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all"
-          aria-label="Abrir carrito de pedidos"
+          class="relative h-8 px-2.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-[11px] font-bold flex items-center gap-1 shadow-sm transition-all active:scale-95"
+          aria-label="Abrir carrito"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
-          <span class="hidden sm:inline" data-i18n="nav.order">Pedido</span>
-          <span id="header-cart-count" class="px-1.5 py-0.5 text-[11px] rounded-full bg-white/20 font-bold">0</span>
+          <span id="header-cart-count">0</span>
         </button>
       </div>
-    </div>
 
-    <!-- Barra secundaria móvil para alternar entre Cabaña y Restaurante -->
-    <div class="md:hidden flex border-t border-slate-200/70 dark:border-slate-800 bg-slate-50/90 dark:bg-zinc-900/90 px-4 py-1.5 gap-2">
-      <button
-        type="button"
-        id="mobile-nav-cabin"
-        onclick="App.navigateTo('cabin')"
-        class="flex-1 py-1.5 rounded-lg text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5"
-      >
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" />
-        </svg>
-        <span data-i18n="nav.cabin">Cabaña La Finca</span>
-      </button>
-      <button
-        type="button"
-        id="mobile-nav-restaurant"
-        onclick="App.navigateTo('restaurant')"
-        class="flex-1 py-1.5 rounded-lg text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5"
-      >
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-        <span data-i18n="nav.restaurant">Restaurante La Finca</span>
-      </button>
     </div>
   </header>
 
   <!-- =========================================================================
-       1. PANTALLA DE BIENVENIDA (LANDING PAGE A PANTALLA COMPLETA)
+       CONTENIDO PRINCIPAL SPA
        ========================================================================= -->
   <main class="flex-1 flex flex-col">
-    <section id="view-landing" class="spa-view view-active min-h-screen flex flex-col justify-between relative overflow-hidden px-4 sm:px-6 lg:px-10 py-6 sm:py-8">
-      <!-- Decoración ambiental sutil -->
-      <div class="pointer-events-none absolute -top-32 -left-32 w-96 h-96 rounded-full bg-emerald-500/10 dark:bg-emerald-500/5 blur-3xl"></div>
-      <div class="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-amber-500/10 dark:bg-amber-500/5 blur-3xl"></div>
 
-      <!-- Barra superior de la Landing con Selectores Iniciales (Idioma, Moneda, Tema, Instalar PWA) -->
-      <div class="max-w-7xl w-full mx-auto flex flex-wrap items-center justify-between gap-4 z-10">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl bg-emerald-800 dark:bg-emerald-700 text-emerald-50 flex items-center justify-center shadow-md">
-            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
+    <!-- =======================================================================
+         1. PANTALLA DE BIENVENIDA (LANDING PAGE LIMPIA Y DIRECTA)
+         ======================================================================= -->
+    <section id="view-landing" class="spa-view view-active flex-1 flex flex-col justify-between max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <div class="my-auto space-y-6 sm:space-y-8">
+        <!-- Encabezado compacto -->
+        <div class="text-center max-w-2xl mx-auto space-y-2.5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-100/90 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span data-i18n="landing.badge">San Isidro de Peñas Blancas · Costa Rica</span>
           </div>
-          <div>
-            <p class="text-xs uppercase tracking-widest text-emerald-700 dark:text-emerald-400 font-bold" data-i18n="landing.badge">San Isidro de Peñas Blancas · Costa Rica</p>
-            <h1 class="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">Grupo Familiar La Finca</h1>
-          </div>
-        </div>
+          <h1 class="font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-tight" data-i18n="landing.heroTitle">
+            Bienvenido a La Finca
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-zinc-400" data-i18n="landing.heroSubtitle">
+            Selecciona qué experiencia deseas explorar hoy. Puedes cambiar idioma, moneda o modo claro/oscuro en la barra superior en cualquier momento.
+          </p>
 
-        <!-- Panel de Selectores Iniciales (Idioma, Moneda, Tema) -->
-        <div class="flex flex-wrap items-center gap-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-sm">
-          <!-- Selector de Idioma -->
-          <div class="flex items-center bg-slate-100 dark:bg-zinc-900/80 rounded-xl p-0.5" role="group" aria-label="Selector de idioma">
-            <button
-              type="button"
-              onclick="App.setLanguage('es')"
-              data-lang-btn="es"
-              class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-            >
-              ES
-            </button>
-            <button
-              type="button"
-              onclick="App.setLanguage('en')"
-              data-lang-btn="en"
-              class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-            >
-              EN
-            </button>
-          </div>
-
-          <div class="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
-
-          <!-- Selector de Moneda -->
-          <div class="flex items-center bg-slate-100 dark:bg-zinc-900/80 rounded-xl p-0.5" role="group" aria-label="Selector de moneda">
-            <button
-              type="button"
-              onclick="App.setCurrency('CRC')"
-              data-curr-btn="CRC"
-              class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-            >
-              ₡ CRC
-            </button>
-            <button
-              type="button"
-              onclick="App.setCurrency('USD')"
-              data-curr-btn="USD"
-              class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-            >
-              $ USD
-            </button>
-          </div>
-
-          <div class="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
-
-          <!-- Selector de Tema Claro / Oscuro -->
-          <button
-            type="button"
-            onclick="App.toggleTheme()"
-            class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 dark:bg-zinc-900/80 dark:hover:bg-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 transition-all"
-          >
-            <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <svg class="w-4 h-4 block dark:hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-            <span data-i18n="landing.themeLabel">Tema</span>
-          </button>
-
-          <!-- Botón Instalar App (PWA) si está disponible -->
+          <!-- Botón Instalar App PWA si está disponible -->
           <button
             type="button"
             id="pwa-install-btn"
             onclick="App.installPWA()"
-            class="hidden px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold items-center gap-1.5 transition-all"
+            class="hidden mx-auto px-3.5 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold items-center gap-1.5 shadow-sm transition-all"
           >
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            <span data-i18n="landing.installPwa">Instalar App</span>
+            <span data-i18n="landing.installPwa">Instalar App en tu celular</span>
           </button>
         </div>
-      </div>
 
-      <!-- Contenido Central de Bienvenida y Tarjetas de Destino -->
-      <div class="max-w-7xl w-full mx-auto my-auto py-8 z-10">
-        <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-100/90 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/70 mb-4">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span data-i18n="landing.welcomePill">Hospitalidad y Sabor Auténtico cerca del Volcán Arenal</span>
-          </span>
-          <h2 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-tight" data-i18n="landing.heroTitle">
-            Dos experiencias familiares, un mismo corazón natural
-          </h2>
-          <p class="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 dark:text-zinc-400" data-i18n="landing.heroSubtitle">
-            Elige tu destino para comenzar: descansa rodeado de naturaleza en nuestra acogedora cabaña o disfruta los mejores platillos típicos de nuestro restaurante.
-          </p>
-        </div>
+        <!-- Dos Tarjetas de Destino (Compactas en móvil, lado a lado en Desktop) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
-        <!-- Dos Grandes Tarjetas Interactivas (Mobile First a Desktop Split) -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-          <!-- Tarjeta 1: Visitar Cabaña La Finca -->
+          <!-- Destino 1: Cabaña La Finca -->
           <article
             onclick="App.navigateTo('cabin')"
             tabindex="0"
             role="button"
             onkeydown="if(event.key==='Enter'||event.key===' ') App.navigateTo('cabin')"
-            class="group relative rounded-3xl overflow-hidden bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col justify-between min-h-[380px] sm:min-h-[430px]"
+            class="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-zinc-900 border border-slate-200/80 dark:border-slate-700/80 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[250px] sm:min-h-[340px]"
           >
-            <!-- Imagen de fondo con gradiente (Foto oficial de portada de Airbnb) -->
-            <div class="absolute inset-0 overflow-hidden">
-              <img
-                src="https://a0.muscache.com/im/pictures/hosting/Hosting-1732806563395028991/original/440f2127-ec8d-484c-a420-3da9963d40a2.jpeg"
-                alt="Cabaña La Finca en San Isidro de Peñas Blancas (Airbnb Oficial)"
-                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                loading="eager"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/95 via-zinc-900/55 to-zinc-900/20"></div>
-            </div>
+            <img
+              src="https://a0.muscache.com/im/pictures/hosting/Hosting-1732806563395028991/original/440f2127-ec8d-484c-a420-3da9963d40a2.jpeg"
+              alt="Cabaña La Finca Airbnb"
+              class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent"></div>
 
-            <!-- Etiquetas superiores -->
-            <div class="relative z-10 p-6 sm:p-8 flex items-center justify-between">
-              <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-600/95 text-white backdrop-blur-md shadow-sm" data-i18n="landing.cabinTag">
-                Hospedaje &amp; Naturaleza
+            <div class="relative z-10 p-4 sm:p-6 flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-600/95 text-white backdrop-blur-sm" data-i18n="landing.cabinTag">
+                Hospedaje
               </span>
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-900/75 text-amber-300 backdrop-blur-md flex items-center gap-1 border border-white/10">
-                ★ 4.95 · Airbnb &amp; Google
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-zinc-900/75 text-amber-300 backdrop-blur-sm border border-white/10">
+                ★ Airbnb &amp; Google
               </span>
             </div>
 
-            <!-- Contenido inferior -->
-            <div class="relative z-10 p-6 sm:p-8 mt-auto">
-              <div class="flex items-center gap-2 text-emerald-300 text-xs sm:text-sm font-medium mb-2">
-                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span data-i18n="landing.cabinLocation">San Isidro de Peñas Blancas · A 20 min de La Fortuna</span>
+            <div class="relative z-10 p-4 sm:p-6 mt-auto flex items-end justify-between gap-3">
+              <div>
+                <p class="text-[11px] text-emerald-300 font-medium mb-0.5" data-i18n="landing.cabinLocation">
+                  Peñas Blancas · A 20 min de La Fortuna
+                </p>
+                <h2 class="font-display text-xl sm:text-3xl font-bold text-white" data-i18n="landing.cabinTitle">
+                  Cabaña La Finca
+                </h2>
+                <p class="text-slate-200 text-xs sm:text-sm mt-1 line-clamp-2" data-i18n="landing.cabinDesc">
+                  Galería oficial, cotizador interactivo por fechas y pronóstico del clima.
+                </p>
               </div>
-              <h3 class="font-display text-2xl sm:text-4xl font-bold text-white mb-2" data-i18n="landing.cabinTitle">
-                Cabaña La Finca
-              </h3>
-              <p class="text-slate-200 text-sm sm:text-base mb-6 line-clamp-2" data-i18n="landing.cabinDesc">
-                Refugio privado rodeado de jardines tropicales, paz de montaña y acceso rápido al Volcán Arenal. Cotiza tu estadía al instante.
-              </p>
-              <div class="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-emerald-600 group-hover:bg-emerald-500 text-white font-semibold text-sm shadow-lg transition-all">
-                <span data-i18n="landing.cabinCta">Visitar Cabaña La Finca</span>
-                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <span class="shrink-0 w-10 h-10 rounded-xl bg-emerald-600 group-hover:bg-emerald-500 text-white flex items-center justify-center shadow-md group-hover:translate-x-0.5 transition-all">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
-              </div>
+              </span>
             </div>
           </article>
 
-          <!-- Tarjeta 2: Visitar Restaurante La Finca -->
+          <!-- Destino 2: Restaurante La Finca -->
           <article
             onclick="App.navigateTo('restaurant')"
             tabindex="0"
             role="button"
             onkeydown="if(event.key==='Enter'||event.key===' ') App.navigateTo('restaurant')"
-            class="group relative rounded-3xl overflow-hidden bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col justify-between min-h-[380px] sm:min-h-[430px]"
+            class="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-zinc-900 border border-slate-200/80 dark:border-slate-700/80 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[250px] sm:min-h-[340px]"
           >
-            <!-- Imagen de fondo con gradiente (Foto oficial Restaurante La Finca) -->
-            <div class="absolute inset-0 overflow-hidden">
-              <img
-                src="./restaurante-portada.jpg"
-                alt="Restaurante La Finca Gastronomía Costarricense"
-                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                loading="eager"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/95 via-zinc-900/55 to-zinc-900/20"></div>
-            </div>
+            <img
+              src="./restaurante-portada.jpg"
+              alt="Restaurante La Finca"
+              class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent"></div>
 
-            <!-- Etiquetas superiores -->
-            <div class="relative z-10 p-6 sm:p-8 flex items-center justify-between">
-              <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-600/95 text-white backdrop-blur-md shadow-sm" data-i18n="landing.restTag">
-                Sazón Costarricense
+            <div class="relative z-10 p-4 sm:p-6 flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-zinc-950 backdrop-blur-sm" data-i18n="landing.restTag">
+                Menú Digital
               </span>
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-900/75 text-emerald-300 backdrop-blur-md flex items-center gap-1.5 border border-white/10">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span data-i18n="landing.restOrderBadge">Pedidos por WhatsApp</span>
+              <span id="landing-rest-status-pill" class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-zinc-900/80 text-emerald-300 backdrop-blur-sm border border-white/10 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>Restaurante</span>
               </span>
             </div>
 
-            <!-- Contenido inferior -->
-            <div class="relative z-10 p-6 sm:p-8 mt-auto">
-              <div class="flex items-center gap-2 text-amber-300 text-xs sm:text-sm font-medium mb-2">
-                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span data-i18n="landing.restHours">Abierto todos los días · 7:00 AM – 9:00 PM</span>
+            <div class="relative z-10 p-4 sm:p-6 mt-auto flex items-end justify-between gap-3">
+              <div>
+                <p class="text-[11px] text-amber-300 font-medium mb-0.5" data-i18n="landing.restHours">
+                  Pedidos para salón, llevar o cabaña
+                </p>
+                <h2 class="font-display text-xl sm:text-3xl font-bold text-white" data-i18n="landing.restTitle">
+                  Restaurante La Finca
+                </h2>
+                <p class="text-slate-200 text-xs sm:text-sm mt-1 line-clamp-2" data-i18n="landing.restDesc">
+                  Comidas rápidas, sopas, tilapias, mariscos, arroces, casados y bebidas.
+                </p>
               </div>
-              <h3 class="font-display text-2xl sm:text-4xl font-bold text-white mb-2" data-i18n="landing.restTitle">
-                Restaurante La Finca
-              </h3>
-              <p class="text-slate-200 text-sm sm:text-base mb-6 line-clamp-2" data-i18n="landing.restDesc">
-                Casados al fogón, carnes, mariscos frescos, café chorreado y postres caseros. Arma tu pedido en el menú digital y ordénalo en un clic.
-              </p>
-              <div class="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-amber-600 group-hover:bg-amber-500 text-white font-semibold text-sm shadow-lg transition-all">
-                <span data-i18n="landing.restCta">Visitar Restaurante La Finca</span>
-                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <span class="shrink-0 w-10 h-10 rounded-xl bg-amber-500 group-hover:bg-amber-400 text-zinc-950 flex items-center justify-center shadow-md group-hover:translate-x-0.5 transition-all">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
-              </div>
+              </span>
             </div>
           </article>
+
         </div>
       </div>
 
-      <!-- Pie de la Landing -->
-      <div class="max-w-7xl w-full mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-zinc-400 border-t border-slate-200/70 dark:border-slate-800 pt-4 z-10">
-        <span data-i18n="footer.locationLine">📍 San Isidro de Peñas Blancas, San Ramón, Alajuela, Costa Rica</span>
-        <span>WhatsApp Directo: <a href="https://wa.me/50685857454" target="_blank" rel="noopener noreferrer" class="font-semibold text-emerald-700 dark:text-emerald-400 hover:underline">+506 8585 7454</a></span>
+      <!-- Pie compacto -->
+      <div class="pt-6 mt-6 border-t border-slate-200/70 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-zinc-400">
+        <span data-i18n="footer.locationLine">📍 San Isidro de Peñas Blancas, Alajuela, Costa Rica</span>
+        <a href="https://wa.me/50685857454" target="_blank" rel="noopener noreferrer" class="font-semibold text-emerald-700 dark:text-emerald-400 hover:underline">
+          WhatsApp: +506 8585 7454
+        </a>
       </div>
     </section>
 
-    <!-- =========================================================================
+    <!-- =======================================================================
          2. INTERFAZ DE CABAÑA LA FINCA
-         ========================================================================= -->
-    <section id="view-cabin" class="spa-view view-hidden pb-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 space-y-12 sm:space-y-16">
+         ======================================================================= -->
+    <section id="view-cabin" class="spa-view view-hidden pb-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 sm:pt-8 space-y-8 sm:space-y-10">
 
-        <!-- Encabezado + Indicadores de Ubicación y Distancia -->
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <!-- Encabezado compacto + Chips de distancia -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/90 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/70 mb-3">
-              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span data-i18n="cabin.locationBadge">San Isidro de Peñas Blancas, Costa Rica</span>
-            </div>
-            <h1 class="font-display text-3xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 tracking-tight" data-i18n="cabin.title">
+            <p class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1" data-i18n="cabin.locationBadge">
+              San Isidro de Peñas Blancas, Costa Rica
+            </p>
+            <h1 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100" data-i18n="cabin.title">
               Cabaña La Finca
             </h1>
-            <p class="mt-2 text-slate-600 dark:text-zinc-400 max-w-2xl text-sm sm:text-base" data-i18n="cabin.subtitle">
-              Tu refugio privado entre bosque tropical y montaña. Ideal para parejas, familias y viajeros que buscan tranquilidad auténtica a minutos de las mejores atracciones de la Zona Norte.
+            <p class="mt-1 text-xs sm:text-sm text-slate-600 dark:text-zinc-400 max-w-2xl" data-i18n="cabin.subtitle">
+              1 habitación · 2 camas · 1 baño privado · Cocina completa · Amplias zonas verdes.
             </p>
           </div>
 
-          <!-- Tarjetas de Indicadores de Distancia (La Fortuna & Volcán Arenal) -->
-          <div class="grid grid-cols-2 sm:flex items-stretch gap-3">
-            <div class="bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-4 py-3 shadow-sm flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                </svg>
-              </div>
+          <!-- Píldoras compactas de distancia -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-xs flex items-center gap-2 shadow-sm">
+              <span>🚗</span>
               <div>
-                <span class="text-[11px] uppercase tracking-wider font-bold text-slate-400 dark:text-zinc-400 block" data-i18n="cabin.distFortunaLabel">A La Fortuna</span>
-                <span class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">15 km · 20 min</span>
+                <span class="text-[10px] uppercase tracking-wider text-slate-400 dark:text-zinc-400 block leading-none" data-i18n="cabin.distFortunaLabel">A La Fortuna</span>
+                <span class="font-bold text-slate-800 dark:text-slate-100">15 km · 20 min</span>
               </div>
             </div>
-
-            <div class="bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl px-4 py-3 shadow-sm flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 20h18L13.5 6 9 14l-3-4-3 10z" />
-                </svg>
-              </div>
+            <div class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-xs flex items-center gap-2 shadow-sm">
+              <span>🌋</span>
               <div>
-                <span class="text-[11px] uppercase tracking-wider font-bold text-slate-400 dark:text-zinc-400 block" data-i18n="cabin.distVolcanoLabel">Al Volcán Arenal</span>
-                <span class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">22 km · 30 min</span>
+                <span class="text-[10px] uppercase tracking-wider text-slate-400 dark:text-zinc-400 block leading-none" data-i18n="cabin.distVolcanoLabel">Al Volcán Arenal</span>
+                <span class="font-bold text-slate-800 dark:text-slate-100">22 km · 30 min</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Galería Visual: Carrusel Responsivo Suave y Automático (27 Fotos Oficiales de Airbnb) -->
-        <div class="space-y-3">
-          <div class="relative rounded-3xl overflow-hidden bg-zinc-950 border border-slate-200/80 dark:border-slate-700/80 shadow-xl group"
+        <!-- Galería Carrusel de las 27 Fotos de Airbnb -->
+        <div class="space-y-2.5">
+          <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-zinc-950 border border-slate-200/80 dark:border-slate-700/80 shadow-lg"
                onmouseenter="App.pauseCarousel(true)"
                onmouseleave="App.pauseCarousel(false)">
-            <!-- Contador de fotos y enlace oficial a Airbnb -->
-            <div class="absolute top-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-none">
-              <span id="cabin-carousel-counter" class="px-3 py-1 rounded-full text-xs font-bold bg-zinc-900/75 text-white backdrop-blur-md border border-white/15">
+            <div class="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-none">
+              <span id="cabin-carousel-counter" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-zinc-900/80 text-white backdrop-blur-md border border-white/15">
                 1 / 27
               </span>
               <a
                 href="https://www.airbnb.co.cr/rooms/1773491009691684318"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="pointer-events-auto px-3.5 py-1.5 rounded-full text-xs font-bold bg-rose-600/95 hover:bg-rose-500 text-white backdrop-blur-md shadow-sm transition-all flex items-center gap-1.5"
+                class="pointer-events-auto px-3 py-1 rounded-full text-[11px] font-bold bg-rose-600/95 hover:bg-rose-500 text-white backdrop-blur-md shadow-sm transition-all flex items-center gap-1"
               >
-                <span>Ver anuncio en Airbnb</span>
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <span>Airbnb</span>
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
             </div>
 
-            <!-- Contenedor de Slides (Renderizado desde GALLERY_SLIDES en app.js) -->
-            <div id="cabin-carousel-track" class="relative h-[340px] sm:h-[460px] lg:h-[540px] w-full overflow-hidden">
-              <!-- Los contenedores de imágenes oficiales de Airbnb se renderizan desde GALLERY_SLIDES en app.js -->
-            </div>
+            <div id="cabin-carousel-track" class="relative h-[260px] sm:h-[380px] lg:h-[460px] w-full overflow-hidden"></div>
 
-            <!-- Controles Anterior / Siguiente -->
             <button
               type="button"
               onclick="App.prevSlide()"
-              class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-zinc-900/65 hover:bg-zinc-900/90 text-white backdrop-blur-md flex items-center justify-center border border-white/15 transition-all z-20"
-              aria-label="Foto anterior"
+              class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-zinc-900/65 hover:bg-zinc-900/90 text-white backdrop-blur-md flex items-center justify-center border border-white/15 transition-all z-20 active:scale-95"
+              aria-label="Anterior"
             >
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
+              ‹
             </button>
             <button
               type="button"
               onclick="App.nextSlide()"
-              class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-zinc-900/65 hover:bg-zinc-900/90 text-white backdrop-blur-md flex items-center justify-center border border-white/15 transition-all z-20"
-              aria-label="Foto siguiente"
+              class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-zinc-900/65 hover:bg-zinc-900/90 text-white backdrop-blur-md flex items-center justify-center border border-white/15 transition-all z-20 active:scale-95"
+              aria-label="Siguiente"
             >
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
+              ›
             </button>
           </div>
 
-          <!-- Tira de Miniaturas Interactivas de las 27 Fotos de Airbnb -->
-          <div id="cabin-carousel-dots" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1"></div>
+          <!-- Tira compacta de miniaturas -->
+          <div id="cabin-carousel-dots" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1"></div>
         </div>
 
-        <!-- Amenidades Rápidas de la Cabaña -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          <div class="bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl p-3.5 flex items-center gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 text-lg">📶</span>
-            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200" data-i18n="cabin.amenityWifi">Wi-Fi Fibra Óptica</span>
-          </div>
-          <div class="bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl p-3.5 flex items-center gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 text-lg">❄️</span>
-            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200" data-i18n="cabin.amenityAc">Aire Acondicionado</span>
-          </div>
-          <div class="bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl p-3.5 flex items-center gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 text-lg">🍳</span>
-            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200" data-i18n="cabin.amenityKitchen">Cocina Equipada</span>
-          </div>
-          <div class="bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl p-3.5 flex items-center gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 text-lg">🚗</span>
-            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200" data-i18n="cabin.amenityParking">Parqueo Privado</span>
-          </div>
-          <div class="bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl p-3.5 flex items-center gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 text-lg">🌿</span>
-            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200" data-i18n="cabin.amenityTerrace">Terraza &amp; Jardín</span>
-          </div>
-          <div class="bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 rounded-2xl p-3.5 flex items-center gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 text-lg">🍽️</span>
-            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200" data-i18n="cabin.amenityRoomService">Restaurante a Pasos</span>
-          </div>
-        </div>
+        <!-- Cotizador Interactivo + Widget de Clima y Upselling -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
-        <!-- ===================================================================
-             COTIZADOR INTERACTIVO + WIDGET ANIMADO DE CLIMA Y UPSELLING
-             =================================================================== -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <!-- Columna Izquierda (7 cols): Herramienta de Cotización Interactiva -->
-          <div class="lg:col-span-7 bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-sm">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+          <!-- Cotizador (7 cols) -->
+          <div class="lg:col-span-7 bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm">
+            <div class="flex items-center justify-between gap-2 mb-4">
               <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400" data-i18n="quote.kicker">Reserva Directa Sin Comisiones</span>
-                <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100" data-i18n="quote.title">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400" data-i18n="quote.kicker">Reserva Directa</span>
+                <h2 class="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100" data-i18n="quote.title">
                   Cotizador de Estadía
                 </h2>
               </div>
               <div class="text-right">
-                <span class="text-xs text-slate-500 dark:text-zinc-400 block" data-i18n="quote.baseRateLabel">Tarifa base por noche</span>
-                <span id="cabin-base-rate-display" class="text-lg sm:text-xl font-bold text-emerald-700 dark:text-emerald-400">₡38,000</span>
+                <span class="text-[11px] text-slate-500 dark:text-zinc-400 block" data-i18n="quote.baseRateLabel">Por noche</span>
+                <span id="cabin-base-rate-display" class="text-base sm:text-lg font-bold text-emerald-700 dark:text-emerald-400">₡38,000</span>
               </div>
             </div>
 
-            <form id="cabin-quote-form" onsubmit="event.preventDefault(); App.sendCabinQuoteWhatsApp();" class="space-y-5">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Fecha Check-in -->
+            <form id="cabin-quote-form" onsubmit="event.preventDefault(); App.sendCabinQuoteWhatsApp();" class="space-y-4">
+              <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label for="quote-checkin" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300 mb-2" data-i18n="quote.checkinLabel">
-                    Fecha de Entrada (Check-in)
+                  <label for="quote-checkin" class="block text-[11px] font-semibold text-slate-600 dark:text-zinc-300 mb-1" data-i18n="quote.checkinLabel">
+                    Entrada (Check-in)
                   </label>
                   <input
                     type="date"
                     id="quote-checkin"
                     onchange="App.updateCabinQuote()"
-                    class="w-full rounded-xl bg-slate-50 dark:bg-zinc-900/90 border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    class="w-full rounded-xl bg-stone-50 dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs sm:text-sm font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     required
                   />
                 </div>
-
-                <!-- Fecha Check-out -->
                 <div>
-                  <label for="quote-checkout" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300 mb-2" data-i18n="quote.checkoutLabel">
-                    Fecha de Salida (Check-out)
+                  <label for="quote-checkout" class="block text-[11px] font-semibold text-slate-600 dark:text-zinc-300 mb-1" data-i18n="quote.checkoutLabel">
+                    Salida (Check-out)
                   </label>
                   <input
                     type="date"
                     id="quote-checkout"
                     onchange="App.updateCabinQuote()"
-                    class="w-full rounded-xl bg-slate-50 dark:bg-zinc-900/90 border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    class="w-full rounded-xl bg-stone-50 dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs sm:text-sm font-medium text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     required
                   />
                 </div>
               </div>
 
-              <!-- Selector de Cantidad de Personas -->
-              <div>
-                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-300 mb-2" data-i18n="quote.guestsLabel">
-                  Cantidad de Huéspedes (Máx. 6 personas)
-                </label>
-                <div class="flex items-center justify-between bg-slate-50 dark:bg-zinc-900/90 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5">
-                  <div>
-                    <span id="quote-guests-display" class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">2 Huéspedes</span>
-                    <span class="block text-xs text-slate-500 dark:text-zinc-400" data-i18n="quote.extraGuestNote">Tarifa base incluye 2 personas</span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onclick="App.changeGuestCount(-1)"
-                      class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                      aria-label="Disminuir huéspedes"
-                    >
-                      −
-                    </button>
-                    <span id="quote-guests-count" class="w-7 text-center font-bold text-sm">2</span>
-                    <button
-                      type="button"
-                      onclick="App.changeGuestCount(1)"
-                      class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                      aria-label="Aumentar huéspedes"
-                    >
-                      +
-                    </button>
-                  </div>
+              <!-- Huéspedes compacto -->
+              <div class="flex items-center justify-between bg-stone-50 dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2">
+                <div>
+                  <span id="quote-guests-display" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100">2 Huéspedes</span>
+                  <span class="block text-[11px] text-slate-500 dark:text-zinc-400" data-i18n="quote.extraGuestNote">Base incluye 2 personas (máx. 6)</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onclick="App.changeGuestCount(-1)"
+                    class="w-8 h-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-sm font-bold active:scale-95"
+                  >
+                    −
+                  </button>
+                  <span id="quote-guests-count" class="w-6 text-center font-bold text-xs">2</span>
+                  <button
+                    type="button"
+                    onclick="App.changeGuestCount(1)"
+                    class="w-8 h-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-sm font-bold active:scale-95"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
-              <!-- Resumen del Desglose de Cotización -->
-              <div class="rounded-2xl bg-stone-100/90 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-slate-700/80 p-4 sm:p-5 space-y-2.5">
-                <div class="flex justify-between text-sm text-slate-600 dark:text-zinc-300">
+              <!-- Resumen compacto -->
+              <div class="rounded-xl bg-stone-100/80 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-slate-700/80 p-3.5 space-y-1.5 text-xs">
+                <div class="flex justify-between text-slate-600 dark:text-zinc-300">
                   <span id="quote-nights-line">2 noches × ₡38,000</span>
                   <span id="quote-nights-subtotal" class="font-semibold text-slate-900 dark:text-slate-100">₡76,000</span>
                 </div>
-                <div id="quote-extra-guests-row" class="flex justify-between text-sm text-slate-600 dark:text-zinc-300">
-                  <span id="quote-extra-guests-line">Huéspedes adicionales</span>
-                  <span id="quote-extra-guests-subtotal" class="font-semibold text-slate-900 dark:text-slate-100">₡0</span>
+                <div class="flex justify-between text-slate-600 dark:text-zinc-300">
+                  <span id="quote-extra-guests-line">Huéspedes extra</span>
+                  <span id="quote-extra-guests-subtotal" class="font-semibold text-slate-900 dark:text-slate-100">Incluido</span>
                 </div>
-                <div class="border-t border-slate-200 dark:border-slate-700 pt-2.5 flex items-baseline justify-between">
-                  <span class="text-sm font-bold text-slate-900 dark:text-slate-100" data-i18n="quote.totalEstimated">Total Estimado</span>
-                  <span id="quote-grand-total" class="font-display text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">₡76,000</span>
+                <div class="border-t border-slate-200 dark:border-slate-700 pt-2 flex items-baseline justify-between">
+                  <span class="font-bold text-slate-900 dark:text-slate-100" data-i18n="quote.totalEstimated">Total Estimado</span>
+                  <span id="quote-grand-total" class="font-display text-xl sm:text-2xl font-bold text-emerald-700 dark:text-emerald-400">₡76,000</span>
                 </div>
               </div>
 
-              <!-- Botón CTA para Consultar Disponibilidad / Reservar por WhatsApp -->
               <button
                 type="submit"
-                class="w-full py-3.5 px-6 rounded-2xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2.5"
+                class="w-full py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-sm transition-all flex items-center justify-center gap-2 active:scale-[0.99]"
               >
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
-                </svg>
-                <span data-i18n="quote.whatsappBtn">Reservar / Consultar fechas por WhatsApp</span>
+                <span>💬</span>
+                <span data-i18n="quote.whatsappBtn">Consultar fechas por WhatsApp</span>
               </button>
             </form>
           </div>
 
-          <!-- Columna Derecha (5 cols): Widget Animado de Clima Simulado + Upselling Gastronómico -->
-          <div class="lg:col-span-5 space-y-6">
-            <div class="bg-gradient-to-br from-emerald-900 via-slate-800 to-zinc-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-emerald-700/40 relative overflow-hidden">
-              <!-- Encabezado del Clima -->
-              <div class="flex items-center justify-between gap-2 mb-4">
+          <!-- Clima Simulado + Upselling + Métodos de Pago (5 cols) -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-gradient-to-br from-emerald-900 via-slate-800 to-zinc-900 text-white rounded-2xl sm:rounded-3xl p-5 shadow-md border border-emerald-700/30 space-y-4">
+              <div class="flex items-center justify-between">
                 <div>
-                  <span class="text-[11px] font-bold uppercase tracking-widest text-emerald-300 block" data-i18n="weather.kicker">Pronóstico Estimado en tus Fechas</span>
-                  <h3 id="weather-date-range" class="text-sm font-semibold text-slate-200 mt-0.5">San Isidro de Peñas Blancas</h3>
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-300 block" data-i18n="weather.kicker">Clima Estimado en tus Fechas</span>
+                  <span id="weather-date-range" class="text-xs font-semibold text-slate-200">Peñas Blancas</span>
                 </div>
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-emerald-200 backdrop-blur-sm">
-                  Microclima Tropical
-                </span>
+                <span id="weather-temp" class="font-display text-2xl font-bold text-amber-300">26°C</span>
               </div>
 
-              <!-- Tarjeta Principal del Clima Simulado con Icono SVG Animado -->
-              <div class="flex items-center gap-5 my-5 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
-                <div id="weather-animated-icon" class="w-16 h-16 shrink-0 flex items-center justify-center">
-                  <!-- Icono SVG animado inyectado dinámicamente -->
-                </div>
+              <div class="flex items-center gap-3.5 bg-white/10 rounded-xl p-3 border border-white/10">
+                <div id="weather-animated-icon" class="w-12 h-12 shrink-0 flex items-center justify-center"></div>
                 <div>
-                  <div class="flex items-baseline gap-2">
-                    <span id="weather-temp" class="font-display text-3xl font-bold">26°C</span>
-                    <span id="weather-condition-title" class="text-sm font-semibold text-emerald-300">Mañana Soleada</span>
-                  </div>
-                  <p id="weather-condition-desc" class="text-xs text-slate-200 mt-1">
-                    Brisa cálida con vistas despejadas hacia la cordillera de Tilarán y el Volcán Arenal.
-                  </p>
+                  <h3 id="weather-condition-title" class="text-xs sm:text-sm font-bold text-emerald-300">Clima Templado</h3>
+                  <p id="weather-condition-desc" class="text-[11px] text-slate-200 leading-snug mt-0.5"></p>
                 </div>
               </div>
 
-              <!-- Bloque de Upselling Dinámico del Restaurante -->
-              <div class="bg-zinc-900/80 rounded-2xl p-5 border border-amber-400/30 space-y-3">
-                <div class="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                  <span>🍽️</span>
-                  <span data-i18n="weather.upsellBadge">Recomendación del Chef para tu Clima</span>
+              <div class="bg-zinc-900/80 rounded-xl p-3.5 border border-amber-400/30 space-y-2.5">
+                <div class="text-[11px] font-bold text-amber-300 uppercase tracking-wider" data-i18n="weather.upsellBadge">
+                  🍽️ Sugerencia del Restaurante
                 </div>
-                <p id="weather-upsell-text" class="text-sm sm:text-base font-medium text-slate-100 leading-relaxed">
-                  Día soleado: refréscate con un Ceviche Costarricense recién preparado y un fresco natural de frutas.
-                </p>
-                <div class="pt-1 flex flex-wrap items-center justify-between gap-3">
-                  <span id="weather-upsell-price" class="text-xs font-semibold text-emerald-300">Sugerencia disponible en Restaurante La Finca</span>
+                <p id="weather-upsell-text" class="text-xs sm:text-sm text-slate-100 leading-relaxed"></p>
+                <div class="flex items-center justify-between gap-2 pt-1">
+                  <span id="weather-upsell-price" class="text-[11px] text-emerald-300 font-medium"></span>
                   <button
                     type="button"
                     onclick="App.goToRecommendedMenu()"
-                    class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md"
+                    class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs transition-all shrink-0 active:scale-95"
+                    data-i18n="weather.upsellCta"
                   >
-                    <span data-i18n="weather.upsellCta">Ver menú del restaurante</span>
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    Ver en el menú →
                   </button>
                 </div>
               </div>
             </div>
 
-            <!-- Métodos de Pago Aceptados -->
-            <div class="bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 rounded-3xl p-6 shadow-sm">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-4" data-i18n="cabin.paymentTitle">
-                Métodos de Pago Aceptados
-              </h3>
-              <div class="grid grid-cols-3 gap-3">
-                <!-- PayPal -->
-                <div class="rounded-2xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-slate-700 p-3.5 text-center flex flex-col items-center justify-center gap-2">
-                  <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/>
-                    </svg>
-                  </div>
-                  <span class="text-xs font-bold text-slate-800 dark:text-slate-200">PayPal</span>
-                </div>
-
-                <!-- Efectivo -->
-                <div class="rounded-2xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-slate-700 p-3.5 text-center flex flex-col items-center justify-center gap-2">
-                  <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                  <span class="text-xs font-bold text-slate-800 dark:text-slate-200" data-i18n="cabin.payCash">Efectivo (₡/$)</span>
-                </div>
-
-                <!-- Tarjetas -->
-                <div class="rounded-2xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-slate-700 p-3.5 text-center flex flex-col items-center justify-center gap-2">
-                  <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                    </svg>
-                  </div>
-                  <span class="text-xs font-bold text-slate-800 dark:text-slate-200" data-i18n="cabin.payCards">Tarjetas</span>
-                </div>
+            <!-- Métodos de pago compactos en una sola fila -->
+            <div class="bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-bold text-slate-500 dark:text-zinc-400" data-i18n="cabin.paymentTitle">Pagos:</span>
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">💳 PayPal</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300" data-i18n="cabin.payCash">💵 Efectivo (₡/$)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300" data-i18n="cabin.payCards">💳 Tarjetas</span>
               </div>
             </div>
           </div>
+
         </div>
 
-        <!-- ===================================================================
-             SECCIÓN DE RESEÑAS (SLIDER DE TARJETAS AIRBNB & GOOGLE MAPS)
-             =================================================================== -->
-        <div class="space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400" data-i18n="reviews.kicker">Experiencias Verificadas</span>
-              <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100" data-i18n="reviews.title">
-                Lo que dicen nuestros huéspedes en Airbnb y Google Maps
-              </h2>
-            </div>
-            <div class="flex items-center gap-2">
+        <!-- Reseñas (Slider Horizontal Compacto) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h2 class="font-display text-lg sm:text-2xl font-bold text-slate-900 dark:text-slate-100" data-i18n="reviews.title">
+              Reseñas en Airbnb y Google Maps
+            </h2>
+            <div class="flex items-center gap-1.5">
               <button
                 type="button"
                 onclick="App.scrollReviews(-1)"
-                class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                aria-label="Reseñas anteriores"
+                class="w-8 h-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold flex items-center justify-center active:scale-95"
+                aria-label="Anterior"
               >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
+                ‹
               </button>
               <button
                 type="button"
                 onclick="App.scrollReviews(1)"
-                class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                aria-label="Reseñas siguientes"
+                class="w-8 h-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold flex items-center justify-center active:scale-95"
+                aria-label="Siguiente"
               >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
+                ›
               </button>
             </div>
           </div>
-
-          <!-- Slider horizontal de tarjetas de reseñas -->
-          <div id="reviews-slider" class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2">
-            <!-- Inyectado dinámicamente por app.js -->
-          </div>
-        </div>
-
-        <!-- Banner de Contacto Directo Cabaña -->
-        <div class="rounded-3xl bg-emerald-800 dark:bg-slate-800 border border-emerald-700/60 dark:border-slate-700 p-6 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6">
-          <div class="space-y-2 text-center md:text-left">
-            <h3 class="font-display text-2xl sm:text-3xl font-bold" data-i18n="cabin.ctaBannerTitle">
-              ¿Tienes alguna consulta especial sobre Cabaña La Finca?
-            </h3>
-            <p class="text-emerald-100 dark:text-zinc-300 text-sm sm:text-base max-w-xl" data-i18n="cabin.ctaBannerDesc">
-              Atendemos personalmente cada reserva familiar. Escríbenos por WhatsApp y te responderemos de inmediato.
-            </p>
-          </div>
-          <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
-            <a
-              href="https://wa.me/50685857454?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Caba%C3%B1a%20La%20Finca."
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-6 py-3.5 rounded-2xl bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-sm shadow-lg transition-all flex items-center gap-2"
-            >
-              <span>💬 WhatsApp +506 8585 7454</span>
-            </a>
-            <a
-              href="https://www.google.com/maps/search/?api=1&amp;query=San+Isidro+de+Pe%C3%B1as+Blancas+Costa+Rica"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-5 py-3.5 rounded-2xl bg-emerald-900/70 hover:bg-emerald-900 text-white border border-white/15 font-semibold text-sm transition-all flex items-center gap-2"
-            >
-              <span>📍 Google Maps</span>
-            </a>
-          </div>
+          <div id="reviews-slider" class="flex gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-1"></div>
         </div>
 
       </div>
     </section>
 
-    <!-- =========================================================================
-         3. INTERFAZ DE RESTAURANTE LA FINCA
-         ========================================================================= -->
-    <section id="view-restaurant" class="spa-view view-hidden pb-28">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 space-y-8 sm:space-y-10">
+    <!-- =======================================================================
+         3. INTERFAZ DE RESTAURANTE LA FINCA (ÁGIL, INTERACTIVA Y COMPACTA)
+         ======================================================================= -->
+    <section id="view-restaurant" class="spa-view view-hidden pb-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 sm:pt-8 space-y-5">
 
-        <!-- Hero / Detalles del Restaurante (Foto Oficial + Horario & Ubicación en Google Maps) -->
-        <div class="rounded-3xl bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 overflow-hidden shadow-sm">
-          <!-- Banner fotográfico del Restaurante La Finca -->
-          <div class="relative h-56 sm:h-72 lg:h-80 w-full overflow-hidden">
-            <img
-              src="./restaurante-portada.jpg"
-              alt="Platillo Especial de Restaurante La Finca"
-              class="w-full h-full object-cover object-center"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/30 to-transparent"></div>
-            <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-8 right-4 flex flex-wrap items-center gap-2">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-zinc-950 shadow-sm" data-i18n="rest.badge">
-                Menú Oficial · Restaurante La Finca
-              </span>
-              <span id="rest-open-status" class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/85 text-emerald-300 border border-emerald-500/40 backdrop-blur-md flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span data-i18n="rest.openNow">Abierto · 7:00 AM a 9:00 PM</span>
+        <!-- Cabecera Compacta del Restaurante con Foto + Horario Desplegable Tipo Google Maps -->
+        <div class="rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm">
+          <div class="grid grid-cols-1 md:grid-cols-12">
+            <!-- Foto del plato insignia -->
+            <div class="md:col-span-5 relative h-44 sm:h-52 md:h-auto overflow-hidden">
+              <img
+                src="./restaurante-portada.jpg"
+                alt="Restaurante La Finca"
+                class="w-full h-full object-cover object-center"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/75 via-transparent to-transparent md:hidden"></div>
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-zinc-950 shadow-sm" data-i18n="rest.badge">
+                Menú Oficial · La Finca
               </span>
             </div>
-          </div>
 
-          <div class="p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div class="space-y-2">
-              <h1 class="font-display text-3xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 tracking-tight" data-i18n="rest.title">
-                Restaurante La Finca
-              </h1>
-              <p class="text-slate-600 dark:text-zinc-400 text-sm sm:text-base max-w-2xl" data-i18n="rest.subtitle">
-                Ingredientes frescos de San Isidro de Peñas Blancas. Selecciona tus platillos favoritos, ajusta las cantidades en tu carrito y envía tu orden directo a nuestra cocina por WhatsApp.
-              </p>
-            </div>
-
-            <!-- Tarjeta de Horario de Atención y Botón Google Maps -->
-            <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 bg-stone-50 dark:bg-zinc-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
-              <div class="flex items-start gap-3">
-                <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 block" data-i18n="rest.hoursTitle">Horario de Atención</span>
-                  <span class="text-sm font-bold text-slate-900 dark:text-slate-100 block" data-i18n="rest.hoursValue">Lunes a Domingo: 7:00 AM – 9:00 PM</span>
-                  <span class="text-xs text-slate-500 dark:text-zinc-400" data-i18n="rest.serviceModes">Salón · Para llevar · Entrega en Cabaña</span>
-                </div>
+            <!-- Información y Horario Interactivo Desplegable -->
+            <div class="md:col-span-7 p-4 sm:p-6 flex flex-col justify-between gap-4">
+              <div>
+                <h1 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100" data-i18n="rest.title">
+                  Restaurante La Finca
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 mt-1" data-i18n="rest.subtitle">
+                  Toca el botón + en cualquier platillo para armar tu pedido y enviarlo por WhatsApp.
+                </p>
               </div>
 
-              <a
-                href="https://www.google.com/maps/search/?api=1&amp;query=San+Isidro+de+Pe%C3%B1as+Blancas+Costa+Rica"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all"
-              >
-                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span data-i18n="rest.openMapsBtn">Abrir Ubicación en Google Maps</span>
-              </a>
+              <!-- Barra Interactiva de Horario (Estilo Google Maps) + Botón Ubicación -->
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <!-- Botón que despliega el horario completo de los 7 días -->
+                  <button
+                    type="button"
+                    onclick="App.toggleHoursDropdown()"
+                    class="flex-1 min-w-[220px] px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200/70 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-slate-200/80 dark:border-slate-700 text-left flex items-center justify-between gap-2 transition-all"
+                  >
+                    <div class="flex items-center gap-2 text-xs">
+                      <span id="rest-live-dot" class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                      <span id="rest-live-status-text" class="font-bold text-slate-900 dark:text-slate-100">Abierto</span>
+                      <span class="text-slate-400">·</span>
+                      <span id="rest-today-hours" class="text-slate-600 dark:text-zinc-300 truncate">Hoy: 9:30 a.m. – 7 p.m.</span>
+                    </div>
+                    <svg id="rest-hours-chevron" class="w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  <!-- Botón compacto Google Maps -->
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&amp;query=San+Isidro+de+Pe%C3%B1as+Blancas+Costa+Rica"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 active:scale-95"
+                  >
+                    <span>📍</span>
+                    <span data-i18n="rest.openMapsShort">Cómo llegar</span>
+                  </a>
+                </div>
+
+                <!-- Lista desplegable de los 7 días del horario oficial -->
+                <div
+                  id="rest-hours-dropdown"
+                  class="hidden rounded-xl bg-stone-50 dark:bg-zinc-900/95 border border-slate-200/80 dark:border-slate-700 p-3 text-xs space-y-1.5"
+                >
+                  <!-- Inyectado dinámicamente en app.js con el día actual resaltado en negrita -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Filtros de Categorías del Menú Digital -->
-        <div class="sticky top-16 z-30 py-3 bg-stone-50/95 dark:bg-zinc-900/95 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800">
-          <div id="menu-category-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <!-- Botones de categorías generados dinámicamente en app.js -->
+        <!-- Barra Sticky de Búsqueda Rápida + Categorías Compactas -->
+        <div class="sticky top-14 z-30 py-2.5 bg-stone-100/95 dark:bg-zinc-900/95 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800 space-y-2">
+          <!-- Buscador instantáneo -->
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="search"
+              id="menu-search-input"
+              oninput="App.setSearchQuery(this.value)"
+              placeholder="Buscar platillo o bebida (ej. Tilapia, Ceviche, Nachos, Café)..."
+              class="w-full rounded-xl bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 pl-9 pr-4 py-2 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
           </div>
+
+          <!-- Pestañas compactas de categorías -->
+          <div id="menu-category-tabs" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar"></div>
         </div>
 
-        <!-- Grid del Menú Digital (Inyectado desde MENU_ITEMS en app.js) -->
-        <div id="restaurant-menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Tarjetas de platillos renderizadas por app.js -->
-        </div>
+        <!-- Lista / Grid Compacto e Interactivo de Platillos -->
+        <div id="restaurant-menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
 
       </div>
     </section>
+
   </main>
 
   <!-- =========================================================================
-       BARRA INFERIOR FLOTANTE DEL CARRITO (Móvil / Tablet cuando hay items)
+       BARRA FLOTANTE COMPACTA DEL CARRITO (Solo aparece cuando hay platillos)
        ========================================================================= -->
   <div
     id="floating-cart-bar"
-    class="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:right-24 sm:w-96 z-40 hidden"
+    class="fixed bottom-4 left-4 right-16 sm:left-auto sm:right-20 sm:w-80 z-40 hidden"
   >
     <button
       type="button"
       onclick="App.toggleCartDrawer(true)"
-      class="w-full p-4 rounded-2xl bg-emerald-800 hover:bg-emerald-700 text-white shadow-2xl border border-emerald-500/40 flex items-center justify-between gap-4 transition-all"
+      class="w-full px-4 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white shadow-xl border border-emerald-400/30 flex items-center justify-between gap-3 transition-all active:scale-95"
     >
-      <div class="flex items-center gap-3">
-        <span id="floating-cart-badge" class="w-8 h-8 rounded-xl bg-white text-emerald-900 font-bold text-sm flex items-center justify-center">0</span>
-        <div class="text-left">
-          <span class="text-xs font-semibold text-emerald-200 block" data-i18n="cart.floatingTitle">Tu Orden Lista</span>
-          <span class="text-sm font-bold" data-i18n="cart.floatingCta">Ver carrito y hacer pedido</span>
-        </div>
+      <div class="flex items-center gap-2.5">
+        <span id="floating-cart-badge" class="w-6 h-6 rounded-lg bg-white text-emerald-900 font-bold text-xs flex items-center justify-center">0</span>
+        <span class="text-xs font-bold" data-i18n="cart.floatingCta">Ver pedido</span>
       </div>
-      <span id="floating-cart-total" class="font-display text-lg font-bold">₡0</span>
+      <span id="floating-cart-total" class="font-display text-sm sm:text-base font-bold">₡0</span>
     </button>
   </div>
 
   <!-- =========================================================================
-       DRAWER LATERAL / INFERIOR DEL CARRITO DE PEDIDOS (RESTAURANTE)
+       DRAWER DEL CARRITO DE PEDIDOS
        ========================================================================= -->
   <div id="cart-drawer-backdrop" class="fixed inset-0 z-50 hidden bg-zinc-950/60 backdrop-blur-sm transition-opacity" onclick="App.toggleCartDrawer(false)"></div>
 
@@ -1005,85 +732,70 @@
     class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white dark:bg-zinc-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col"
     aria-label="Carrito de pedidos"
   >
-    <!-- Cabecera del Carrito -->
-    <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-        </div>
-        <div>
-          <h2 class="font-display text-lg font-bold text-slate-900 dark:text-slate-100" data-i18n="cart.title">Tu Pedido</h2>
-          <p class="text-xs text-slate-500 dark:text-zinc-400" data-i18n="cart.subtitle">Restaurante La Finca</p>
-        </div>
+    <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div>
+        <h2 class="font-display text-base font-bold text-slate-900 dark:text-slate-100" data-i18n="cart.title">Tu Pedido</h2>
+        <p class="text-[11px] text-slate-500 dark:text-zinc-400" data-i18n="cart.subtitle">Restaurante La Finca</p>
       </div>
       <button
         type="button"
         onclick="App.toggleCartDrawer(false)"
-        class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-200 flex items-center justify-center"
+        class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-200 flex items-center justify-center text-sm"
         aria-label="Cerrar carrito"
       >
         ✕
       </button>
     </div>
 
-    <!-- Lista de Platillos en el Carrito -->
-    <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
-      <!-- Renderizado dinámico en app.js -->
-    </div>
+    <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-2.5"></div>
 
-    <!-- Opciones de Entrega y Checkout vía WhatsApp -->
-    <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-800/70 space-y-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-800/70 space-y-3">
+      <div class="grid grid-cols-2 gap-2.5">
         <div>
-          <label for="cart-customer-name" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1" data-i18n="cart.nameLabel">
-            Tu Nombre (Opcional)
+          <label for="cart-customer-name" class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1" data-i18n="cart.nameLabel">
+            Tu Nombre
           </label>
           <input
             type="text"
             id="cart-customer-name"
             placeholder="Ej. Familia Rojas"
-            class="w-full rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full rounded-lg bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
         </div>
         <div>
-          <label for="cart-delivery-mode" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1" data-i18n="cart.modeLabel">
+          <label for="cart-delivery-mode" class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1" data-i18n="cart.modeLabel">
             Modalidad
           </label>
           <select
             id="cart-delivery-mode"
-            class="w-full rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full rounded-lg bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
-            <option value="En el Restaurante" data-i18n="cart.modeDineIn">Comer en el Restaurante</option>
-            <option value="Para Llevar" data-i18n="cart.modeTakeout">Para Llevar (Pick-up)</option>
-            <option value="Entregar en Cabaña La Finca" data-i18n="cart.modeCabin">Entregar en Cabaña La Finca</option>
+            <option value="En el Restaurante" data-i18n="cart.modeDineIn">En el Restaurante</option>
+            <option value="Para Llevar" data-i18n="cart.modeTakeout">Para Llevar</option>
+            <option value="Entregar en Cabaña La Finca" data-i18n="cart.modeCabin">Entregar en Cabaña</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label for="cart-notes" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1" data-i18n="cart.notesLabel">
-          Notas o instrucciones especiales
-        </label>
         <input
           type="text"
           id="cart-notes"
-          placeholder="Ej. Sin culantro, término medio..."
-          class="w-full rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          placeholder="Notas (ej. Nachos de pollo, batido de mora...)"
+          class="w-full rounded-lg bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </div>
 
-      <div class="flex items-baseline justify-between pt-1">
-        <span class="text-sm font-bold text-slate-700 dark:text-zinc-200" data-i18n="cart.totalLabel">Total a Pagar</span>
-        <span id="cart-drawer-total" class="font-display text-2xl font-bold text-emerald-700 dark:text-emerald-400">₡0</span>
+      <div class="flex items-baseline justify-between">
+        <span class="text-xs font-bold text-slate-700 dark:text-zinc-200" data-i18n="cart.totalLabel">Total a Pagar</span>
+        <span id="cart-drawer-total" class="font-display text-xl font-bold text-emerald-700 dark:text-emerald-400">₡0</span>
       </div>
 
       <div class="flex gap-2">
         <button
           type="button"
           onclick="App.clearCart()"
-          class="px-3.5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-zinc-300 hover:bg-slate-200/60 dark:hover:bg-slate-700 transition-colors"
+          class="px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-zinc-300 hover:bg-slate-200/60"
           data-i18n="cart.clearBtn"
         >
           Vaciar
@@ -1091,35 +803,33 @@
         <button
           type="button"
           onclick="App.checkoutWhatsApp()"
-          class="flex-1 py-3.5 px-5 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2"
+          class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 active:scale-95"
         >
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/>
-          </svg>
-          <span data-i18n="cart.checkoutBtn">Hacer pedido por WhatsApp</span>
+          <span>💬</span>
+          <span data-i18n="cart.checkoutBtn">Enviar pedido por WhatsApp</span>
         </button>
       </div>
     </div>
   </aside>
 
   <!-- =========================================================================
-       BOTÓN FLOTANTE PERSISTENTE DE WHATSAPP (+506 8585 7454)
+       BOTÓN FLOTANTE DISCRETO DE WHATSAPP (+506 8585 7454)
        ========================================================================= -->
   <a
     id="floating-whatsapp-cta"
     href="https://wa.me/50685857454?text=Hola%20La%20Finca%2C%20me%20gustar%C3%ADa%20hacer%20una%20consulta."
     target="_blank"
     rel="noopener noreferrer"
-    class="fixed bottom-4 right-4 z-40 group flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-zinc-950 font-bold px-4 py-3.5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
-    aria-label="Contacto directo por WhatsApp +506 8585 7454"
+    class="fixed bottom-4 right-4 z-40 w-11 h-11 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-zinc-950 shadow-lg hover:shadow-xl flex items-center justify-center transition-transform active:scale-90"
+    aria-label="WhatsApp +506 8585 7454"
+    title="WhatsApp +506 8585 7454"
   >
-    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
       <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
     </svg>
-    <span class="hidden sm:inline text-xs tracking-tight" data-i18n="cta.whatsappFloat">WhatsApp Directo</span>
   </a>
 
-  <!-- Lógica Principal de la Aplicación (Vanilla JS) -->
+  <!-- Lógica Principal -->
   <script src="./app.js"></script>
 </body>
 </html>

@@ -8,19 +8,39 @@
  */
 
 /* --------------------------------------------------------------------------
- * 1. CONFIGURACIÓN GLOBAL Y PARÁMETROS DEL NEGOCIO
+ * 1. CONFIGURACIÓN GLOBAL Y HORARIO OFICIAL DEL RESTAURANTE
  * -------------------------------------------------------------------------- */
 const CONFIG = {
   whatsappNumber: '50685857454',
   exchangeRateUSD: 515, // 1 USD = 515 CRC
   cabin: {
-    baseNightlyRateCRC: 38000, // Tarifa base por noche (1-2 personas) en Colones
-    extraGuestFeeCRC: 8000,    // Cargo por persona adicional por noche en Colones
+    baseNightlyRateCRC: 38000,
+    extraGuestFeeCRC: 8000,
     includedGuests: 2,
     maxGuests: 6,
   },
   carouselIntervalMs: 5000,
 };
+
+/**
+ * Horario oficial de Restaurante La Finca (según Google Maps):
+ * domingo:    9:30 a.m. – 7:00 p.m.
+ * lunes:     11:00 a.m. – 6:00 p.m.
+ * martes:    11:00 a.m. – 6:00 p.m.
+ * miércoles: 11:00 a.m. – 7:00 p.m.
+ * jueves:     9:30 a.m. – 7:00 p.m.
+ * viernes:    9:30 a.m. – 7:00 p.m.
+ * sábado:     9:30 a.m. – 7:00 p.m.
+ */
+const RESTAURANT_SCHEDULE = [
+  { dayIndex: 0, day: { es: 'domingo', en: 'Sunday' }, hours: { es: '9:30 a.m.–7 p.m.', en: '9:30 AM–7:00 PM' }, openMin: 9 * 60 + 30, closeMin: 19 * 60 },
+  { dayIndex: 1, day: { es: 'lunes', en: 'Monday' }, hours: { es: '11 a.m.–6 p.m.', en: '11:00 AM–6:00 PM' }, openMin: 11 * 60, closeMin: 18 * 60 },
+  { dayIndex: 2, day: { es: 'martes', en: 'Tuesday' }, hours: { es: '11 a.m.–6 p.m.', en: '11:00 AM–6:00 PM' }, openMin: 11 * 60, closeMin: 18 * 60 },
+  { dayIndex: 3, day: { es: 'miércoles', en: 'Wednesday' }, hours: { es: '11 a.m.–7 p.m.', en: '11:00 AM–7:00 PM' }, openMin: 11 * 60, closeMin: 19 * 60 },
+  { dayIndex: 4, day: { es: 'jueves', en: 'Thursday' }, hours: { es: '9:30 a.m.–7 p.m.', en: '9:30 AM–7:00 PM' }, openMin: 9 * 60 + 30, closeMin: 19 * 60 },
+  { dayIndex: 5, day: { es: 'viernes', en: 'Friday' }, hours: { es: '9:30 a.m.–7 p.m.', en: '9:30 AM–7:00 PM' }, openMin: 9 * 60 + 30, closeMin: 19 * 60 },
+  { dayIndex: 6, day: { es: 'sábado', en: 'Saturday' }, hours: { es: '9:30 a.m.–7 p.m.', en: '9:30 AM–7:00 PM' }, openMin: 9 * 60 + 30, closeMin: 19 * 60 },
+];
 
 /* --------------------------------------------------------------------------
  * 2. DICCIONARIO DE INTERNACIONALIZACIÓN (i18n: Español / Inglés)
@@ -28,66 +48,49 @@ const CONFIG = {
 const I18N = {
   es: {
     nav: {
-      subtitle: 'Peñas Blancas, CR',
-      cabin: 'Cabaña La Finca',
-      restaurant: 'Restaurante La Finca',
-      order: 'Pedido',
+      home: 'Inicio',
+      cabinShort: 'Cabaña',
+      restShort: 'Menú',
+      lightMode: 'Claro',
+      darkMode: 'Oscuro',
     },
     landing: {
       badge: 'San Isidro de Peñas Blancas · Costa Rica',
-      themeLabel: 'Tema',
-      installPwa: 'Instalar App',
-      welcomePill: 'Hospitalidad y Sabor Auténtico cerca del Volcán Arenal',
-      heroTitle: 'Dos experiencias familiares, un mismo corazón natural',
+      heroTitle: 'Bienvenido a La Finca',
       heroSubtitle:
-        'Elige tu destino para comenzar: descansa rodeado de naturaleza en nuestra acogedora cabaña o disfruta los mejores platillos de nuestro restaurante.',
-      cabinTag: 'Hospedaje & Naturaleza',
-      cabinLocation: 'San Isidro de Peñas Blancas · A 20 min de La Fortuna',
+        'Selecciona qué experiencia deseas explorar hoy. Puedes cambiar idioma, moneda o modo claro/oscuro en la barra superior en cualquier momento.',
+      installPwa: 'Instalar App en tu celular',
+      cabinTag: 'Hospedaje',
+      cabinLocation: 'Peñas Blancas · A 20 min de La Fortuna',
       cabinTitle: 'Cabaña La Finca',
-      cabinDesc:
-        'Refugio privado rodeado de jardines tropicales, paz de montaña y acceso rápido al Volcán Arenal. Cotiza tu estadía al instante.',
-      cabinCta: 'Visitar Cabaña La Finca',
-      restTag: 'Menú Oficial La Finca',
-      restOrderBadge: 'Pedidos por WhatsApp',
-      restHours: 'Abierto todos los días · 7:00 AM – 9:00 PM',
+      cabinDesc: 'Galería oficial de Airbnb, cotizador interactivo por fechas y pronóstico del clima.',
+      restTag: 'Menú Digital',
+      restHours: 'Pedidos para salón, llevar o cabaña',
       restTitle: 'Restaurante La Finca',
-      restDesc:
-        'Comidas rápidas, ceviches, tilapias, mariscos, arroces, casados y bebidas naturales. Arma tu pedido en el menú digital y ordénalo en un clic.',
-      restCta: 'Visitar Restaurante La Finca',
+      restDesc: 'Comidas rápidas, sopas, tilapias, mariscos, arroces, casados y bebidas.',
     },
     footer: {
-      locationLine: '📍 San Isidro de Peñas Blancas, San Ramón, Alajuela, Costa Rica',
+      locationLine: '📍 San Isidro de Peñas Blancas, Alajuela, Costa Rica',
     },
     cabin: {
       locationBadge: 'San Isidro de Peñas Blancas, Costa Rica',
       title: 'Cabaña La Finca',
-      subtitle:
-        'Tu refugio privado entre bosque tropical y montaña (1 habitación · 2 camas · 1 baño completo · cocina equipada). Ideal para descansar a minutos de La Fortuna y el Volcán Arenal.',
+      subtitle: '1 habitación · 2 camas · 1 baño privado · Cocina completa · Amplias zonas verdes.',
       distFortunaLabel: 'A La Fortuna',
       distVolcanoLabel: 'Al Volcán Arenal',
-      amenityWifi: 'Wi-Fi de Alta Velocidad',
-      amenityAc: '1 Habitación · 2 Camas',
-      amenityKitchen: 'Cocina Completa',
-      amenityParking: 'Parqueo Privado',
-      amenityTerrace: 'Amplias Zonas Verdes',
-      amenityRoomService: 'Restaurante a Pasos',
-      paymentTitle: 'Métodos de Pago Aceptados',
-      payCash: 'Efectivo (₡/$)',
-      payCards: 'Tarjetas',
-      ctaBannerTitle: '¿Tienes alguna consulta especial sobre Cabaña La Finca?',
-      ctaBannerDesc:
-        'Atendemos personalmente cada reserva familiar. Escríbenos por WhatsApp y te responderemos de inmediato.',
+      paymentTitle: 'Pagos:',
+      payCash: '💵 Efectivo (₡/$)',
+      payCards: '💳 Tarjetas',
     },
     quote: {
-      kicker: 'Reserva Directa Sin Comisiones',
+      kicker: 'Reserva Directa',
       title: 'Cotizador de Estadía',
-      baseRateLabel: 'Tarifa base por noche',
-      checkinLabel: 'Fecha de Entrada (Check-in)',
-      checkoutLabel: 'Fecha de Salida (Check-out)',
-      guestsLabel: 'Cantidad de Huéspedes (Máx. 6 personas)',
-      extraGuestNote: 'Tarifa base incluye 2 personas',
+      baseRateLabel: 'Por noche',
+      checkinLabel: 'Entrada (Check-in)',
+      checkoutLabel: 'Salida (Check-out)',
+      extraGuestNote: 'Base incluye 2 personas (máx. 6)',
       totalEstimated: 'Total Estimado',
-      whatsappBtn: 'Reservar / Consultar fechas por WhatsApp',
+      whatsappBtn: 'Consultar fechas por WhatsApp',
       nightSingular: 'noche',
       nightPlural: 'noches',
       guestSingular: 'Huésped',
@@ -96,113 +99,88 @@ const I18N = {
       includedText: 'Incluido',
     },
     weather: {
-      kicker: 'Pronóstico Estimado en tus Fechas',
-      upsellBadge: 'Recomendación del Menú para tu Clima',
-      upsellCta: 'Ver menú del restaurante',
-      availableAt: 'Disponible en Restaurante La Finca por',
+      kicker: 'Clima Estimado en tus Fechas',
+      upsellBadge: '🍽️ Sugerencia del Restaurante',
+      upsellCta: 'Ver en el menú →',
+      availableAt: 'En el menú por',
     },
     reviews: {
-      kicker: 'Experiencias Verificadas',
-      title: 'Lo que dicen nuestros huéspedes en Airbnb y Google Maps',
+      title: 'Reseñas en Airbnb y Google Maps',
     },
     rest: {
-      badge: 'Menú Oficial · Restaurante La Finca',
-      openNow: 'Abierto · 7:00 AM a 9:00 PM',
+      badge: 'Menú Oficial · La Finca',
       title: 'Restaurante La Finca',
-      subtitle:
-        'Explora nuestro menú completo de Comidas Rápidas, Sopas, Platos Fuertes, Bebidas Calientes y Bebidas Frías. Ajusta las cantidades y envía tu pedido directo por WhatsApp.',
-      hoursTitle: 'Horario de Atención',
-      hoursValue: 'Lunes a Domingo: 7:00 AM – 9:00 PM',
-      serviceModes: 'Salón · Para llevar · Entrega en Cabaña',
-      openMapsBtn: 'Abrir Ubicación en Google Maps',
-      addBtn: 'Agregar al pedido',
-      inCartLabel: 'en tu pedido',
-      recommendedPill: '★ Sugerido para tu clima',
+      subtitle: 'Toca el botón + en cualquier platillo para armar tu pedido y enviarlo por WhatsApp.',
+      openStatus: 'Abierto ahora',
+      closedStatus: 'Cerrado',
+      todayPrefix: 'Hoy',
+      openMapsShort: 'Cómo llegar',
+      searchPlaceholder: 'Buscar platillo o bebida (ej. Tilapia, Ceviche, Nachos, Café)...',
+      recommendedPill: '★ Sugerido',
+      noResults: 'No se encontraron platillos con esa búsqueda.',
     },
     cart: {
-      floatingTitle: 'Tu Orden Lista',
-      floatingCta: 'Ver carrito y hacer pedido',
+      floatingCta: 'Ver pedido',
       title: 'Tu Pedido',
       subtitle: 'Restaurante La Finca',
       emptyTitle: 'Tu carrito está vacío',
-      emptyDesc: 'Explora las categorías del menú y agrega tus platillos o bebidas favoritas.',
-      nameLabel: 'Tu Nombre (Opcional)',
+      emptyDesc: 'Toca el botón + en cualquier platillo del menú para agregarlo.',
+      nameLabel: 'Tu Nombre',
       modeLabel: 'Modalidad',
-      modeDineIn: 'Comer en el Restaurante',
-      modeTakeout: 'Para Llevar (Pick-up)',
-      modeCabin: 'Entregar en Cabaña La Finca',
-      notesLabel: 'Notas o elección (ej. Pollo/Carne, sabor de batido)',
+      modeDineIn: 'En el Restaurante',
+      modeTakeout: 'Para Llevar',
+      modeCabin: 'Entregar en Cabaña',
       totalLabel: 'Total a Pagar',
       clearBtn: 'Vaciar',
-      checkoutBtn: 'Hacer pedido por WhatsApp',
-    },
-    cta: {
-      whatsappFloat: 'WhatsApp Directo',
+      checkoutBtn: 'Enviar pedido por WhatsApp',
     },
   },
 
   en: {
     nav: {
-      subtitle: 'Peñas Blancas, CR',
-      cabin: 'La Finca Cabin',
-      restaurant: 'La Finca Restaurant',
-      order: 'Order',
+      home: 'Home',
+      cabinShort: 'Cabin',
+      restShort: 'Menu',
+      lightMode: 'Light',
+      darkMode: 'Dark',
     },
     landing: {
       badge: 'San Isidro de Peñas Blancas · Costa Rica',
-      themeLabel: 'Theme',
-      installPwa: 'Install App',
-      welcomePill: 'Authentic Hospitality & Flavor near Arenal Volcano',
-      heroTitle: 'Two family experiences, one natural heart',
+      heroTitle: 'Welcome to La Finca',
       heroSubtitle:
-        'Choose your destination to begin: unwind surrounded by nature in our cozy cabin or savor our full restaurant menu.',
-      cabinTag: 'Stay & Nature',
-      cabinLocation: 'San Isidro de Peñas Blancas · 20 min from La Fortuna',
+        'Choose your experience below. Switch language, currency, or light/dark theme anytime from the top bar.',
+      installPwa: 'Install App on your phone',
+      cabinTag: 'Cabin Stay',
+      cabinLocation: 'Peñas Blancas · 20 min from La Fortuna',
       cabinTitle: 'Cabaña La Finca',
-      cabinDesc:
-        'Private mountain retreat surrounded by tropical gardens, peaceful nature, and quick access to Arenal Volcano. Quote your stay instantly.',
-      cabinCta: 'Visit Cabaña La Finca',
-      restTag: 'Official La Finca Menu',
-      restOrderBadge: 'WhatsApp Ordering',
-      restHours: 'Open daily · 7:00 AM – 9:00 PM',
+      cabinDesc: 'Official Airbnb photo gallery, interactive stay calculator & weather forecast.',
+      restTag: 'Digital Menu',
+      restHours: 'Dine-in, takeout or cabin delivery',
       restTitle: 'Restaurante La Finca',
-      restDesc:
-        'Fast food, fresh fish ceviche, whole fried tilapia, seafood, fried rice, traditional casados & natural drinks. Order online in seconds.',
-      restCta: 'Visit Restaurante La Finca',
+      restDesc: 'Fast food, soups, whole fried tilapia, seafood, fried rice, casados & drinks.',
     },
     footer: {
-      locationLine: '📍 San Isidro de Peñas Blancas, San Ramón, Alajuela, Costa Rica',
+      locationLine: '📍 San Isidro de Peñas Blancas, Alajuela, Costa Rica',
     },
     cabin: {
       locationBadge: 'San Isidro de Peñas Blancas, Costa Rica',
       title: 'Cabaña La Finca',
-      subtitle:
-        'Your private sanctuary between tropical rainforest and mountains (1 bedroom · 2 beds · 1 full bath · full kitchen). Minutes from La Fortuna and Arenal Volcano.',
+      subtitle: '1 bedroom · 2 beds · 1 private bath · Full kitchen · Spacious green areas.',
       distFortunaLabel: 'To La Fortuna',
       distVolcanoLabel: 'To Arenal Volcano',
-      amenityWifi: 'High-Speed Wi-Fi',
-      amenityAc: '1 Bedroom · 2 Beds',
-      amenityKitchen: 'Full Kitchen',
-      amenityParking: 'Private Parking',
-      amenityTerrace: 'Spacious Green Areas',
-      amenityRoomService: 'Steps from Restaurant',
-      paymentTitle: 'Accepted Payment Methods',
-      payCash: 'Cash (₡/$)',
-      payCards: 'Credit / Debit Cards',
-      ctaBannerTitle: 'Have a special question about Cabaña La Finca?',
-      ctaBannerDesc:
-        'Our family personally handles every reservation. Message us on WhatsApp and we will reply right away.',
+      paymentTitle: 'Payments:',
+      payCash: '💵 Cash (₡/$)',
+      payCards: '💳 Cards',
     },
     quote: {
-      kicker: 'Commission-Free Direct Booking',
-      title: 'Interactive Stay Calculator',
-      baseRateLabel: 'Base nightly rate',
-      checkinLabel: 'Check-in Date',
-      checkoutLabel: 'Check-out Date',
-      guestsLabel: 'Number of Guests (Max 6 guests)',
-      extraGuestNote: 'Base rate includes up to 2 guests',
+      kicker: 'Direct Booking',
+      title: 'Stay Calculator',
+      baseRateLabel: 'Per night',
+      checkinLabel: 'Check-in',
+      checkoutLabel: 'Check-out',
+      extraGuestNote: 'Base rate includes 2 guests (max 6)',
       totalEstimated: 'Estimated Total',
-      whatsappBtn: 'Book / Inquire Dates via WhatsApp',
+      whatsappBtn: 'Inquire dates via WhatsApp',
       nightSingular: 'night',
       nightPlural: 'nights',
       guestSingular: 'Guest',
@@ -211,48 +189,40 @@ const I18N = {
       includedText: 'Included',
     },
     weather: {
-      kicker: 'Simulated Forecast for Your Dates',
-      upsellBadge: 'Chef’s Weather Pairing Recommendation',
-      upsellCta: 'View restaurant menu',
-      availableAt: 'Available at Restaurante La Finca for',
+      kicker: 'Estimated Forecast for Your Dates',
+      upsellBadge: '🍽️ Restaurant Pairing Pick',
+      upsellCta: 'View on menu →',
+      availableAt: 'On the menu for',
     },
     reviews: {
-      kicker: 'Verified Guest Stories',
-      title: 'What our guests say on Airbnb & Google Maps',
+      title: 'Reviews on Airbnb & Google Maps',
     },
     rest: {
-      badge: 'Official Menu · Restaurante La Finca',
-      openNow: 'Open Daily · 7:00 AM to 9:00 PM',
+      badge: 'Official Menu · La Finca',
       title: 'Restaurante La Finca',
-      subtitle:
-        'Explore our complete menu of Fast Food, Soups, Main Dishes, Hot Beverages, and Cold Beverages. Adjust quantities in your cart and send your order via WhatsApp.',
-      hoursTitle: 'Opening Hours',
-      hoursValue: 'Monday to Sunday: 7:00 AM – 9:00 PM',
-      serviceModes: 'Dine-in · Takeout · Cabin Delivery',
-      openMapsBtn: 'Open Location in Google Maps',
-      addBtn: 'Add to order',
-      inCartLabel: 'in your order',
+      subtitle: 'Tap the + button on any dish to build your order and send it via WhatsApp.',
+      openStatus: 'Open now',
+      closedStatus: 'Closed',
+      todayPrefix: 'Today',
+      openMapsShort: 'Directions',
+      searchPlaceholder: 'Search dish or drink (e.g. Tilapia, Ceviche, Nachos, Coffee)...',
       recommendedPill: '★ Weather Pick',
+      noResults: 'No dishes matched your search.',
     },
     cart: {
-      floatingTitle: 'Your Order is Ready',
-      floatingCta: 'View cart & place order',
+      floatingCta: 'View order',
       title: 'Your Order',
       subtitle: 'Restaurante La Finca',
       emptyTitle: 'Your cart is empty',
-      emptyDesc: 'Browse the menu categories and add your favorite dishes or drinks.',
-      nameLabel: 'Your Name (Optional)',
+      emptyDesc: 'Tap the + button on any dish in the menu to add it.',
+      nameLabel: 'Your Name',
       modeLabel: 'Order Type',
-      modeDineIn: 'Dine-in at Restaurant',
-      modeTakeout: 'Takeout / Pick-up',
-      modeCabin: 'Deliver to Cabaña La Finca',
-      notesLabel: 'Notes or choices (e.g. Chicken/Beef, milkshake flavor)',
+      modeDineIn: 'Dine-in',
+      modeTakeout: 'Takeout',
+      modeCabin: 'Cabin Delivery',
       totalLabel: 'Total Due',
       clearBtn: 'Clear',
-      checkoutBtn: 'Place Order via WhatsApp',
-    },
-    cta: {
-      whatsappFloat: 'Direct WhatsApp',
+      checkoutBtn: 'Send Order via WhatsApp',
     },
   },
 };
@@ -461,12 +431,12 @@ const REVIEWS_DATA = [
     id: 'rev-1',
     platform: 'Airbnb',
     author: 'Mariana & Lucas',
-    country: '🇨🇷 San José, Costa Rica',
+    country: '🇨🇷 San José, CR',
     rating: 5,
     date: { es: 'Hace 2 semanas', en: '2 weeks ago' },
     text: {
-      es: '¡Una joya en Peñas Blancas! La cabaña es impecable, súper fresca y silenciosa. En 20 minutos estábamos en La Fortuna y al regresar cenamos delicioso en el Restaurante La Finca.',
-      en: 'A true gem in Peñas Blancas! The cabin is spotless, super fresh, and peaceful. We reached La Fortuna in 20 minutes and came back to an amazing dinner at Restaurante La Finca.',
+      es: '¡Una joya en Peñas Blancas! La cabaña es impecable y silenciosa. En 20 min estábamos en La Fortuna y al regresar cenamos delicioso en el Restaurante La Finca.',
+      en: 'A true gem in Peñas Blancas! The cabin is spotless and peaceful. We reached La Fortuna in 20 min and came back to an amazing dinner at Restaurante La Finca.',
     },
   },
   {
@@ -477,8 +447,8 @@ const REVIEWS_DATA = [
     rating: 5,
     date: { es: 'Hace 1 mes', en: '1 month ago' },
     text: {
-      es: 'Hospitalidad costarricense de primer nivel. Tener el restaurante familiar a pocos pasos hace toda la diferencia: el café caliente y los patacones en la tarde lluviosa fueron inolvidables.',
-      en: 'Top-notch Costa Rican hospitality. Having the family restaurant steps away makes all the difference—the hot coffee and patacones on a rainy afternoon were unforgettable.',
+      es: 'Hospitalidad costarricense de primer nivel. Tener el restaurante familiar a pocos pasos hace toda la diferencia: el café caliente y los patacones fueron inolvidables.',
+      en: 'Top-notch Costa Rican hospitality. Having the family restaurant steps away makes all the difference—the hot coffee and patacones were unforgettable.',
     },
   },
   {
@@ -489,26 +459,26 @@ const REVIEWS_DATA = [
     rating: 5,
     date: { es: 'Hace 1 mes', en: '1 month ago' },
     text: {
-      es: 'Despertar rodeados de jardines verdes camino al Volcán Arenal fue mágico. La cabaña tiene cocina muy completa y camas súper cómodas.',
-      en: 'Waking up surrounded by green gardens on the way to Arenal Volcano was magical. The cabin has a full kitchen and very comfortable beds.',
+      es: 'Despertar rodeados de jardines verdes camino al Volcán Arenal fue mágico. Cocina muy completa y camas súper cómodas.',
+      en: 'Waking up surrounded by green gardens on the way to Arenal Volcano was magical. Full kitchen and very comfortable beds.',
     },
   },
   {
     id: 'rev-4',
     platform: 'Google Maps',
     author: 'Carlos Vindas',
-    country: '🇨🇷 Heredia, Costa Rica',
+    country: '🇨🇷 Heredia, CR',
     rating: 5,
     date: { es: 'Hace 2 meses', en: '2 months ago' },
     text: {
-      es: 'Excelente relación calidad-precio. Nos quedamos 3 noches en familia; la Tilapia Entera Frita, el Chifrijo y el Ceviche del restaurante son 10/10. Volveremos sin duda.',
-      en: 'Unbeatable value. We stayed 3 nights with our family; the Whole Fried Tilapia, Chifrijo, and Fish Ceviche at the restaurant are 10/10. We will definitely return.',
+      es: 'Excelente relación calidad-precio. La Tilapia Entera Frita, el Chifrijo y el Ceviche del restaurante son 10/10. Volveremos sin duda.',
+      en: 'Unbeatable value. The Whole Fried Tilapia, Chifrijo, and Fish Ceviche at the restaurant are 10/10. We will definitely return.',
     },
   },
 ];
 
 /* --------------------------------------------------------------------------
- * 5. PERFILES SIMULADOS DE CLIMA + UPSELLING DINÁMICO CON PLATILLOS DEL MENÚ
+ * 5. PERFILES SIMULADOS DE CLIMA + UPSELLING DINÁMICO CON EL MENÚ OFICIAL
  * -------------------------------------------------------------------------- */
 const WEATHER_PROFILES = [
   {
@@ -516,20 +486,14 @@ const WEATHER_PROFILES = [
     tempC: 22,
     recommendedDishId: 'sopa-mariscos',
     recommendedCategory: 'soups',
-    title: {
-      es: 'Tarde Lluviosa de Montaña',
-      en: 'Cozy Mountain Rain Shower',
-    },
-    desc: {
-      es: 'Lluvia suave tropical típica de Peñas Blancas con brisa fresca en el bosque.',
-      en: 'Gentle tropical rain typical of Peñas Blancas with refreshing forest mist.',
-    },
+    title: { es: 'Tarde Lluviosa de Montaña', en: 'Mountain Rain Shower' },
+    desc: { es: 'Lluvia suave tropical con brisa fresca en Peñas Blancas.', en: 'Gentle tropical rain with fresh mountain breeze.' },
     upsell: {
-      es: '🍲 Tarde lluviosa: ideal para un Café con Leche (₡800), Agua Dulce con Leche o una reconfortante Sopa de Mariscos calientita.',
-      en: '🍲 Rainy afternoon: ideal for a hot Coffee with Milk, Sugar Cane Tea with Milk, or a steaming Seafood Soup.',
+      es: '🍲 Tarde lluviosa: ideal para un Café con Leche (₡800), Agua Dulce con Leche o una Sopa de Mariscos calientita.',
+      en: '🍲 Rainy afternoon: ideal for a hot Coffee with Milk, Sugar Cane Tea, or a steaming Seafood Soup.',
     },
     svgIcon: `
-      <svg class="w-14 h-14 text-sky-300" viewBox="0 0 64 64" fill="none">
+      <svg class="w-11 h-11 text-sky-300" viewBox="0 0 64 64" fill="none">
         <path d="M20 42h26a10 10 0 001.2-19.9A14 14 0 0020 18a11 11 0 000 22z" fill="currentColor" opacity="0.9"/>
         <line x1="24" y1="47" x2="21" y2="56" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" class="animate-rain-drop"/>
         <line x1="34" y1="47" x2="31" y2="56" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" class="animate-rain-drop" style="animation-delay:0.4s"/>
@@ -542,30 +506,20 @@ const WEATHER_PROFILES = [
     tempC: 29,
     recommendedDishId: 'ceviche-pescado',
     recommendedCategory: 'fast_food',
-    title: {
-      es: 'Día Soleado Tropical',
-      en: 'Sunny Tropical Day',
-    },
-    desc: {
-      es: 'Cielo despejado y excelente visibilidad hacia el Volcán Arenal y La Fortuna.',
-      en: 'Clear blue skies and crisp visibility toward Arenal Volcano and La Fortuna.',
-    },
+    title: { es: 'Día Soleado Tropical', en: 'Sunny Tropical Day' },
+    desc: { es: 'Cielo despejado hacia La Fortuna y el Volcán Arenal.', en: 'Clear skies toward La Fortuna and Arenal Volcano.' },
     upsell: {
-      es: '🍋 Día soleado: refréscate con nuestro Ceviche de Pescado recién preparado y un Batido en Leche o Refresco Natural bien frío.',
-      en: '🍋 Sunny day: cool down with our fresh Fish Ceviche and an ice-cold Natural Fruit Juice or Milkshake.',
+      es: '🍋 Día soleado: refréscate con un Ceviche de Pescado fresco y un Batido en Leche o Cerveza bien fría.',
+      en: '🍋 Sunny day: cool down with our fresh Fish Ceviche and an ice-cold Milkshake or Beer.',
     },
     svgIcon: `
-      <svg class="w-14 h-14 text-amber-300 animate-sun-spin" viewBox="0 0 64 64" fill="none">
+      <svg class="w-11 h-11 text-amber-300 animate-sun-spin" viewBox="0 0 64 64" fill="none">
         <circle cx="32" cy="32" r="13" fill="currentColor"/>
         <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
-          <line x1="32" y1="7" x2="32" y2="13"/>
-          <line x1="32" y1="51" x2="32" y2="57"/>
-          <line x1="7" y1="32" x2="13" y2="32"/>
-          <line x1="51" y1="32" x2="57" y2="32"/>
-          <line x1="14.3" y1="14.3" x2="18.5" y2="18.5"/>
-          <line x1="45.5" y1="45.5" x2="49.7" y2="49.7"/>
-          <line x1="49.7" y1="14.3" x2="45.5" y2="18.5"/>
-          <line x1="18.5" y1="45.5" x2="14.3" y2="49.7"/>
+          <line x1="32" y1="7" x2="32" y2="13"/><line x1="32" y1="51" x2="32" y2="57"/>
+          <line x1="7" y1="32" x2="13" y2="32"/><line x1="51" y1="32" x2="57" y2="32"/>
+          <line x1="14.3" y1="14.3" x2="18.5" y2="18.5"/><line x1="45.5" y1="45.5" x2="49.7" y2="49.7"/>
+          <line x1="49.7" y1="14.3" x2="45.5" y2="18.5"/><line x1="18.5" y1="45.5" x2="14.3" y2="49.7"/>
         </g>
       </svg>
     `,
@@ -575,20 +529,14 @@ const WEATHER_PROFILES = [
     tempC: 26,
     recommendedDishId: 'tilapia-entera-frita',
     recommendedCategory: 'mains',
-    title: {
-      es: 'Clima Templado con Brisa del Bosque',
-      en: 'Mild Mountain Breeze',
-    },
-    desc: {
-      es: 'Temperatura perfecta para recorrer senderos y disfrutar al aire libre.',
-      en: 'Ideal temperature for exploring nature trails and dining al fresco.',
-    },
+    title: { es: 'Clima Templado de Montaña', en: 'Mild Mountain Breeze' },
+    desc: { es: 'Temperatura agradable para disfrutar al aire libre.', en: 'Pleasant temperature for outdoor dining.' },
     upsell: {
-      es: '🐟 Clima ideal: disfruta nuestra especialidad de Tilapia Entera Frita con patacones/papas y ceviche de banano o un Casado Tradicional.',
-      en: '🐟 Ideal weather: enjoy our specialty Whole Fried Tilapia with banana ceviche or a traditional Costa Rican Casado.',
+      es: '🐟 Clima ideal: prueba nuestra especialidad de Tilapia Entera Frita con patacones o un Casado Tradicional.',
+      en: '🐟 Ideal weather: try our specialty Whole Fried Tilapia with patacones or a Traditional Casado.',
     },
     svgIcon: `
-      <svg class="w-14 h-14 text-emerald-300 animate-float-slow" viewBox="0 0 64 64" fill="none">
+      <svg class="w-11 h-11 text-emerald-300 animate-float-slow" viewBox="0 0 64 64" fill="none">
         <circle cx="22" cy="22" r="9" fill="#fbbf24"/>
         <path d="M22 44h24a9 9 0 001-17.9A12.5 12.5 0 0023 22a9.5 9.5 0 00-1 22z" fill="#e2e8f0" opacity="0.95"/>
         <path d="M14 52h28" stroke="#6ee7b7" stroke-width="3" stroke-linecap="round"/>
@@ -601,12 +549,12 @@ const WEATHER_PROFILES = [
  * 6. MENÚ DIGITAL OFICIAL DE RESTAURANTE LA FINCA (57 Ítems del Menú Físico)
  * -------------------------------------------------------------------------- */
 const MENU_CATEGORIES = [
-  { id: 'all', label: { es: 'Todo el Menú', en: 'Full Menu' }, icon: '✨' },
+  { id: 'all', label: { es: 'Todos', en: 'All' }, icon: '✨' },
   { id: 'fast_food', label: { es: 'Comidas Rápidas', en: 'Fast Food' }, icon: '🍔' },
   { id: 'soups', label: { es: 'Sopas', en: 'Soups' }, icon: '🍲' },
   { id: 'mains', label: { es: 'Platos Fuertes', en: 'Main Dishes' }, icon: '🍛' },
-  { id: 'hot_drinks', label: { es: 'Bebidas Calientes', en: 'Hot Beverages' }, icon: '☕' },
-  { id: 'cold_drinks', label: { es: 'Bebidas Frías', en: 'Cold Beverages' }, icon: '🥤' },
+  { id: 'hot_drinks', label: { es: 'Bebidas Calientes', en: 'Hot Drinks' }, icon: '☕' },
+  { id: 'cold_drinks', label: { es: 'Bebidas Frías', en: 'Cold Drinks' }, icon: '🥤' },
 ];
 
 const MENU_ITEMS = [
@@ -615,39 +563,34 @@ const MENU_ITEMS = [
     id: 'nachos-mixtos',
     category: 'fast_food',
     priceCRC: 4500,
-    badge: { es: 'Comidas Rápidas', en: 'Fast Food' },
     name: { es: 'Nachos Mixtos', en: 'Mixed Nachos' },
-    desc: { es: 'Nachos crujientes mixtos (pollo y carne) preparados al momento.', en: 'Crispy mixed nachos (chicken and beef) prepared to order.' },
+    desc: { es: 'Nachos crujientes mixtos (pollo y carne).', en: 'Crispy mixed nachos (chicken and beef).' },
   },
   {
     id: 'nachos-pollo-carne',
     category: 'fast_food',
     priceCRC: 4000,
-    badge: { es: 'Comidas Rápidas', en: 'Fast Food' },
     name: { es: 'Nachos de Pollo o Carne', en: 'Chicken or Beef Nachos' },
-    desc: { es: 'Elige entre pollo o carne en las notas de tu pedido.', en: 'Choose between chicken or beef in your order notes.' },
+    desc: { es: 'Elige pollo o carne en las notas del pedido.', en: 'Choose chicken or beef in order notes.' },
   },
   {
     id: 'papanachos-pollo-carne',
     category: 'fast_food',
     priceCRC: 5000,
-    badge: { es: 'Especialidad', en: 'Specialty' },
     name: { es: 'Papanachos de Pollo o Carne', en: 'Chicken or Beef Papanachos' },
-    desc: { es: 'Base de papas con aderezos y pollo o carne a elección.', en: 'Crispy potato base topped with chicken or beef.' },
+    desc: { es: 'Base de papas con pollo o carne a elección.', en: 'Crispy potato base with chicken or beef.' },
   },
   {
     id: 'papanachos-mixtos',
     category: 'fast_food',
     priceCRC: 5500,
-    badge: { es: 'Para Compartir', en: 'Shareable' },
     name: { es: 'Papanachos Mixtos', en: 'Mixed Papanachos' },
-    desc: { es: 'Papanachos combinados con pollo y carne.', en: 'Mixed papanachos with both chicken and beef.' },
+    desc: { es: 'Papanachos combinados con pollo y carne.', en: 'Mixed papanachos with chicken and beef.' },
   },
   {
     id: 'ceviche-pescado',
     category: 'fast_food',
     priceCRC: 3500,
-    badge: { es: 'Fresco', en: 'Fresh' },
     name: { es: 'Ceviche de Pescado', en: 'Fish Ceviche' },
     desc: { es: 'Porción regular de ceviche de pescado fresco.', en: 'Regular size fresh fish ceviche.' },
   },
@@ -655,63 +598,55 @@ const MENU_ITEMS = [
     id: 'ceviche-pescado-pequeno',
     category: 'fast_food',
     priceCRC: 2500,
-    badge: { es: 'Tamaño Pequeño', en: 'Small Size' },
     name: { es: 'Ceviche de Pescado Pequeño', en: 'Fish Ceviche (Small size)' },
-    desc: { es: 'Porción pequeña de ceviche de pescado fresco.', en: 'Small size fresh fish ceviche.' },
+    desc: { es: 'Porción pequeña de ceviche de pescado.', en: 'Small size fresh fish ceviche.' },
   },
   {
     id: 'chifrijo',
     category: 'fast_food',
     priceCRC: 4000,
-    badge: { es: 'Favorito Tico', en: 'Local Favorite' },
     name: { es: 'Chifrijo', en: 'Chifrijo Bowl' },
-    desc: { es: 'Arroz, frijoles, chicharrón, pico de gallo y tortillas tostadas.', en: 'Rice, beans, pork rinds, pico de gallo, and toasted tortillas.' },
+    desc: { es: 'Arroz, frijoles, pico de gallo y tortillas tostadas.', en: 'Fried rice, beans, pico de gallo & toast tortilla.' },
   },
   {
     id: 'orden-papas-fritas',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Acompañamiento', en: 'Side Order' },
     name: { es: 'Orden de Papas Fritas', en: 'French Fries' },
-    desc: { es: 'Porción de papas fritas doradas y crujientes.', en: 'Crispy golden French fries.' },
+    desc: { es: 'Porción de papas fritas crujientes.', en: 'Crispy golden French fries.' },
   },
   {
     id: 'orden-patacones',
     category: 'fast_food',
     priceCRC: 3000,
-    badge: { es: 'Tradicional', en: 'Traditional' },
     name: { es: 'Orden de Patacones', en: 'Order of Patacones' },
-    desc: { es: 'Acompañado de frijoles molidos y pico de gallo.', en: 'Fried green plantains with refried beans and pico de gallo.' },
+    desc: { es: 'Acompañado de frijoles molidos y pico de gallo.', en: 'Fried green plantains with refried beans & pico de gallo.' },
   },
   {
     id: 'orden-yuca-frita',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Acompañamiento', en: 'Side Order' },
     name: { es: 'Orden de Yuca Frita', en: 'Fried Yucca' },
-    desc: { es: 'Porción de yuca frita crujiente por fuera y suave por dentro.', en: 'Crispy fried cassava root.' },
+    desc: { es: 'Porción de yuca frita dorada.', en: 'Crispy fried cassava root.' },
   },
   {
     id: 'chicharrones',
     category: 'fast_food',
     priceCRC: 4000,
-    badge: { es: 'De la Casa', en: 'House Pick' },
     name: { es: 'Chicharrones', en: 'Pork Rinds (Chicharrones)' },
-    desc: { es: 'Acompañados de yuca frita y pico de gallo.', en: 'Pork rinds served with fried yucca and pico de gallo.' },
+    desc: { es: 'Con yuca frita y pico de gallo.', en: 'Pork rinds with yucca and pico de gallo.' },
   },
   {
     id: 'emparedados',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Comidas Rápidas', en: 'Sandwich' },
-    name: { es: 'Emparedados (Pollo, Carne o Jamón y Queso)', en: 'Sandwich (Chicken, Beef or Ham & Cheese)' },
-    desc: { es: 'Indica en notas si lo prefieres de pollo, carne o jamón y queso.', en: 'Specify chicken, beef, or ham & cheese in your order notes.' },
+    name: { es: 'Emparedados', en: 'Sandwich' },
+    desc: { es: 'Pollo, carne o jamón y queso.', en: 'Chicken, beef or ham and cheese.' },
   },
   {
     id: 'hamburguesa-sencilla',
     category: 'fast_food',
     priceCRC: 2500,
-    badge: { es: 'Comidas Rápidas', en: 'Fast Food' },
     name: { es: 'Hamburguesa Sencilla', en: 'Simple Hamburger' },
     desc: { es: 'Hamburguesa tradicional preparada al momento.', en: 'Classic freshly made hamburger.' },
   },
@@ -719,81 +654,71 @@ const MENU_ITEMS = [
     id: 'hamburguesa-con-papas',
     category: 'fast_food',
     priceCRC: 3000,
-    badge: { es: 'Combo', en: 'Combo' },
     name: { es: 'Hamburguesa con Papas', en: 'Hamburger with French Fries' },
-    desc: { es: 'Hamburguesa acompañada de orden de papas fritas.', en: 'Hamburger served with French fries.' },
+    desc: { es: 'Hamburguesa acompañada de papas fritas.', en: 'Hamburger served with French fries.' },
   },
   {
     id: 'taco-sencillo',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Comidas Rápidas', en: 'Fast Food' },
     name: { es: 'Taco Sencillo', en: 'Simple Taco' },
-    desc: { es: 'Taco tico crujiente con repollo y aderezos.', en: 'Crispy Costa Rican style taco.' },
+    desc: { es: 'Taco tico crujiente con repollo y salsas.', en: 'Crispy Costa Rican style taco.' },
   },
   {
     id: 'taco-con-papas',
     category: 'fast_food',
     priceCRC: 2500,
-    badge: { es: 'Combo', en: 'Combo' },
     name: { es: 'Taco con Papas', en: 'Taco with French Fries' },
-    desc: { es: 'Taco crujiente acompañado de papas fritas.', en: 'Crispy taco served with French fries.' },
+    desc: { es: 'Taco crujiente acompañado de papas fritas.', en: 'Taco served with French fries.' },
   },
   {
     id: 'torta-de-carne',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Comidas Rápidas', en: 'Fast Food' },
     name: { es: 'Torta de Carne', en: 'Beef Patty' },
-    desc: { es: 'Torta de carne sazonada al estilo casero.', en: 'Homestyle seasoned beef patty.' },
+    desc: { es: 'Torta de carne al estilo casero.', en: 'Homestyle seasoned beef patty.' },
   },
   {
     id: 'salchipapas',
     category: 'fast_food',
     priceCRC: 2500,
-    badge: { es: 'Comidas Rápidas', en: 'Fast Food' },
     name: { es: 'Salchipapas', en: 'Sausage and Fries' },
-    desc: { es: 'Papas fritas con salchicha y salsas.', en: 'French fries with sliced sausage and sauces.' },
+    desc: { es: 'Papas fritas con salchicha.', en: 'French fries with sliced sausage.' },
   },
   {
     id: 'gallo-salchichon',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Gallo Tico', en: 'Tortilla Gallo' },
     name: { es: 'Gallo de Salchichón', en: 'Sausage with Tortilla' },
-    desc: { es: 'Salchichón asado en tortilla casera.', en: 'Seasoned Costa Rican sausage on a warm tortilla.' },
+    desc: { es: 'Salchichón en tortilla caliente.', en: 'Sausage served on tortilla.' },
   },
   {
     id: 'gallo-queso',
     category: 'fast_food',
     priceCRC: 1500,
-    badge: { es: 'Gallo Tico', en: 'Tortilla Gallo' },
     name: { es: 'Gallo de Queso', en: 'Cheese with Tortilla' },
-    desc: { es: 'Queso a la plancha en tortilla.', en: 'Grilled local cheese on a warm tortilla.' },
+    desc: { es: 'Queso a la plancha en tortilla.', en: 'Grilled cheese with tortilla.' },
   },
   {
     id: 'gallo-pescado',
     category: 'fast_food',
     priceCRC: 2500,
-    badge: { es: 'Gallo Tico', en: 'Tortilla Gallo' },
     name: { es: 'Gallo de Pescado', en: 'Fish with Tortilla' },
-    desc: { es: 'Filet de pescado en tortilla.', en: 'Seasoned fish fillet served on tortilla.' },
+    desc: { es: 'Filet de pescado en tortilla.', en: 'Fish fillet with tortilla.' },
   },
   {
     id: 'prensadas',
     category: 'fast_food',
     priceCRC: 1000,
-    badge: { es: 'Tradicional', en: 'Traditional' },
-    name: { es: 'Prensadas', en: 'Cheese Crisp Tortilla (Prensada)' },
-    desc: { es: 'Tortilla prensada con queso derretido.', en: 'Pressed grilled tortilla with melted cheese.' },
+    name: { es: 'Prensadas', en: 'Cheese Crisp (Prensada)' },
+    desc: { es: 'Tortilla prensada con queso.', en: 'Pressed tortilla with melted cheese.' },
   },
   {
     id: 'platano-con-natilla',
     category: 'fast_food',
     priceCRC: 2000,
-    badge: { es: 'Dulce Tico', en: 'Sweet Side' },
-    name: { es: 'Plátano con Natilla', en: 'Sweet Plantains with Sour Cream' },
-    desc: { es: 'Plátano maduro dorado acompañado de natilla.', en: 'Fried sweet plantains served with Costa Rican sour cream.' },
+    name: { es: 'Plátano con Natilla', en: 'Plantains with Sour Cream' },
+    desc: { es: 'Plátano maduro con natilla.', en: 'Sweet plantains with sour cream.' },
   },
 
   // ================= SOPAS / SOUPS =================
@@ -801,17 +726,15 @@ const MENU_ITEMS = [
     id: 'sopa-ranchera',
     category: 'soups',
     priceCRC: 3500,
-    badge: { es: 'Sopa Caliente', en: 'Hot Soup' },
     name: { es: 'Sopa Ranchera', en: 'Ranchero Soup' },
-    desc: { es: 'Sopa ranchera tradicional preparada al momento.', en: 'Hearty traditional Ranchero soup.' },
+    desc: { es: 'Sopa ranchera tradicional caliente.', en: 'Hearty traditional Ranchero soup.' },
   },
   {
     id: 'sopa-mariscos',
     category: 'soups',
     priceCRC: 5000,
-    badge: { es: 'Especialidad', en: 'Specialty Soup' },
     name: { es: 'Sopa de Mariscos', en: 'Seafood Soup' },
-    desc: { es: 'Sopa reconfortante con mezcla de mariscos frescos.', en: 'Rich and comforting fresh seafood soup.' },
+    desc: { es: 'Sopa reconfortante de mariscos frescos.', en: 'Rich fresh seafood soup.' },
   },
 
   // ================= PLATOS FUERTES / MAIN DISHES =================
@@ -819,210 +742,137 @@ const MENU_ITEMS = [
     id: 'tilapia-entera-frita',
     category: 'mains',
     priceCRC: 7500,
-    badge: { es: 'Especialidad La Finca', en: 'House Specialty' },
     name: { es: 'Tilapia Entera Frita', en: 'Fried Whole Tilapia' },
     desc: {
       es: 'Papas fritas y ensalada o yuca frita y ceviche de banano.',
-      en: 'Served with French fries and salad, or fried yucca with banana ceviche.',
+      en: 'French fries & salad or fried yucca with banana ceviche.',
     },
   },
   {
     id: 'filet-tilapia-plancha',
     category: 'mains',
     priceCRC: 4800,
-    badge: { es: 'Platos Fuertes', en: 'Main Dish' },
     name: { es: 'Filet de Tilapia a la Plancha', en: 'Grilled Tilapia Fillet' },
-    desc: {
-      es: 'Acompañado de vegetales y arroz blanco.',
-      en: 'Grilled tilapia accompanied with vegetables and white rice.',
-    },
+    desc: { es: 'Acompañado de vegetales y arroz blanco.', en: 'With vegetables and white rice.' },
   },
   {
     id: 'filet-tilapia-empanizado',
     category: 'mains',
     priceCRC: 4800,
-    badge: { es: 'Platos Fuertes', en: 'Main Dish' },
     name: { es: 'Filet de Tilapia Empanizado', en: 'Breaded Tilapia Fillet' },
-    desc: {
-      es: 'Acompañado de vegetales y arroz blanco.',
-      en: 'Breaded tilapia accompanied with vegetables and white rice.',
-    },
+    desc: { es: 'Acompañado de vegetales y arroz blanco.', en: 'Breaded tilapia with vegetables and white rice.' },
   },
   {
     id: 'filet-pollo-plancha',
     category: 'mains',
     priceCRC: 4500,
-    badge: { es: 'Platos Fuertes', en: 'Main Dish' },
     name: { es: 'Filet de Pollo a la Plancha', en: 'Grilled Chicken Fillet' },
-    desc: {
-      es: 'Acompañado de vegetales y arroz blanco.',
-      en: 'Grilled chicken accompanied with vegetables and white rice.',
-    },
+    desc: { es: 'Acompañado de vegetales y arroz blanco.', en: 'Grilled chicken with vegetables and white rice.' },
   },
   {
     id: 'filet-pollo-empanizado',
     category: 'mains',
     priceCRC: 4500,
-    badge: { es: 'Platos Fuertes', en: 'Main Dish' },
     name: { es: 'Filet de Pollo Empanizado', en: 'Breaded Chicken Fillet' },
-    desc: {
-      es: 'Acompañado de vegetales y arroz blanco.',
-      en: 'Breaded chicken with vegetables and white rice.',
-    },
+    desc: { es: 'Acompañado de vegetales y arroz blanco.', en: 'Breaded chicken with vegetables and white rice.' },
   },
   {
     id: 'camarones-al-ajillo',
     category: 'mains',
     priceCRC: 4500,
-    badge: { es: 'Mariscos', en: 'Seafood' },
-    name: { es: 'Camarones al Ajillo, Ensalada y Arroz', en: 'Garlic Shrimp with Rice and Salad' },
-    desc: {
-      es: 'Camarones salteados al ajillo acompañados de ensalada y arroz.',
-      en: 'Shrimp in garlic sauce served with rice and salad.',
-    },
+    name: { es: 'Camarones al Ajillo, Ensalada y Arroz', en: 'Shrimp in Garlic Sauce, Rice & Salad' },
+    desc: { es: 'Camarones al ajillo con ensalada y arroz.', en: 'Garlic shrimp with fried rice and salad.' },
   },
   {
     id: 'camarones-empanizados',
     category: 'mains',
     priceCRC: 4500,
-    badge: { es: 'Mariscos', en: 'Seafood' },
-    name: { es: 'Camarones Empanizados, Ensalada y Arroz', en: 'Breaded Shrimp with White Rice and Salad' },
-    desc: {
-      es: 'Camarones empanizados crujientes con arroz blanco y ensalada.',
-      en: 'Crispy breaded shrimp served with white rice and salad.',
-    },
+    name: { es: 'Camarones Empanizados, Ensalada y Arroz', en: 'Breaded Shrimp, White Rice & Salad' },
+    desc: { es: 'Camarones empanizados con arroz blanco y ensalada.', en: 'Breaded shrimp, white rice and salad.' },
   },
   {
     id: 'gordon-blue-pollo',
     category: 'mains',
     priceCRC: 5000,
-    badge: { es: 'Especialidad', en: 'Specialty' },
     name: { es: 'Gordon Blue de Pollo', en: 'Chicken Cordon Bleu' },
-    desc: {
-      es: 'En salsa blanca acompañado de puré y vegetales.',
-      en: 'In white sauce accompanied with mashed potatoes and vegetables.',
-    },
+    desc: { es: 'En salsa blanca acompañado de puré y vegetales.', en: 'With mashed potatoes and vegetables in white sauce.' },
   },
   {
     id: 'fajitas-pollo',
     category: 'mains',
     priceCRC: 4000,
-    badge: { es: 'Platos Fuertes', en: 'Main Dish' },
     name: { es: 'Fajitas de Pollo', en: 'Chicken Fajitas' },
-    desc: {
-      es: 'Acompañadas de papas fritas y ceviche de banano.',
-      en: 'Chicken fajitas served with French fries and banana ceviche.',
-    },
+    desc: { es: 'Acompañadas de papas fritas y ceviche de banano.', en: 'With French fries and banana ceviche.' },
   },
   {
     id: 'fajitas-pescado',
     category: 'mains',
     priceCRC: 4800,
-    badge: { es: 'Platos Fuertes', en: 'Main Dish' },
     name: { es: 'Fajitas de Pescado', en: 'Fish Fajitas' },
-    desc: {
-      es: 'Acompañadas de papas fritas y ceviche de banano.',
-      en: 'Fish fajitas served with French fries and banana ceviche.',
-    },
+    desc: { es: 'Acompañadas de papas fritas y ceviche de banano.', en: 'With French fries and banana ceviche.' },
   },
   {
     id: 'arroz-con-camarones',
     category: 'mains',
     priceCRC: 5000,
-    badge: { es: 'Arroces', en: 'Rice Dishes' },
     name: { es: 'Arroz con Camarones', en: 'Shrimp Fried Rice' },
-    desc: {
-      es: 'Acompañado de papas fritas y ensalada.',
-      en: 'Shrimp fried rice served with French fries and salad.',
-    },
+    desc: { es: 'Acompañado de papas fritas y ensalada.', en: 'Served with French fries and salad.' },
   },
   {
     id: 'camarones-con-arroz',
     category: 'mains',
     priceCRC: 6500,
-    badge: { es: 'Mariscos', en: 'Seafood' },
     name: { es: 'Camarones con Arroz', en: 'Premium Shrimp with Rice' },
-    desc: {
-      es: 'Acompañado de papas fritas y ensalada.',
-      en: 'Generous shrimp portion with rice, French fries, and salad.',
-    },
+    desc: { es: 'Acompañado de papas fritas y ensalada.', en: 'Served with French fries and salad.' },
   },
   {
     id: 'arroz-con-mariscos',
     category: 'mains',
     priceCRC: 5000,
-    badge: { es: 'Arroces', en: 'Rice Dishes' },
     name: { es: 'Arroz con Mariscos', en: 'Seafood Fried Rice' },
-    desc: {
-      es: 'Acompañado de papas fritas y ensalada.',
-      en: 'Seafood fried rice served with French fries and salad.',
-    },
+    desc: { es: 'Acompañado de papas fritas y ensalada.', en: 'Served with French fries and salad.' },
   },
   {
     id: 'arroz-cantones',
     category: 'mains',
     priceCRC: 5000,
-    badge: { es: 'Arroces', en: 'Rice Dishes' },
     name: { es: 'Arroz Cantonés', en: 'Cantonese Fried Rice' },
-    desc: {
-      es: 'Acompañado de papas fritas y ensalada.',
-      en: 'Cantonese fried rice served with French fries and salad.',
-    },
+    desc: { es: 'Acompañado de papas fritas y ensalada.', en: 'Served with French fries and salad.' },
   },
   {
     id: 'arroz-con-pollo',
     category: 'mains',
     priceCRC: 4000,
-    badge: { es: 'Tradicional', en: 'Traditional' },
     name: { es: 'Arroz con Pollo', en: 'Chicken Fried Rice' },
-    desc: {
-      es: 'Con papas fritas y ensalada.',
-      en: 'Traditional Costa Rican rice with chicken, French fries, and salad.',
-    },
+    desc: { es: 'Con papas fritas y ensalada.', en: 'Served with French fries and salad.' },
   },
   {
     id: 'arroz-con-cerdo',
     category: 'mains',
     priceCRC: 4000,
-    badge: { es: 'Arroces', en: 'Rice Dishes' },
     name: { es: 'Arroz con Cerdo', en: 'Pork Fried Rice' },
-    desc: {
-      es: 'Acompañado de papas fritas y ensalada.',
-      en: 'Pork fried rice served with French fries and salad.',
-    },
+    desc: { es: 'Acompañado de papas fritas y ensalada.', en: 'Served with French fries and salad.' },
   },
   {
     id: 'arroz-con-carne-salsa',
     category: 'mains',
     priceCRC: 3500,
-    badge: { es: 'Casero', en: 'Homestyle' },
     name: { es: 'Arroz con Carne en Salsa', en: 'Rice with Stewed Beef' },
-    desc: {
-      es: 'Acompañado de ensalada verde.',
-      en: 'Rice topped with tender stewed beef and green house salad.',
-    },
+    desc: { es: 'Acompañado de ensalada verde.', en: 'Rice with stewed beef and green salad.' },
   },
   {
     id: 'casados',
     category: 'mains',
     priceCRC: 4000,
-    badge: { es: 'Clásico Tico', en: 'Costa Rican Classic' },
-    name: { es: 'Casados (Pollo, Bistec, Carne en Salsa, Pescado o Chuleta)', en: 'Traditional Casado (Chicken, Steak, Stewed Beef, Fish or Pork Chop)' },
-    desc: {
-      es: 'Arroz, frijoles, ensalada, acompañamientos y proteína a elegir.',
-      en: 'Complete traditional platter with your choice of protein.',
-    },
+    name: { es: 'Casados', en: 'Traditional Casado' },
+    desc: { es: 'Pollo, Bistec, Carne en Salsa, Pescado o Chuleta.', en: 'Chicken, Skirt Steak, Stewed Beef, Fish or Pork Chop.' },
   },
   {
     id: 'casados-vegetarianos',
     category: 'mains',
     priceCRC: 4000,
-    badge: { es: 'Vegetariano', en: 'Vegetarian' },
     name: { es: 'Casados Vegetarianos', en: 'Vegetarian Casado' },
-    desc: {
-      es: 'Arroz, frijoles, vegetales salteados, plátano y ensalada fresca.',
-      en: 'Rice, beans, sautéed vegetables, sweet plantain, and fresh salad.',
-    },
+    desc: { es: 'Arroz, frijoles, vegetales, plátano y ensalada.', en: 'Rice, beans, vegetables, plantain and salad.' },
   },
 
   // ================= BEBIDAS CALIENTES / HOT BEVERAGES =================
@@ -1030,107 +880,94 @@ const MENU_ITEMS = [
     id: 'cafe-negro',
     category: 'hot_drinks',
     priceCRC: 800,
-    badge: { es: 'Bebida Caliente', en: 'Hot Beverage' },
     name: { es: 'Café Negro', en: 'Black Coffee' },
-    desc: { es: 'Café costarricense recién hecho.', en: 'Freshly brewed Costa Rican black coffee.' },
+    desc: { es: 'Café recién chorreado.', en: 'Fresh black coffee.' },
   },
   {
     id: 'cafe-con-leche',
     category: 'hot_drinks',
     priceCRC: 800,
-    badge: { es: 'Bebida Caliente', en: 'Hot Beverage' },
     name: { es: 'Café con Leche', en: 'Coffee with Milk' },
-    desc: { es: 'Café recién chorreado con leche caliente.', en: 'Fresh coffee with hot milk.' },
+    desc: { es: 'Café recién hecho con leche caliente.', en: 'Coffee with hot milk/cream.' },
   },
   {
     id: 'chocolate-caliente',
     category: 'hot_drinks',
     priceCRC: 1200,
-    badge: { es: 'Bebida Caliente', en: 'Hot Beverage' },
-    name: { es: 'Chocolate Caliente', en: 'Hot Chocolate' },
-    desc: { es: 'Chocolate caliente cremoso.', en: 'Creamy hot chocolate.' },
+    name: { es: 'Chocolate', en: 'Hot Chocolate' },
+    desc: { es: 'Chocolate caliente tradicional.', en: 'Creamy hot chocolate.' },
   },
   {
     id: 'agua-dulce',
     category: 'hot_drinks',
     priceCRC: 800,
-    badge: { es: 'Tradicional', en: 'Traditional' },
-    name: { es: 'Agua Dulce', en: 'Sugar Cane Tea (Agua Dulce)' },
-    desc: { es: 'Bebida caliente tradicional de tapa de dulce.', en: 'Traditional hot Costa Rican raw cane sugar drink.' },
+    name: { es: 'Agua Dulce', en: 'Sugar Cane Tea' },
+    desc: { es: 'Agua dulce caliente de tapa.', en: 'Traditional hot cane sugar tea.' },
   },
   {
     id: 'agua-dulce-con-leche',
     category: 'hot_drinks',
     priceCRC: 1200,
-    badge: { es: 'Tradicional', en: 'Traditional' },
     name: { es: 'Agua Dulce con Leche', en: 'Sugar Cane Tea with Milk' },
-    desc: { es: 'Agua dulce de tapa preparada con leche caliente.', en: 'Hot cane sugar drink with milk.' },
+    desc: { es: 'Agua dulce preparada con leche.', en: 'Hot sugar cane tea with milk.' },
   },
   {
     id: 'te-en-agua',
     category: 'hot_drinks',
     priceCRC: 800,
-    badge: { es: 'Bebida Caliente', en: 'Hot Beverage' },
     name: { es: 'Té en Agua', en: 'Hot Tea' },
-    desc: { es: 'Infusión de té caliente en agua.', en: 'Hot herbal or black tea.' },
+    desc: { es: 'Té caliente en agua.', en: 'Hot herbal or black tea.' },
   },
 
   // ================= BEBIDAS FRÍAS / COLD BEVERAGES =================
   {
-    id: 'refrescos-naturales',
-    category: 'cold_drinks',
-    priceCRC: 1000,
-    badge: { es: '100% Natural', en: '100% Natural' },
-    name: { es: 'Refrescos Naturales', en: 'Natural Fruit Juice' },
-    desc: { es: 'Refresco natural de frutas frescas del día en agua.', en: 'Freshly blended natural fruit juice.' },
-  },
-  {
-    id: 'batidos-en-leche',
-    category: 'cold_drinks',
-    priceCRC: 2000,
-    badge: { es: 'Cremoso', en: 'Milkshake' },
-    name: { es: 'Batidos en Leche (Fresa, Cocomani, Crema, Papaya o Mora)', en: 'Milkshakes (Strawberry, Coconut-Peanut, Vanilla Cream, Papaya or Blackberry)' },
-    desc: { es: 'Elige tu sabor favorito: Fresa, Cocomani, Crema, Papaya o Mora.', en: 'Flavors: Strawberry, Cocomani, Cream, Papaya, or Blackberry.' },
-  },
-  {
     id: 'gaseosa-desechable',
     category: 'cold_drinks',
     priceCRC: 1400,
-    badge: { es: 'Bebida Fría', en: 'Cold Drink' },
-    name: { es: 'Gaseosa Desechable', en: 'Soft Drink (Plastic Bottle)' },
-    desc: { es: 'Refresco gaseoso en botella plástica.', en: 'Chilled soft drink in plastic bottle.' },
+    name: { es: 'Gaseosa Desechable', en: 'Soft Drinks (Plastic Bottle)' },
+    desc: { es: 'Refresco gaseoso en botella plástica.', en: 'Soft drink in plastic bottle.' },
   },
   {
     id: 'gaseosa-vidrio',
     category: 'cold_drinks',
     priceCRC: 1200,
-    badge: { es: 'Bebida Fría', en: 'Cold Drink' },
-    name: { es: 'Gaseosas de Vidrio', en: 'Soft Drink (Glass Bottle)' },
-    desc: { es: 'Refresco gaseoso bien frío en botella de vidrio.', en: 'Ice-cold soft drink in glass bottle.' },
+    name: { es: 'Gaseosas de Vidrio', en: 'Soft Drinks (Glass Bottle)' },
+    desc: { es: 'Refresco gaseoso en botella de vidrio.', en: 'Soft drink in glass bottle.' },
   },
   {
     id: 'tropicales-vidrio',
     category: 'cold_drinks',
     priceCRC: 1200,
-    badge: { es: 'Bebida Fría', en: 'Cold Drink' },
-    name: { es: 'Tropicales (Vidrio)', en: 'Bottled Tropical Tea/Juice (Glass)' },
-    desc: { es: 'Fresco o té Tropical en botella de vidrio.', en: 'Bottled Tropical juice or iced tea (glass).' },
+    name: { es: 'Tropicales', en: 'Bottled Juice (Glass)' },
+    desc: { es: 'Refresco Tropical en botella de vidrio.', en: 'Bottled Tropical juice (glass).' },
   },
   {
     id: 'tropicales-desechables',
     category: 'cold_drinks',
     priceCRC: 1400,
-    badge: { es: 'Bebida Fría', en: 'Cold Drink' },
-    name: { es: 'Tropicales Desechables', en: 'Bottled Tropical Tea/Juice (Plastic)' },
-    desc: { es: 'Fresco o té Tropical en envase desechable.', en: 'Bottled Tropical juice or iced tea (plastic bottle).' },
+    name: { es: 'Tropicales Desechables', en: 'Bottled Juice (Plastic)' },
+    desc: { es: 'Refresco Tropical desechable.', en: 'Bottled Tropical juice (plastic).' },
+  },
+  {
+    id: 'refrescos-naturales',
+    category: 'cold_drinks',
+    priceCRC: 1000,
+    name: { es: 'Refrescos Naturales', en: 'Natural Fruit Juice' },
+    desc: { es: 'Fresco natural de fruta en agua.', en: 'Fresh natural fruit juice.' },
+  },
+  {
+    id: 'batidos-en-leche',
+    category: 'cold_drinks',
+    priceCRC: 2000,
+    name: { es: 'Batidos en Leche', en: 'Milkshakes' },
+    desc: { es: 'Sabores: Fresa, Cocomani, Crema, Papaya o Mora.', en: 'Flavors: Strawberry, Cocomani, Cream, Papaya, Blackberry.' },
   },
   {
     id: 'cerveza',
     category: 'cold_drinks',
     priceCRC: 2000,
-    badge: { es: 'Cerveza Fría', en: 'Cold Beer' },
-    name: { es: 'Cerveza (Imperial, Pilsen, Rock Ice Limón)', en: 'Cold Beer (Imperial, Pilsen, Rock Ice)' },
-    desc: { es: 'Consulta tu marca preferida en las notas del pedido.', en: 'Mention your preferred brand in the order notes.' },
+    name: { es: 'Cerveza', en: 'Cold Beer' },
+    desc: { es: 'Cerveza bien fría (₡2,000 c/u).', en: 'Ice-cold beer.' },
   },
 ];
 
@@ -1139,11 +976,15 @@ const MENU_ITEMS = [
  * -------------------------------------------------------------------------- */
 const App = {
   state: {
-    currentView: 'landing', // 'landing' | 'cabin' | 'restaurant'
+    currentView: 'landing',
     lang: localStorage.getItem('lafinca_lang') || 'es',
-    currency: localStorage.getItem('lafinca_currency') || 'CRC', // 'CRC' | 'USD'
-    theme: localStorage.getItem('lafinca_theme') || 'light',    // 'light' | 'dark'
+    currency: localStorage.getItem('lafinca_currency') || 'CRC',
+    theme:
+      localStorage.getItem('lafinca_theme') ||
+      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
     activeCategory: 'all',
+    searchQuery: '',
+    hoursExpanded: false,
     highlightedDishId: null,
     carouselIndex: 0,
     carouselPaused: false,
@@ -1156,7 +997,7 @@ const App = {
       totalCRC: 76000,
       weatherProfile: WEATHER_PROFILES[0],
     },
-    cart: JSON.parse(localStorage.getItem('lafinca_cart') || '{}'), // { [dishId]: quantity }
+    cart: JSON.parse(localStorage.getItem('lafinca_cart') || '{}'),
     deferredInstallPrompt: null,
   },
 
@@ -1171,6 +1012,8 @@ const App = {
     const hashView = window.location.hash.replace('#', '');
     if (['landing', 'cabin', 'restaurant'].includes(hashView)) {
       this.navigateTo(hashView, false);
+    } else {
+      this.updateActiveNavButtons();
     }
 
     window.addEventListener('hashchange', () => {
@@ -1202,7 +1045,7 @@ const App = {
   },
 
   /* ========================================================================
-   * NAVEGACIÓN SPA (Landing / Cabaña / Restaurante)
+   * NAVEGACIÓN SPA
    * ======================================================================== */
   navigateTo(viewName, updateHash = true) {
     this.state.currentView = viewName;
@@ -1210,8 +1053,7 @@ const App = {
       window.history.pushState(null, '', `#${viewName}`);
     }
 
-    const views = ['landing', 'cabin', 'restaurant'];
-    views.forEach((v) => {
+    ['landing', 'cabin', 'restaurant'].forEach((v) => {
       const el = document.getElementById(`view-${v}`);
       if (!el) return;
       if (v === viewName) {
@@ -1223,15 +1065,6 @@ const App = {
       }
     });
 
-    const navbar = document.getElementById('global-navbar');
-    if (navbar) {
-      if (viewName === 'landing') {
-        navbar.classList.add('hidden');
-      } else {
-        navbar.classList.remove('hidden');
-      }
-    }
-
     this.updateActiveNavButtons();
     this.updateFloatingCartVisibility();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1239,16 +1072,13 @@ const App = {
 
   updateActiveNavButtons() {
     const activeClasses = ['bg-emerald-700', 'text-white', 'shadow-sm'];
-    const inactiveClasses = ['text-slate-600', 'dark:text-zinc-300', 'hover:bg-slate-200/60', 'dark:hover:bg-slate-700/60'];
+    const inactiveClasses = ['text-slate-600', 'dark:text-zinc-300', 'hover:text-slate-900', 'dark:hover:text-white'];
 
-    const pairs = [
+    [
+      { id: 'nav-btn-landing', view: 'landing' },
       { id: 'nav-btn-cabin', view: 'cabin' },
       { id: 'nav-btn-restaurant', view: 'restaurant' },
-      { id: 'mobile-nav-cabin', view: 'cabin' },
-      { id: 'mobile-nav-restaurant', view: 'restaurant' },
-    ];
-
-    pairs.forEach(({ id, view }) => {
+    ].forEach(({ id, view }) => {
       const btn = document.getElementById(id);
       if (!btn) return;
       if (this.state.currentView === view) {
@@ -1262,7 +1092,7 @@ const App = {
   },
 
   /* ========================================================================
-   * TEMA CLARO / OSCURO (Paleta slate & zinc de bajo contraste)
+   * MODO CLARO / OSCURO (Funciona en Celular y Desktop)
    * ======================================================================== */
   toggleTheme() {
     const next = this.state.theme === 'dark' ? 'light' : 'dark';
@@ -1280,12 +1110,21 @@ const App = {
       if (metaTheme) metaTheme.setAttribute('content', '#18181b');
     } else {
       root.classList.remove('dark');
-      if (metaTheme) metaTheme.setAttribute('content', '#065f46');
+      if (metaTheme) metaTheme.setAttribute('content', '#f5f5f4');
+    }
+    this.updateThemeLabel();
+  },
+
+  updateThemeLabel() {
+    const label = document.getElementById('theme-mode-label');
+    if (label) {
+      label.textContent =
+        this.state.theme === 'dark' ? this.t('nav.darkMode') : this.t('nav.lightMode');
     }
   },
 
   /* ========================================================================
-   * INTERNACIONALIZACIÓN (i18n: ES / EN)
+   * IDIOMA (ES / EN) Y MONEDA (CRC / USD)
    * ======================================================================== */
   toggleLanguage() {
     const next = this.state.lang === 'es' ? 'en' : 'es';
@@ -1313,9 +1152,6 @@ const App = {
     return current;
   },
 
-  /* ========================================================================
-   * CONVERSOR DE MONEDA (CRC ₡ / USD $)
-   * ======================================================================== */
   toggleCurrency() {
     const next = this.state.currency === 'CRC' ? 'USD' : 'CRC';
     this.setCurrency(next);
@@ -1331,10 +1167,79 @@ const App = {
   formatMoney(amountCRC) {
     if (this.state.currency === 'USD') {
       const usdValue = amountCRC / CONFIG.exchangeRateUSD;
-      return `$${usdValue.toFixed(2)} USD`;
+      return `$${usdValue.toFixed(2)}`;
     }
-    const formattedCRC = Math.round(amountCRC).toLocaleString('es-CR');
-    return `₡${formattedCRC}`;
+    return `₡${Math.round(amountCRC).toLocaleString('es-CR')}`;
+  },
+
+  /* ========================================================================
+   * HORARIO INTERACTIVO EN TIEMPO REAL (RESTAURANTE LA FINCA)
+   * ======================================================================== */
+  toggleHoursDropdown() {
+    this.state.hoursExpanded = !this.state.hoursExpanded;
+    const dropdown = document.getElementById('rest-hours-dropdown');
+    const chevron = document.getElementById('rest-hours-chevron');
+    if (dropdown) {
+      dropdown.classList.toggle('hidden', !this.state.hoursExpanded);
+    }
+    if (chevron) {
+      chevron.classList.toggle('rotate-180', this.state.hoursExpanded);
+    }
+  },
+
+  renderRestaurantSchedule() {
+    // Obtener día y hora actual en Costa Rica (UTC-6)
+    const now = new Date();
+    const crString = now.toLocaleString('en-US', { timeZone: 'America/Costa_Rica' });
+    const crDate = new Date(crString);
+    const currentDay = crDate.getDay(); // 0 = domingo ... 6 = sábado
+    const currentMinutes = crDate.getHours() * 60 + crDate.getMinutes();
+
+    const todayConfig = RESTAURANT_SCHEDULE.find((d) => d.dayIndex === currentDay) || RESTAURANT_SCHEDULE[0];
+    const isOpen = currentMinutes >= todayConfig.openMin && currentMinutes < todayConfig.closeMin;
+
+    const dotEl = document.getElementById('rest-live-dot');
+    const statusTextEl = document.getElementById('rest-live-status-text');
+    const todayHoursEl = document.getElementById('rest-today-hours');
+    const landingStatusPill = document.getElementById('landing-rest-status-pill');
+
+    if (dotEl) {
+      dotEl.className = isOpen
+        ? 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0'
+        : 'w-2 h-2 rounded-full bg-rose-500 shrink-0';
+    }
+    if (statusTextEl) {
+      statusTextEl.textContent = isOpen ? this.t('rest.openStatus') : this.t('rest.closedStatus');
+      statusTextEl.className = isOpen
+        ? 'font-bold text-emerald-700 dark:text-emerald-400'
+        : 'font-bold text-rose-600 dark:text-rose-400';
+    }
+    if (todayHoursEl) {
+      todayHoursEl.textContent = `${this.t('rest.todayPrefix')} (${todayConfig.day[this.state.lang]}): ${todayConfig.hours[this.state.lang]}`;
+    }
+    if (landingStatusPill) {
+      landingStatusPill.innerHTML = `
+        <span class="w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}"></span>
+        <span>${isOpen ? this.t('rest.openStatus') : this.t('rest.closedStatus')} · ${todayConfig.hours[this.state.lang]}</span>
+      `;
+    }
+
+    const dropdown = document.getElementById('rest-hours-dropdown');
+    if (dropdown) {
+      dropdown.innerHTML = RESTAURANT_SCHEDULE.map((item) => {
+        const isToday = item.dayIndex === currentDay;
+        return `
+          <div class="flex items-center justify-between py-1 px-2 rounded-lg ${
+            isToday
+              ? 'bg-emerald-50 dark:bg-emerald-950/60 font-bold text-slate-900 dark:text-white'
+              : 'text-slate-600 dark:text-zinc-400'
+          }">
+            <span class="capitalize">${item.day[this.state.lang]}</span>
+            <span>${item.hours[this.state.lang]}</span>
+          </div>
+        `;
+      }).join('');
+    }
   },
 
   /* ========================================================================
@@ -1346,6 +1251,11 @@ const App = {
       el.textContent = this.t(key);
     });
 
+    const searchInput = document.getElementById('menu-search-input');
+    if (searchInput) {
+      searchInput.placeholder = this.t('rest.searchPlaceholder');
+    }
+
     document.querySelectorAll('.lang-indicator').forEach((el) => {
       el.textContent = this.state.lang.toUpperCase();
     });
@@ -1356,20 +1266,8 @@ const App = {
       el.textContent = this.state.currency;
     });
 
-    document.querySelectorAll('[data-lang-btn]').forEach((btn) => {
-      const isSelected = btn.getAttribute('data-lang-btn') === this.state.lang;
-      btn.className = isSelected
-        ? 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-700 text-white shadow-sm transition-all'
-        : 'px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all';
-    });
-
-    document.querySelectorAll('[data-curr-btn]').forEach((btn) => {
-      const isSelected = btn.getAttribute('data-curr-btn') === this.state.currency;
-      btn.className = isSelected
-        ? 'px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-sm transition-all'
-        : 'px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all';
-    });
-
+    this.updateThemeLabel();
+    this.renderRestaurantSchedule();
     this.renderCarouselCaptions();
     this.updateCabinQuote();
     this.renderReviews();
@@ -1395,11 +1293,10 @@ const App = {
       (slide, index) => `
         <div
           data-carousel-slide="${index}"
-          class="absolute inset-0 transition-opacity duration-700 ease-in-out ${
+          class="absolute inset-0 transition-opacity duration-500 ease-in-out ${
             index === this.state.carouselIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
           }"
         >
-          <!-- Fondo ambiental difuminado para fotos verticales (PORTRAIT) de Airbnb -->
           <img
             src="${slide.imageUrl}"
             alt=""
@@ -1407,7 +1304,6 @@ const App = {
             class="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-50"
             loading="${index === 0 ? 'eager' : 'lazy'}"
           />
-          <!-- Foto principal oficial de Airbnb -->
           <img
             src="${slide.imageUrl}"
             alt="${slide.caption[this.state.lang]}"
@@ -1416,12 +1312,12 @@ const App = {
             } object-center"
             loading="${index === 0 ? 'eager' : 'lazy'}"
           />
-          <div class="absolute inset-0 z-10 bg-gradient-to-t from-zinc-950/85 via-zinc-950/15 to-transparent pointer-events-none"></div>
-          <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 right-6 z-20 text-white pointer-events-none">
-            <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-600/90 backdrop-blur-sm mb-2" data-slide-tag="${index}">
+          <div class="absolute inset-0 z-10 bg-gradient-to-t from-zinc-950/85 via-transparent to-transparent pointer-events-none"></div>
+          <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-5 right-5 z-20 text-white pointer-events-none">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-600/90 mb-1" data-slide-tag="${index}">
               ${slide.tag[this.state.lang]}
             </span>
-            <p class="font-display text-base sm:text-xl font-semibold text-slate-100 drop-shadow" data-slide-caption="${index}">
+            <p class="font-display text-sm sm:text-lg font-semibold text-slate-100 drop-shadow" data-slide-caption="${index}">
               ${slide.caption[this.state.lang]}
             </p>
           </div>
@@ -1435,19 +1331,14 @@ const App = {
           type="button"
           onclick="App.goToSlide(${index})"
           data-carousel-dot="${index}"
-          aria-label="Ir a foto ${index + 1}"
-          class="relative shrink-0 w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden border-2 transition-all ${
+          aria-label="Foto ${index + 1}"
+          class="relative shrink-0 w-14 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all ${
             index === this.state.carouselIndex
-              ? 'border-emerald-500 ring-2 ring-emerald-500/40 opacity-100 scale-105'
-              : 'border-transparent opacity-60 hover:opacity-95'
+              ? 'border-emerald-500 opacity-100 scale-105'
+              : 'border-transparent opacity-55 hover:opacity-90'
           }"
         >
-          <img
-            src="${slide.imageUrl}"
-            alt="Miniatura ${index + 1}"
-            class="w-full h-full object-cover"
-            loading="lazy"
-          />
+          <img src="${slide.imageUrl}" alt="" class="w-full h-full object-cover" loading="lazy" />
         </button>
       `
     ).join('');
@@ -1472,22 +1363,20 @@ const App = {
 
     document.querySelectorAll('[data-carousel-slide]').forEach((el) => {
       const i = Number(el.getAttribute('data-carousel-slide'));
-      if (i === this.state.carouselIndex) {
-        el.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
-        el.classList.add('opacity-100', 'z-10');
-      } else {
-        el.classList.remove('opacity-100', 'z-10');
-        el.classList.add('opacity-0', 'z-0', 'pointer-events-none');
-      }
+      el.classList.toggle('opacity-100', i === this.state.carouselIndex);
+      el.classList.toggle('z-10', i === this.state.carouselIndex);
+      el.classList.toggle('opacity-0', i !== this.state.carouselIndex);
+      el.classList.toggle('z-0', i !== this.state.carouselIndex);
+      el.classList.toggle('pointer-events-none', i !== this.state.carouselIndex);
     });
 
     document.querySelectorAll('[data-carousel-dot]').forEach((dot) => {
       const i = Number(dot.getAttribute('data-carousel-dot'));
       const isActive = i === this.state.carouselIndex;
-      dot.className = `relative shrink-0 w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden border-2 transition-all ${
+      dot.className = `relative shrink-0 w-14 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all ${
         isActive
-          ? 'border-emerald-500 ring-2 ring-emerald-500/40 opacity-100 scale-105'
-          : 'border-transparent opacity-60 hover:opacity-95'
+          ? 'border-emerald-500 opacity-100 scale-105'
+          : 'border-transparent opacity-55 hover:opacity-90'
       }`;
       if (isActive) {
         dot.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -1517,13 +1406,10 @@ const App = {
   },
 
   /* ========================================================================
-   * COTIZADOR INTERACTIVO DE CABAÑA + CLIMA SIMULADO Y UPSELLING
+   * COTIZADOR DE CABAÑA + CLIMA Y UPSELLING
    * ======================================================================== */
   changeGuestCount(delta) {
-    const next = Math.min(
-      CONFIG.cabin.maxGuests,
-      Math.max(1, this.state.quote.guests + delta)
-    );
+    const next = Math.min(CONFIG.cabin.maxGuests, Math.max(1, this.state.quote.guests + delta));
     this.state.quote.guests = next;
     this.updateCabinQuote();
   },
@@ -1629,15 +1515,13 @@ const App = {
 
     const linkedDish = MENU_ITEMS.find((item) => item.id === profile.recommendedDishId);
     if (upsellPriceEl && linkedDish) {
-      upsellPriceEl.textContent = `${this.t('weather.availableAt')} ${this.formatMoney(
-        linkedDish.priceCRC
-      )}`;
+      upsellPriceEl.textContent = `${this.t('weather.availableAt')} ${this.formatMoney(linkedDish.priceCRC)}`;
     }
 
     if (dateRangeEl && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
       const locale = this.state.lang === 'es' ? 'es-CR' : 'en-US';
       const fmt = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
-      dateRangeEl.textContent = `${fmt.format(startDate)} – ${fmt.format(endDate)} · Peñas Blancas`;
+      dateRangeEl.textContent = `${fmt.format(startDate)} – ${fmt.format(endDate)}`;
     }
   },
 
@@ -1646,6 +1530,9 @@ const App = {
     if (profile) {
       this.state.activeCategory = profile.recommendedCategory || 'all';
       this.state.highlightedDishId = profile.recommendedDishId || null;
+      this.state.searchQuery = '';
+      const searchInput = document.getElementById('menu-search-input');
+      if (searchInput) searchInput.value = '';
     }
     this.navigateTo('restaurant');
     this.renderMenuCategories();
@@ -1657,7 +1544,7 @@ const App = {
         if (card) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      }, 350);
+      }, 300);
     }
   },
 
@@ -1685,7 +1572,7 @@ const App = {
   },
 
   /* ========================================================================
-   * SECCIÓN DE RESEÑAS (Airbnb & Google Maps Slider)
+   * SECCIÓN DE RESEÑAS COMPACTA
    * ======================================================================== */
   renderReviews() {
     const container = document.getElementById('reviews-slider');
@@ -1698,26 +1585,24 @@ const App = {
         : 'bg-blue-50 text-blue-600 dark:bg-blue-950/70 dark:text-blue-300 border-blue-200 dark:border-blue-800/60';
 
       return `
-        <article class="snap-start shrink-0 w-[85%] sm:w-[360px] bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+        <article class="snap-start shrink-0 w-[82%] sm:w-[320px] bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${badgeClass}">
                 ${rev.platform}
               </span>
-              <div class="flex items-center text-amber-400 text-sm" aria-label="5 estrellas">
-                ★★★★★
-              </div>
+              <span class="text-amber-400 text-xs">★★★★★</span>
             </div>
-            <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed mb-6">
+            <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed mb-4">
               “${rev.text[this.state.lang]}”
             </p>
           </div>
-          <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700/70 pt-4">
+          <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700/60 pt-2.5 text-xs">
             <div>
-              <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">${rev.author}</h4>
-              <span class="text-xs text-slate-500 dark:text-zinc-400">${rev.country}</span>
+              <strong class="text-slate-900 dark:text-slate-100 block">${rev.author}</strong>
+              <span class="text-[11px] text-slate-500 dark:text-zinc-400">${rev.country}</span>
             </div>
-            <span class="text-[11px] text-slate-400 dark:text-zinc-400">${rev.date[this.state.lang]}</span>
+            <span class="text-[10px] text-slate-400">${rev.date[this.state.lang]}</span>
           </div>
         </article>
       `;
@@ -1727,15 +1612,20 @@ const App = {
   scrollReviews(direction) {
     const container = document.getElementById('reviews-slider');
     if (!container) return;
-    container.scrollBy({ left: direction * 360, behavior: 'smooth' });
+    container.scrollBy({ left: direction * 320, behavior: 'smooth' });
   },
 
   /* ========================================================================
-   * RESTAURANTE LA FINCA: MENÚ DIGITAL OFICIAL Y CARRITO DE PEDIDOS
+   * MENÚ DIGITAL COMPACTO E INTERACTIVO + BUSCADOR EN TIEMPO REAL
    * ======================================================================== */
   setCategory(categoryId) {
     this.state.activeCategory = categoryId;
     this.renderMenuCategories();
+    this.renderMenuGrid();
+  },
+
+  setSearchQuery(query) {
+    this.state.searchQuery = (query || '').trim().toLowerCase();
     this.renderMenuGrid();
   },
 
@@ -1754,15 +1644,15 @@ const App = {
         <button
           type="button"
           onclick="App.setCategory('${cat.id}')"
-          class="shrink-0 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+          class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95 ${
             active
               ? 'bg-emerald-700 text-white shadow-sm'
-              : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
+              : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 hover:bg-slate-100'
           }"
         >
           <span>${cat.icon}</span>
           <span>${cat.label[this.state.lang]}</span>
-          <span class="px-1.5 py-0.5 rounded-full text-[10px] ${
+          <span class="px-1.5 py-0.2 rounded-full text-[10px] ${
             active ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-zinc-900 text-slate-500 dark:text-zinc-400'
           }">${count}</span>
         </button>
@@ -1774,18 +1664,32 @@ const App = {
     const grid = document.getElementById('restaurant-menu-grid');
     if (!grid) return;
 
-    const filtered =
-      this.state.activeCategory === 'all'
-        ? MENU_ITEMS
-        : MENU_ITEMS.filter((item) => item.category === this.state.activeCategory);
+    const query = this.state.searchQuery;
+    const filtered = MENU_ITEMS.filter((item) => {
+      const matchesCategory =
+        this.state.activeCategory === 'all' || item.category === this.state.activeCategory;
+      if (!matchesCategory) return false;
+      if (!query) return true;
+      const nameEs = item.name.es.toLowerCase();
+      const nameEn = item.name.en.toLowerCase();
+      const descEs = item.desc.es.toLowerCase();
+      const descEn = item.desc.en.toLowerCase();
+      return (
+        nameEs.includes(query) ||
+        nameEn.includes(query) ||
+        descEs.includes(query) ||
+        descEn.includes(query)
+      );
+    });
 
-    const categoryIcons = {
-      fast_food: '🍔',
-      soups: '🍲',
-      mains: '🍛',
-      hot_drinks: '☕',
-      cold_drinks: '🥤',
-    };
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="col-span-full py-10 text-center text-xs sm:text-sm text-slate-500 dark:text-zinc-400">
+          ${this.t('rest.noResults')}
+        </div>
+      `;
+      return;
+    }
 
     grid.innerHTML = filtered
       .map((dish) => {
@@ -1793,79 +1697,70 @@ const App = {
         const isRecommended =
           this.state.quote.weatherProfile &&
           this.state.quote.weatherProfile.recommendedDishId === dish.id;
-        const icon = categoryIcons[dish.category] || '🍽️';
 
         return `
           <article
             id="dish-card-${dish.id}"
-            class="group rounded-3xl bg-white dark:bg-slate-800/90 border ${
+            class="rounded-2xl bg-white dark:bg-slate-800/90 border ${
               isRecommended
-                ? 'border-amber-400 dark:border-amber-400/80 ring-2 ring-amber-400/30'
-                : 'border-slate-200/90 dark:border-slate-700/80'
-            } p-5 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between gap-4"
+                ? 'border-amber-400 ring-1 ring-amber-400/40'
+                : qty > 0
+                ? 'border-emerald-500/70 dark:border-emerald-500/60'
+                : 'border-slate-200/80 dark:border-slate-700/80'
+            } p-3.5 sm:p-4 shadow-sm hover:shadow-md transition-all flex items-center justify-between gap-3"
           >
-            <div>
-              <!-- Etiquetas Superiores y Precio -->
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-100 dark:bg-zinc-900 text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                    <span>${icon}</span>
-                    <span>${dish.badge[this.state.lang]}</span>
-                  </span>
-                  ${
-                    isRecommended
-                      ? `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-400 text-zinc-950">
-                          ${this.t('rest.recommendedPill')}
-                        </span>`
-                      : ''
-                  }
-                </div>
-                <span class="font-display text-lg sm:text-xl font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
-                  ${this.formatMoney(dish.priceCRC)}
-                </span>
+            <!-- Información del Platillo (Izquierda) -->
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-snug">
+                  ${dish.name[this.state.lang]}
+                </h3>
+                ${
+                  isRecommended
+                    ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-400 text-zinc-950">
+                        ${this.t('rest.recommendedPill')}
+                      </span>`
+                    : ''
+                }
               </div>
-
-              <!-- Nombre y Descripción del Platillo -->
-              <h3 class="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug mb-1.5">
-                ${dish.name[this.state.lang]}
-              </h3>
-              <p class="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+              <p class="text-[11px] sm:text-xs text-slate-500 dark:text-zinc-400 line-clamp-2 mt-0.5">
                 ${dish.desc[this.state.lang]}
               </p>
+              <span class="inline-block font-display text-sm sm:text-base font-bold text-emerald-700 dark:text-emerald-400 mt-1.5">
+                ${this.formatMoney(dish.priceCRC)}
+              </span>
             </div>
 
-            <!-- Controles de Agregar / Ajustar Cantidad -->
-            <div class="pt-1">
+            <!-- Control Compacto de Cantidad (Derecha: no ocupa espacio innecesario) -->
+            <div class="shrink-0">
               ${
                 qty === 0
                   ? `
                     <button
                       type="button"
                       onclick="App.updateCartQty('${dish.id}', 1)"
-                      class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-emerald-700 hover:text-white dark:bg-zinc-900 dark:hover:bg-emerald-600 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2"
+                      class="w-9 h-9 rounded-xl bg-emerald-50 hover:bg-emerald-700 text-emerald-700 hover:text-white dark:bg-slate-700 dark:hover:bg-emerald-600 dark:text-emerald-300 font-bold text-lg flex items-center justify-center border border-emerald-200 dark:border-slate-600 transition-all active:scale-90"
+                      aria-label="Agregar ${dish.name[this.state.lang]}"
                     >
-                      <span>+</span>
-                      <span>${this.t('rest.addBtn')}</span>
+                      +
                     </button>
                   `
                   : `
-                    <div class="flex items-center justify-between bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 rounded-xl p-1.5">
+                    <div class="flex items-center gap-1 bg-emerald-700 text-white rounded-xl p-1 shadow-sm">
                       <button
                         type="button"
                         onclick="App.updateCartQty('${dish.id}', -1)"
-                        class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold shadow-sm hover:bg-slate-100 transition-colors"
-                        aria-label="Restar uno"
+                        class="w-7 h-7 rounded-lg hover:bg-white/15 font-bold text-sm flex items-center justify-center active:scale-90"
+                        aria-label="Quitar uno"
                       >
                         −
                       </button>
-                      <span class="text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                        ${qty} ${this.t('rest.inCartLabel')}
-                      </span>
+                      <span class="w-5 text-center text-xs font-bold">${qty}</span>
                       <button
                         type="button"
                         onclick="App.updateCartQty('${dish.id}', 1)"
-                        class="w-9 h-9 rounded-lg bg-emerald-700 text-white font-bold shadow-sm hover:bg-emerald-600 transition-colors"
-                        aria-label="Sumar uno"
+                        class="w-7 h-7 rounded-lg hover:bg-white/15 font-bold text-sm flex items-center justify-center active:scale-90"
+                        aria-label="Agregar uno"
                       >
                         +
                       </button>
@@ -1880,7 +1775,7 @@ const App = {
   },
 
   /* ========================================================================
-   * LÓGICA DEL CARRITO Y CHECKOUT VÍA WHATSAPP
+   * CARRITO Y CHECKOUT VÍA WHATSAPP
    * ======================================================================== */
   updateCartQty(dishId, delta) {
     const current = this.state.cart[dishId] || 0;
@@ -1913,11 +1808,7 @@ const App = {
         const subtotalCRC = dish.priceCRC * qty;
         totalItems += qty;
         totalCRC += subtotalCRC;
-        lines.push({
-          dish,
-          qty,
-          subtotalCRC,
-        });
+        lines.push({ dish, qty, subtotalCRC });
       }
     });
 
@@ -1944,14 +1835,12 @@ const App = {
 
     if (lines.length === 0) {
       container.innerHTML = `
-        <div class="text-center py-12 px-4 space-y-3">
-          <div class="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center text-2xl">
-            🍽️
-          </div>
-          <h3 class="font-display text-base font-bold text-slate-800 dark:text-slate-200">
+        <div class="text-center py-10 px-4 space-y-2">
+          <div class="text-2xl">🍽️</div>
+          <h3 class="font-display text-sm font-bold text-slate-800 dark:text-slate-200">
             ${this.t('cart.emptyTitle')}
           </h3>
-          <p class="text-xs text-slate-500 dark:text-zinc-400 max-w-xs mx-auto">
+          <p class="text-xs text-slate-500 dark:text-zinc-400">
             ${this.t('cart.emptyDesc')}
           </p>
         </div>
@@ -1962,31 +1851,28 @@ const App = {
     container.innerHTML = lines
       .map(
         ({ dish, qty, subtotalCRC }) => `
-          <div class="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-stone-50 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80">
+          <div class="flex items-center justify-between gap-2.5 p-3 rounded-xl bg-stone-50 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700">
             <div class="flex-1 min-w-0">
-              <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
+              <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
                 ${dish.name[this.state.lang]}
               </h4>
-              <span class="text-xs text-slate-500 dark:text-zinc-400 block">
-                ${this.formatMoney(dish.priceCRC)} c/u
-              </span>
-              <span class="text-xs font-bold text-emerald-700 dark:text-emerald-400">
+              <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
                 ${this.formatMoney(subtotalCRC)}
               </span>
             </div>
-            <div class="flex items-center gap-1.5">
+            <div class="flex items-center gap-1">
               <button
                 type="button"
                 onclick="App.updateCartQty('${dish.id}', -1)"
-                class="w-7 h-7 rounded-lg bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 text-xs font-bold"
+                class="w-6 h-6 rounded-md bg-white dark:bg-zinc-900 border border-slate-300 dark:border-slate-700 text-xs font-bold"
               >
                 −
               </button>
-              <span class="w-6 text-center text-xs font-bold">${qty}</span>
+              <span class="w-5 text-center text-xs font-bold">${qty}</span>
               <button
                 type="button"
                 onclick="App.updateCartQty('${dish.id}', 1)"
-                class="w-7 h-7 rounded-lg bg-emerald-700 text-white text-xs font-bold"
+                class="w-6 h-6 rounded-md bg-emerald-700 text-white text-xs font-bold"
               >
                 +
               </button>
@@ -2039,40 +1925,34 @@ const App = {
 
     const totalFormatted = this.formatMoney(totalCRC);
 
-    let message = '';
-    if (this.state.lang === 'es') {
-      message =
-        `¡Hola Restaurante La Finca! 🍽️ Quisiera realizar el siguiente pedido:\n\n` +
-        `${itemLines}\n\n` +
-        `💰 *Total (${this.state.currency}):* ${totalFormatted}\n` +
-        `📍 *Modalidad:* ${deliveryMode}\n` +
-        (customerName ? `👤 *Nombre:* ${customerName}\n` : '') +
-        (notes ? `📝 *Notas:* ${notes}\n` : '') +
-        `\n¡Muchas gracias!`;
-    } else {
-      message =
-        `Hello Restaurante La Finca! 🍽️ I would like to place the following order:\n\n` +
-        `${itemLines}\n\n` +
-        `💰 *Total (${this.state.currency}):* ${totalFormatted}\n` +
-        `📍 *Order Type:* ${deliveryMode}\n` +
-        (customerName ? `👤 *Name:* ${customerName}\n` : '') +
-        (notes ? `📝 *Notes:* ${notes}\n` : '') +
-        `\nThank you!`;
-    }
+    const message =
+      this.state.lang === 'es'
+        ? `¡Hola Restaurante La Finca! 🍽️ Quisiera realizar el siguiente pedido:\n\n` +
+          `${itemLines}\n\n` +
+          `💰 *Total (${this.state.currency}):* ${totalFormatted}\n` +
+          `📍 *Modalidad:* ${deliveryMode}\n` +
+          (customerName ? `👤 *Nombre:* ${customerName}\n` : '') +
+          (notes ? `📝 *Notas:* ${notes}\n` : '') +
+          `\n¡Muchas gracias!`
+        : `Hello Restaurante La Finca! 🍽️ I would like to place the following order:\n\n` +
+          `${itemLines}\n\n` +
+          `💰 *Total (${this.state.currency}):* ${totalFormatted}\n` +
+          `📍 *Order Type:* ${deliveryMode}\n` +
+          (customerName ? `👤 *Name:* ${customerName}\n` : '') +
+          (notes ? `📝 *Notes:* ${notes}\n` : '') +
+          `\nThank you!`;
 
     const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   },
 
   /* ========================================================================
-   * REGISTRO DE SERVICE WORKER E INSTALACIÓN PWA
+   * PWA & SERVICE WORKER
    * ======================================================================== */
   setupPWA() {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch((err) => {
-          console.warn('Registro de Service Worker omitido en entorno local:', err);
-        });
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
 
