@@ -3,12 +3,13 @@
  * Estrategia: Stale-While-Revalidate para activos locales y CDN, con soporte offline.
  */
 
-const CACHE_NAME = 'la-finca-pwa-v1.0.0';
+const CACHE_NAME = 'la-finca-pwa-v1.1.0';
 const CORE_ASSETS = [
   './',
   './index.html',
   './app.js',
-  './manifest.json'
+  './manifest.json',
+  './restaurante-portada.jpg'
 ];
 
 // Instalación: Pre-cachear archivos esenciales de la aplicación

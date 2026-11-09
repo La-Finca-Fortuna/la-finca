@@ -419,11 +419,10 @@
             onkeydown="if(event.key==='Enter'||event.key===' ') App.navigateTo('restaurant')"
             class="group relative rounded-3xl overflow-hidden bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col justify-between min-h-[380px] sm:min-h-[430px]"
           >
-            <!-- Imagen de fondo con gradiente -->
+            <!-- Imagen de fondo con gradiente (Foto oficial Restaurante La Finca) -->
             <div class="absolute inset-0 overflow-hidden">
-              <!-- CONTENEDOR DE IMAGEN DE PORTADA RESTAURANTE: Puedes reemplazar el atributo src con tu propia foto -->
               <img
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+                src="./restaurante-portada.jpg"
                 alt="Restaurante La Finca Gastronomía Costarricense"
                 class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 loading="eager"
@@ -895,53 +894,65 @@
     <section id="view-restaurant" class="spa-view view-hidden pb-28">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 space-y-8 sm:space-y-10">
 
-        <!-- Hero / Detalles del Restaurante (Horario & Ubicación en Google Maps) -->
-        <div class="rounded-3xl bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 p-6 sm:p-8 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div class="space-y-2">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60" data-i18n="rest.badge">
-                Gastronomía Familiar Costarricense
+        <!-- Hero / Detalles del Restaurante (Foto Oficial + Horario & Ubicación en Google Maps) -->
+        <div class="rounded-3xl bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 overflow-hidden shadow-sm">
+          <!-- Banner fotográfico del Restaurante La Finca -->
+          <div class="relative h-56 sm:h-72 lg:h-80 w-full overflow-hidden">
+            <img
+              src="./restaurante-portada.jpg"
+              alt="Platillo Especial de Restaurante La Finca"
+              class="w-full h-full object-cover object-center"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/30 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-8 right-4 flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-zinc-950 shadow-sm" data-i18n="rest.badge">
+                Menú Oficial · Restaurante La Finca
               </span>
-              <span id="rest-open-status" class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span data-i18n="rest.openNow">Abierto para pedidos</span>
+              <span id="rest-open-status" class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/85 text-emerald-300 border border-emerald-500/40 backdrop-blur-md flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span data-i18n="rest.openNow">Abierto · 7:00 AM a 9:00 PM</span>
               </span>
             </div>
-            <h1 class="font-display text-3xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 tracking-tight" data-i18n="rest.title">
-              Restaurante La Finca
-            </h1>
-            <p class="text-slate-600 dark:text-zinc-400 text-sm sm:text-base max-w-2xl" data-i18n="rest.subtitle">
-              Ingredientes frescos de San Isidro de Peñas Blancas. Selecciona tus platillos favoritos, ajusta las cantidades en tu carrito y envía tu orden directo a nuestra cocina por WhatsApp.
-            </p>
           </div>
 
-          <!-- Tarjeta de Horario de Atención y Botón Google Maps -->
-          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 bg-stone-50 dark:bg-zinc-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
-            <div class="flex items-start gap-3">
-              <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 block" data-i18n="rest.hoursTitle">Horario de Atención</span>
-                <span class="text-sm font-bold text-slate-900 dark:text-slate-100 block" data-i18n="rest.hoursValue">Lunes a Domingo: 7:00 AM – 9:00 PM</span>
-                <span class="text-xs text-slate-500 dark:text-zinc-400" data-i18n="rest.serviceModes">Salón · Para llevar · Entrega en Cabaña</span>
-              </div>
+          <div class="p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div class="space-y-2">
+              <h1 class="font-display text-3xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 tracking-tight" data-i18n="rest.title">
+                Restaurante La Finca
+              </h1>
+              <p class="text-slate-600 dark:text-zinc-400 text-sm sm:text-base max-w-2xl" data-i18n="rest.subtitle">
+                Ingredientes frescos de San Isidro de Peñas Blancas. Selecciona tus platillos favoritos, ajusta las cantidades en tu carrito y envía tu orden directo a nuestra cocina por WhatsApp.
+              </p>
             </div>
 
-            <a
-              href="https://www.google.com/maps/search/?api=1&amp;query=San+Isidro+de+Pe%C3%B1as+Blancas+Costa+Rica"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all"
-            >
-              <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span data-i18n="rest.openMapsBtn">Abrir Ubicación en Google Maps</span>
-            </a>
+            <!-- Tarjeta de Horario de Atención y Botón Google Maps -->
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 bg-stone-50 dark:bg-zinc-900/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/80">
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 block" data-i18n="rest.hoursTitle">Horario de Atención</span>
+                  <span class="text-sm font-bold text-slate-900 dark:text-slate-100 block" data-i18n="rest.hoursValue">Lunes a Domingo: 7:00 AM – 9:00 PM</span>
+                  <span class="text-xs text-slate-500 dark:text-zinc-400" data-i18n="rest.serviceModes">Salón · Para llevar · Entrega en Cabaña</span>
+                </div>
+              </div>
+
+              <a
+                href="https://www.google.com/maps/search/?api=1&amp;query=San+Isidro+de+Pe%C3%B1as+Blancas+Costa+Rica"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all"
+              >
+                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span data-i18n="rest.openMapsBtn">Abrir Ubicación en Google Maps</span>
+              </a>
+            </div>
           </div>
         </div>
 

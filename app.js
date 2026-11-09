@@ -1127,7 +1127,7 @@ const MENU_ITEMS = [
   {
     id: 'cerveza',
     category: 'cold_drinks',
-    priceCRC: 1500,
+    priceCRC: 2000,
     badge: { es: 'Cerveza Fría', en: 'Cold Beer' },
     name: { es: 'Cerveza (Imperial, Pilsen, Rock Ice Limón)', en: 'Cold Beer (Imperial, Pilsen, Rock Ice)' },
     desc: { es: 'Consulta tu marca preferida en las notas del pedido.', en: 'Mention your preferred brand in the order notes.' },
