@@ -1,0 +1,27 @@
+{
+  "name": "La Finca · Cabaña & Restaurante",
+  "short_name": "La Finca",
+  "description": "Hospedaje de montaña y gastronomía costarricense en San Isidro de Peñas Blancas, cerca de La Fortuna y el Volcán Arenal.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#18181b",
+  "theme_color": "#065f46",
+  "lang": "es-CR",
+  "categories": ["travel", "food", "lifestyle"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23065f46'/%3E%3Cpath d='M36 138L82 62l32 52 20-30 22 54H36z' fill='%2334d399' opacity='0.9'/%3E%3Ccircle cx='138' cy='58' r='14' fill='%23fbbf24'/%3E%3Cpath d='M28 148h136' stroke='%23ecfdf5' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23065f46'/%3E%3Cpath d='M96 368L218 165l85 139 54-80 59 144H96z' fill='%2334d399' opacity='0.9'/%3E%3Ccircle cx='368' cy='154' r='36' fill='%23fbbf24'/%3E%3Cpath d='M74 396h364' stroke='%23ecfdf5' stroke-width='20' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
